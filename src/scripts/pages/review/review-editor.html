@@ -1,0 +1,63 @@
+<div class="review-editor">
+    <div class="col-md-3 col-sm-12 col-xs-12 print-hide">
+        <progress-indicator state="getTaskStep(data)" labels="Response Required, Electronic Signature"></progress-indicator>
+    </div>
+    <div class="col-md-4 col-xs-12 top-margin">
+        <h3>Guidance</h3>
+        <ul class="txt-guide">
+            <li ng-repeat="item in legend">{{item}}</li>
+        </ul>
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-12">
+        <quick-links></quick-links>
+    </div>
+    <!-- Preview of Letter -->
+    <div class="col-xs-12">
+        <div class="topline print-hide">
+            <span>Please Select Responses for Party B Additions &amp; Removals</span>
+            <span ng-show="agreed" >(EDITED)</span>
+            <div class="pull-right">
+                <div class="btn" id="tiny-toolbar-rfa-ss"></div>
+                <button tooltip-html-unsafe="View RFA Document History" tooltip-placement="top" class="btn btn-default btn-action sprite-button-history" ng-click="viewRFADocumentHistory()"></button>
+                <a class="btn sprite-button-print" ng-click="print()"></a>
+                <a class="btn btn-success" ng-click="save()">Save</a>
+            </div>
+            <br>
+            <table class="error-box" ng-show="errorText.length">
+                <tr>
+                    <td class="error-sign">!</td>
+                    <td class="text">{{ errorText }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-12">
+            <!-- <div id="tiny-toolbar-rfa-ss"></div> -->
+    </div>
+    <div class="row col-xs-12">
+        <div class="col-xs-9">
+            <!-- <div class="frame-holder letter-preview"> -->
+                <mc-text-editor-s-s data-options="vm.editorOptions" data-editor-instance="vm.editorInstance"></mc-text-editor-s-s><br />
+                <!-- <html-render id="letterBody"></html-render> -->
+                <exhibit-table
+                    id="exhibit-table"
+                    data-data="data"
+                    queue-service="queueService"
+                ></exhibit-table>
+            <!-- </div> -->
+        </div>
+        <div class="text-editor col-xs-3">
+            <div class="sidebar"><div id="annotations-wrapper"><div class="annotations"></div></div><div class="lance-tmpl annotation-ui" tabindex="0"><div class="annotation-comments"></div><div class="annotation-tip"></div></div><div class="lance-tmpl comment-ui"><div class="comment-top"><div class="comment-avatar" style="display:inline-block;"></div><div class="comment-user-details"><div class="comment-user-name"></div><div class="comment-time-stamp"></div></div></div><div class="comment-body"><textarea class="comment-text autogrow-textarea" rows="1" placeholder="[[enter comment]]" readonly="readonly"></textarea><div class="comment-edit-links"><button class="comment-edit">[[edit]]</button><button class="comment-delete">[[delete]]</button><button data-lance-command="resolve">[[resolve]]</button></div><div class="comment-edit-controls"><button class="comment-edit-ok btn btn-small btn-info ">[[save]]</button><button class="comment-edit-cancel btn btn-small btn-info">[[cancel]]</button></div></div><textarea class="comment-reply-text autogrow-textarea" rows="1" placeholder="[[Reply to this comment]]" readonly="readonly"></textarea><div class="comment-controls"><button class="btn btn-small btn-info comment-ok">[[comment]]</button><button class="btn btn-small btn-info comment-cancel">[[cancel]]</button></div></div></div>
+    
+        </div>
+    </div>
+    <!-- <div class="row col-xs-12 pdf-content">
+        <div class="col-xs-12">
+            <div id="pdf-holder-wet"></div>
+        </div>
+    </div> -->
+
+    <div class="loading print-hide" ng-hide="loaded">
+        <i class="fa fa-circle-o-notch fa-spin"></i> {{ notificationText }}
+    </div>
+</div>

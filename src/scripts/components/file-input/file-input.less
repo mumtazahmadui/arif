@@ -1,0 +1,38 @@
+.upload-control{
+    display: table;
+
+    width: 100%;
+
+    .line{
+        display: table-row;
+    }
+
+    .browse{
+        display: table-cell;
+    }    
+    
+    input.upload-file{
+        display: none;
+    }
+
+    span.upload-file-name {
+        display: table-cell;
+        width: 100%;
+        padding-right: 10px;
+        vertical-align: top;
+        .content {
+            border: 1px solid black;
+            border-radius: 2px;
+            width: 100%;
+            padding: 8px 16px 7px;
+            display: inline-block;
+            line-height: 1.4;
+            &:empty:before {
+                content: "";
+                display: inline-block;
+            }
+        }
+    }
+
+}
+

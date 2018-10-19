@@ -1,0 +1,34 @@
+<div class="modal-edit-agreement-type">
+    <div ng-show="editAgrmntType.loading" class="modal-edit-agreement-type--loading"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</div>
+    <div class="modelHeader" style="padding: 15px;">
+            <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="editAgrmntType.cancel()">
+                    <span>x</span></button>
+        <h3 class="modal-title">Edit Agreement Type</h3>
+    </div>
+    <div class="modal-body">
+        <div class="col-xs-12 modal-edit-agreement-type--error" ng-if="editAgrmntType.errorOccurred" ng-bind="editAgrmntType.errorMsg"></div>
+        <div class="modal-edit-agreement-type_label col-xs-4">Select Agreement Type</div>
+        <div class="modal-edit-agreement-type_input col-xs-8">
+            <div class="dropdown" dropdown dropdown-toggle ng-click="editAgrmntType.getData()">
+                <a href class="dropdown-toggle word-wrap">
+                    <p class="margin-clear" ng-bind="editAgrmntType.agreementType.value">
+                    </p>
+                    <i class="fa fa-chevron-down select-chevron-down"></i>
+                </a>
+					<ul class="dropdown-menu big-dropdown">
+                        <li class="text-center" ng-show="!editAgrmntType.types.length">
+                            <h3 ng-show="!editAgrmntType.typesLoaded">&nbsp;<i
+                                    class="fa fa-circle-o-notch fa-spin"></i>Loading...</h3>
+                            </li>
+                            <li ng-repeat="choice in editAgrmntType.types">
+                                <a ng-click="editAgrmntType.select(choice)">{{choice.value}}</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-green" autofocus ng-click="editAgrmntType.cancel()">Cancel</button>
+        <button class="btn btn-lightgreen" ng-disabled="!editAgrmntType.changedType" ng-click="editAgrmntType.save()">Confirm</button>
+    </div>
+</div>

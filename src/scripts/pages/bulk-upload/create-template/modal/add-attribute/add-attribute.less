@@ -1,0 +1,20 @@
+.modal-add-attribute{
+    .button (@color, @color-hover) {
+        padding: 6px 16px;
+        border-radius: 2px;
+        min-width: 90px;
+        background-color: @color;
+        &:hover {
+          background-color: @color-hover;
+        }
+      }
+      .btn-primary {
+        .button(#045a8c, #033a5a);
+      }
+      .btn-success {
+        .button(#7fb74b, #66943b);
+        &:focus {
+          border-color: #4cae4c;
+        }
+    }
+}

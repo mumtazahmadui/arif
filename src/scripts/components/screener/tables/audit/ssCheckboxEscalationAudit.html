@@ -1,0 +1,15 @@
+
+<div class="{{content.class}}">
+    <u class="tootips-titile">Escalated:</u>
+    <ul class="list-unstyled border-btn">
+        <li ng-if="auditData.deskStatus">Escalated on {{auditData.actionDate}} by</li>
+        <li>{{auditData.actionedBy}}</li>
+        <li>Escalated to <br>
+            <li [ngStyle]="{'width': '30px'}" ng-repeat="(index,x) in auditData.escalatedTo track by $index">{{x}}{{$last ? '' : ', '}}</li>
+          <!--  <span [ngStyle]="{'width': '30px'}" ng-repeat="(index,x) in auditData.escalatedTo track by $index">{{x}}{{$last ? '' : ', '}}
+            <br ng-if="$index % 2">
+            </span> -->
+        </li>
+    </ul>
+    <!-- <p ng-if="auditData.data.length == 5 || auditData.data.length > 5">Detailed audit available in export</p> -->
+</div>

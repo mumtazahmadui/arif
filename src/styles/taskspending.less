@@ -1,0 +1,40 @@
+ tasks-pending {
+  cursor: pointer;
+
+  .task-pending-amount {
+    font-size: 3em;
+    text-align: right;
+    height: 60px;
+
+    &.danger{
+      color: @mcpm-danger-color;
+    }
+
+    &.warning{
+      color: @mcpm-warning-color;
+    }
+
+    &.success{
+      color: @mcpm-success-color;
+    }
+
+    &.primary{
+      color: #045a8c;
+    }
+  }
+
+  .task-pending-text {
+    font-size: 0.8em;
+    text-align: left;
+    color: @mcpm-disabled-color;
+    height: 60px;
+  }
+
+  span {
+    position: relative;
+    top: 50%;
+    display: inline-block;
+    transform: translateY(-50%);
+    text-transform: capitalize;
+  }
+}

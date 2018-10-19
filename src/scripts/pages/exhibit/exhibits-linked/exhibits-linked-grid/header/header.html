@@ -1,0 +1,8 @@
+<div class="col-xs-12">
+    <div class="attachment-columns" id="columns-editor">
+        <div ng-repeat="controlColumn in textEditorLinkedConfig.controlColumnsValues">
+            <p class="text-header" ng-show="controlColumn.headerText">{{controlColumn.headerText}}</p>
+            <exhibits-linked-grid-row control-column="controlColumn" last-editable-column="indexOfLastEditableColumn"></exhibits-linked-grid-row>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="modelHeader" style="padding: 15px;">
+    <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+        <span>x</span></button>
+    <h3 class="modal-title">Confirm RFA Deletion</h3>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label for="exampleFormControlTextarea2" style="margin-bottom: 15px;font-weight: 500;">
+            Selected RFA will be marked as ‘Deleted’. Please confirm.
+        </label>
+        <textarea class="form-control rounded-0" ng-style="{'border':data.reason.length==0||data.reason.length>2000?'1px solid #F44336':'1px solid green'}"
+            ng-model="data.reason" style="border-radius: 0px;background: #ecfaf3;padding: 3px 2px;" rows="3"
+            placeholder="Maximum 2000 characters"></textarea>
+        <small class="form-text text-muted">
+            <span>{{2000 - data.reason.length }}</span> character left
+        </small>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-green" autofocus ng-click="cancel()">Close</button>
+    <button class="btn btn-lightgreen" ng-disabled="data.reason.length==0||data.reason.length>2000 || confirm" ng-click="callDeleteRfa(data)">Confirm</button>
+</div>

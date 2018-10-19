@@ -1,0 +1,12 @@
+<div class="modelHeader" style="padding: 15px;">
+        <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+                <span>x</span></button>
+    <h3 class="modal-title">{{data.title}}</h3>
+</div>
+<div class="modal-body">
+    <p ng-if="!data.body.length">{{data.body}}</p>
+    <p ng-if="data.body.length" ng-repeat="error in data.body">{{error}}</p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-green" autofocus ng-click="$dismiss()">Close</button>
+</div>

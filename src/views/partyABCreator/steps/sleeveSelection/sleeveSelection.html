@@ -1,0 +1,88 @@
+<div class="modal-title" ng-if="inputData.flow === 'editSleeve'">
+    <h1>
+        Select Sleeve for Addition/Removal
+    </h1>
+</div>
+<div class="modal-body sleeves-selection">
+    <div class="text-center col-xs-12" ng-show="!inputData.availableSleeves.length && (ss.entityFilter=='')">
+        <h1><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</h1>
+    </div>
+    <div class="row" ng-show="inputData.availableSleeves.length>0 || ss.entityFilter.length>0">
+        <div class="available-sleeves">
+            <div class="title-heading">AVAILABLE SLEEVES FOR SELECTION</div>
+
+            <div class="framed blue-frame">
+                <div class="searchHolder">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <input type="text" class="form-control search input-sm"
+                           placeholder="Search Sleeves"
+                           taiplaceholder="Search Sleeves"
+                           ng-model="ss.entityFilter"
+                           ng-init="ss.entityFilter=''"
+                           ng-change="ss.loadSleeves(ss.entityFilter,1)">
+                </div>
+                <div class="column-headers">
+                    <div class="sleeve-name">True Legal Name</div>
+                    <div class="sleeve-client-id">Client Identifier</div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="long-holder fixed-size" slim-scroll settings="{height:'400px', showScrollOnStart: true}">
+                    <div class="scroll-area" id="partyB">
+                        <div class="available-party-b-item"
+                             ng-repeat="entity in inputData.availableSleeves"
+                             ng-if="inputData.ignoreSleeveIndex.indexOf(entity.id)<0">
+                            <span class="truncated pointer sleeve-name" title="{{entity.name}}">{{entity.name}}</span>
+                            <span class="truncated pointer sleeve-client-id" title="{{entity.clientIdentifier}}">{{entity.clientIdentifier}}</span>
+                            <a class="pull-right action" ng-click="ss.selectSleeve(entity, false)"><i class="glyphicon glyphicon-minus"></i></a>
+                            <a class="pull-right action" ng-click="ss.selectSleeve(entity, true)"><i class="glyphicon glyphicon-plus"></i></a>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="selected-sleeves">
+            <div class="title-heading">SLEEVE FOR ADDITION <i class="glyphicon glyphicon-plus info"></i></div>
+
+            <div class="short-holder framed">
+                <div class="scroll-area-small" slim-scroll settings="{showScrollOnStart: true}">
+                    <div class="available-party-b-item blue-frame"
+                         ng-repeat="entity in ss.getAdditionSleeves()">
+                        <div class="opacity50 three-pipes">|||</div>
+                        <div class="truncated pointer sleeve-name" title="{{entity.entity.trueLegalName}}">{{entity.entity.trueLegalName}}</div>
+                        <div class="truncated pointer sleeve-client-id" title="{{entity.entity.clientIdentifier}}">{{entity.entity.clientIdentifier}}</div>
+                        <a class="pull-right action" ng-click="ss.deselectSleeve(entity)">&times;</a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="title-heading">SLEEVE FOR REMOVAL <i class="glyphicon glyphicon-minus info"></i></div>
+
+            <div class="short-holder framed">
+                <div class="scroll-area-small" slim-scroll settings="{showScrollOnStart: true,alwaysVisible:true,}">
+                    <div class="available-party-b-item blue-frame" 
+                         ng-class="{'sleeve-auto-added':entity.autoAdded}"
+                         ng-repeat="entity in ss.getRemovalSleeves()">
+                        <div class="opacity50 three-pipes">|||</div>
+                        <div class="truncated pointer sleeve-name" title="{{entity.entity.trueLegalName}}">{{entity.entity.trueLegalName}}</div>
+                        <div class="truncated pointer sleeve-client-id" title="{{entity.entity.clientIdentifier}}">{{entity.entity.clientIdentifier}}</div>
+                        <a class="pull-right action" 
+                           ng-click="ss.deselectSleeve(entity, true)" 
+                           ng-if="!entity.autoAdded">&times;</a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-green" ng-click="ss.back()">Back</button>
+    <button class="btn btn-lightgreen" autofocus ng-click="ss.next()" ng-disabled="
+        !(inputData.selectPartyB | filter:{entity:{deleted:0}}).length && 
+        !(inputData.selectedSleeves | filter:{entity:{deleted:0}}).length
+    ">
+        Next
+    </button>
+</div>

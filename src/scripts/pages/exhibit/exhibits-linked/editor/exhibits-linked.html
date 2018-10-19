@@ -1,0 +1,51 @@
+<div class="linked-editor">
+    <div class="col-md-3 col-sm-12 col-xs-12 back">
+        <a ng-click="linkTo('/rfa/company/amendmentLetter')" class="a-green">&larr; Back to Dashboard</a>
+
+        <h1 class="col-md-12"> {{name}} </h1>
+    </div>
+    <div class="col-md-4 col-xs-12 top-margin">
+        <h3>Guidance</h3>
+        <ul class="txt-guide">
+            <li ng-repeat="item in legend">{{item}}</li>
+        </ul>
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-12">
+        <quick-links></quick-links>
+    </div>
+    <div class="text-editor">
+        <div class="row col-xs-12">
+            <div class="text-editor row col-xs-12">
+                    <div class="text-formating-tools panel hidden-print" id="toolbar">
+                            <div class="row">
+                                <div class="col-lg-10 col-md-10 col-xs-10">
+                                    <div class="form-inline commands">
+                                    <span class="text-formating-tools-span">
+                                        <!-- <mc-text-editor-toolbar-standard/> -->
+                                        <div id="tiny-toolbar-ex"></div>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-xs-2 pull-right text-right">
+                                    <button type="button" ng-click="exhsLinkCtrl.save()" class="btn btn-green">Save</button>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            <div class="row col-xs-9">
+                <mc-text-editor data-options="exhsLinkCtrl.editorOptions" data-editor-instance="exhsLinkCtrl.editorInstance">
+                </mc-text-editor>
+            </div>
+            <div class="row col-xs-3">
+                <div class="sidebar"><div id="annotations-wrapper"><div class="annotations"></div></div><div class="lance-tmpl annotation-ui" tabindex="0"><div class="annotation-comments"></div><div class="annotation-tip"></div></div><div class="lance-tmpl comment-ui"><div class="comment-top"><div class="comment-avatar" style="display:inline-block;"></div><div class="comment-user-details"><div class="comment-user-name"></div><div class="comment-time-stamp"></div></div></div><div class="comment-body"><textarea class="comment-text autogrow-textarea" rows="1" placeholder="[[enter comment]]" readonly="readonly"></textarea><div class="comment-edit-links"><button class="comment-edit">[[edit]]</button><button class="comment-delete">[[delete]]</button><button data-lance-command="resolve">[[resolve]]</button></div><div class="comment-edit-controls"><button class="comment-edit-ok btn btn-small btn-info ">[[save]]</button><button class="comment-edit-cancel btn btn-small btn-info">[[cancel]]</button></div></div><textarea class="comment-reply-text autogrow-textarea" rows="1" placeholder="[[Reply to this comment]]" readonly="readonly"></textarea><div class="comment-controls"><button class="btn btn-success comment-ok">[[comment]]</button><button class="btn btn-success comment-cancel">[[cancel]]</button></div></div></div>
+            </div>
+        </div>
+        <form name="exhLinkedForm" novalidate>
+            <div class="error-holder">
+                <span ng-if="invalid && !exhLinkedForm.$valid" class="fill-tables-error nga-default nga-stagger nga-slide-up">Please fill all of cells</span>
+            </div>
+            <exhibits-linked-grid-header></exhibits-linked-grid-header>
+        </form>
+        <loader is-show="isShowLoader" notification-text="notificationText"></loader>
+    </div>
+</div>

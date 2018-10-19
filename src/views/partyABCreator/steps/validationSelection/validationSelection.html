@@ -1,0 +1,56 @@
+<div class="modal-body">
+
+    <div class="error-box" ng-if="vs.validationFailed">
+        <a ng-href="{{vs.validationErrorFile}}" target="_blank">
+			<span class="error-sign">
+				!
+			</span>
+            Please review the Error Report PDF to fix the error <span class="file-icon file-icon-sm" data-type="pdf"></span>
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="title-heading">PARTY B FOR ADDITION <strong class="text-success action">+</strong></div>
+            <div class="max400" slim-scroll settings='{height:"300px",alwaysVisible:true, showScrollOnStart: true}'>
+                <div class="step3-items" ng-repeat="entity in vs.getAdditionEntities()" ng-if="!entity.deleted">
+                    <span class="icon-sleeve" ng-if="entity.entity.isSleeve"></span>{{entity.entity.name | limitTo: 30}}{{entity.entity.name.length
+                    > 30 ? '...' : ''}}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="title-heading">PARTY B FOR REMOVAL <strong class="text-danger action">-</strong></div>
+            <div class="max400" slim-scroll settings='{height:"300px",alwaysVisible:true, showScrollOnStart: true}'>
+                <div class="step3-items" ng-repeat="entity in vs.getRemovalEntities()" ng-if="!entity.deleted">
+                    <span class="icon-sleeve" ng-if="entity.entity.isSleeve"></span>{{entity.entity.name | limitTo: 25}}{{entity.entity.name.length
+                    > 25 ? '...' : ''}}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4" style="padding: 0px;">
+            <div class="title-heading">PARTY B FOR MODIFICATION <strong class="text-danger action">M</strong></div>
+            <div class="max400" slim-scroll settings='{height:"300px",alwaysVisible:true, showScrollOnStart: true}'>
+                <div class="step3-items" ng-repeat="entity in inputData.selectPartyB | filter: vs.filterModification" ng-if="!entity.deleted">
+                    <span class="icon-sleeve" ng-if="entity.entity.isSleeve"></span>{{entity.entity.name | limitTo: 25}}{{entity.entity.name.length
+                    > 25 ? '...' : ''}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div ng-show="!vs.validationFailed">
+            <button class="btn btn-green" autofocus ng-click="vs.back()" ng-disabled="!vs.loaded">Back</button>
+            <button class="btn btn-lightgreen" ng-disabled="unableToSave() || !vs.loaded"
+                ng-click="vs.validateRFA()">Validate &amp; Save</button>
+        </div>
+
+        <div ng-if="vs.validationFailed">
+            <span ng-show="waiting"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</span>
+            <button class="btn btn-green" autofocus ng-click="vs.back('Party A (Dealer) Selection')" ng-disabled="inputData.flow=='editB'">Edit Party A Selection</button>
+            <button class="btn btn-green" autofocus ng-click="vs.back('Party B (Entity) Selection')">Edit Party B Selection</button>
+            <button class="btn btn-lightgreen" ng-click="vs.close()">Close</button>
+        </div>
+    </div>
+</div>

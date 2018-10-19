@@ -1,0 +1,51 @@
+<div class="table-contayner masterlist-screener">
+    <table class="table table-hover table-master-list" ng-if="!data.loading">
+        <thead>
+        <tr>
+            <th class="text-left">Masterlist Identifier</th>
+            <th class="text-left">Agreement type</th>
+            <th class="text-left">Reference Master Agreement Date</th>
+            <th class="text-left">Investment Manager</th>
+            <th class="text-left">Party A</th>
+            <th class="text-left">Last Update</th>
+            <th class="text-left">View Masterlist</th>
+            <th class="text-left">MCPM Party B Mapping</th>
+            <th class="text-left">Masterlist Template Name</th>
+            <th class="text-left col-space2">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in data.table.data.dataList | limitTo:data.pages.items_per_page">
+            <td class="text-left" title="{{item.masterlistIdentifier}}">{{item.masterlistIdentifier | truncate:20}}</td>
+            <td class="text-left" title="{{item.agreementType}}">{{item.agreementType | truncate:20}}</td>
+            <td class="text-left">{{item.masterAgreementDate | date : 'dd-MMM-yyyy'}}</td>
+            <td class="text-left" title="{{item.investmentManager}}">{{item.investmentManager | truncate:25}}</td>
+            <td class="text-left" title="{{item.partyA}}">{{item.partyA | truncate:25}}</td>
+            <td class="text-left">{{item.lastUpdate | date : 'dd-MMM-yyyy'}}</td>
+            <td class="text-left">
+                <a title="View Master List" class="btn btn-default btn-action sprite-file-xcl margin-left-10percent" ng-click="call('exportXCL', {fileId : item.id})"></a>
+            </td>
+            <td class="text-left">
+                <a title="MCPM Party B Mapping" class="btn btn-default btn-action sprite-file-xcl margin-left-10percent" ng-click="call('exportPartyBMap', {fileId : item.id})"></a>
+            </td>
+            <td class="text-left" title="{{item.masterlistTemplateName}}">{{item.masterlistTemplateName | truncate:20}}</td>
+            <td class="text-left masterlist-screener_cell_actions">
+                <div class="masterlist-screener_cell_actions_container">
+                    <button ng-if="item.isDeletable" title="Delete masterlist"
+                            class="btn btn-default btn-action sprite-button-remove"
+                            ng-click="call('removeMasterlist', {id: item.id, name: item.masterlistIdentifier})"></button>
+                </div>
+                <button ng-if="::hasPermissions('ops.edit')" title="Edit Agreement Type"
+                        ng-click="call('editAgreementType', {id: item.id, agreementType: {value: item.agreementType, id: item.agreementTypeId}})"
+                        class="btn btn-default btn-action sprite-button-edit"></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="table-loader" ng-if="data.loading">
+        <span><i class="fa fa-spin fa-circle-o-notch"></i> Loading...</span>
+    </div>
+    <div class="table-no-results" ng-if="data.table.data.dataList.length == 0 && !data.loading">
+        <span>No search results found for this query.</span>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="modal-body">
+    <div class="row tight-fix header">
+        <div class="col-xs-3"> RFA ID</div>
+        <div class="col-xs-3">Counterparty True Legal Name</div>
+        <div class="col-xs-3">Masterlist Identifier</div>
+        <div class="col-xs-3 text-left">Reference Master Agreement Date</div>
+    </div>
+
+    <div class="text-center col-xs-12" ng-show="inputData.savedRFA.length<=0">
+        <h1 ng-show="!ds.loaded"><i class="fa fa-circle-o-notch fa-spin"></i>Saving...</h1>
+        <h1 ng-show="ds.loaded"><i class="fa fa-exclamation-triangle"></i>There is no RFA available</h1>
+    </div>
+
+    <div class="long-holder">
+        <div class="scroll-area-blue">
+            <div class="row step2-items" ng-repeat="entity in inputData.savedRFA" ng-show="!entity.deleted">
+                <div class="col-xs-3 long-holder">{{ entity.id }}</div>
+                <div class="col-xs-3 long-holder break-text">{{ entity.masterAgreement.partyA.trueLegalName }}</div>
+                <div class="col-xs-3 long-holder break-text">{{ entity.masterAgreement.masterlistIdentifier }}</div>
+                <div class="col-xs-3 text-left">{{ entity.masterAgreement.agreementDate| date : 'dd-MMM-yyyy'}}</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <span ng-show="!ds.loaded"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</span>
+    <button class="btn btn-green" autofocus ng-click="ds.next()" ng-disabled="!ds.loaded">Close</button>
+    <!--<button class="btn btn-success" ng-click="goToStep(step+1)" ng-disabled="savedRFA.length<=0 || loaded">Link Exhibit</button>-->
+</div>

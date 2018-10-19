@@ -1,0 +1,11 @@
+<div class="partyAB modal-rfa">
+    <div class="modal-header">
+        <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()"><span>x</span></button>
+        <h3 class="modal-title">{{stepTilte}}</h3>
+
+    </div>
+    <div class="progressholder" ng-show="pab.inputData.flow=='a' || pab.inputData.flow=='b' || pab.inputData.flow=='sleeves'">
+        <utils-scorecard steps="pab.routes"></utils-scorecard>
+    </div>
+    <section class='modal-step' ng-if="pab.stepData" html-compile="pab.stepData.template"></section>
+</div>

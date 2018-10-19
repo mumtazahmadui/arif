@@ -1,0 +1,1087 @@
+
+<div class="table-container">
+    <table class="table table-responsive table-rfa" ng-if="!data.loading">
+        <thead class="light-gray">
+            <tr>
+                <td rowspan="2">&nbsp;</td>
+                <td rowspan="2">RFA ID</td>
+                <td rowspan="2" class="col-space1">Ref. Master<br>Agree Date</td>
+                <td rowspan="2" class="col-space3" ng-if="data.credentials.companyType == 'SS'">Investment<br>Manager</td>
+                <td rowspan="2" class="col-space3">Masterlist Identifier -<br>Agreement Type</td>
+                <td rowspan="2" class="col-space1" ng-if="data.credentials.companyType == 'BS'">Party A</td>
+                <td rowspan="2" class="col-space1">
+                    <span ng-if="data.credentials.companyType == 'BS'">Party B<br />Requested</span>
+                    <span ng-if="data.credentials.companyType == 'SS'"> Party B<br />Account</span>
+                </td>
+                <td rowspan="1" colspan="4" class="col-border">
+                    <div class="text-center"><strong>Party B Actioned</strong></div>
+                </td>
+                <td rowspan="2" class="padd_left5">Request<br />Status</td>
+                <td rowspan="2">
+                    <span ng-if="data.credentials.companyType == 'BS'">Submitted<br />Date</span>
+                    <span ng-if="data.credentials.companyType == 'SS'">Received<br />Date</span>
+                </td>
+                <td rowspan="2" ng-if="data.credentials.companyType == 'BS'">My Status</td>
+                <td rowspan="2">Next Step</td>
+                <td rowspan="2">Wet Sign<br />Status </td>
+                <td rowspan="2" class="col-space1">Actions</td>
+                <td rowspan="2">
+                    <div class="col-space0">
+                        <a href ng-click="screenerCtrl.toggleAll()">{{screenerCtrl.allSelected?'Deselect All':'Select
+                            All'}}</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <table class="table-action">
+                        <tr>
+                            <td>Accepted</td>
+                            <td>Rejected</td>
+                            <td>Pending</td>
+                            <td>Withdrawn</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </thead>
+
+        <tbody ng-repeat="(index,request) in data.table.data.dataList | limitTo:data.pages.items_per_page">
+            <tr class="header-row">
+                <td ng-if="PartyBFilter == 'yes'" class="collapse-btn accordion-toggle" data-toggle="collapse" role="button"
+                    aria-expanded="true" data-target="#collapse_{{index}}" href="#collapse_{{index}}" aria-controls="collapse_{{index}}"></td>
+                <td ng-if="PartyBFilter == 'no'" class="collapse-btn accordion-toggle" data-toggle="collapse" role="button"
+                    aria-expanded="false" data-target="#collapse_{{index}}" href="#collapse_{{index}}" aria-controls="collapse_{{index}}"></td>
+                <td class="text-left rfa-id">
+                    <a ng-click="call('open', {id: request.id, fileId : request.fileId})"
+                        class="word-break-keep-all" target="blank" title="{{request.id}}">{{request.id}}
+                    </a>
+                    <span ng-if="request.signDisabled && request.nextActions.eSign" ready-execute-tooltip-compile="{{data.credentials.companyType}}"
+                       tooltip-placement="right" style="color: red;font-weight: 700;">!</span>
+                    </td>
+                <td class="text-left ref-master-agree-date" title=">{{request.masterAgreement.agreementDate | date : 'dd-MMM-yyyy'}}">{{request.masterAgreement.agreementDate
+                    | date : 'dd-MMM-yyyy'}}</td>
+                <td class="investment-manager" ng-if="data.credentials.companyType == 'SS'">
+                    <div class="col-spaceblock" title="{{request.masterAgreement.investmentManager.trueLegalName || request.masterAgreement.investmentManager.name}}">
+                        {{(request.masterAgreement.investmentManager.trueLegalName ||
+                        request.masterAgreement.investmentManager.name)}}
+                    </div>
+                </td>
+                <td class="masterlist-identifier-agree-type">
+                    <div class="col-spaceblock" title="{{request.masterAgreement.masterlistIdentifierAgreementType}}">{{(request.masterAgreement.masterlistIdentifierAgreementType
+                        || '') | truncate:30}} </div>
+                </td>
+                <td class="party-a" ng-if="data.credentials.companyType == 'BS'">
+                    <div class="col-spaceblock" title="{{request.masterAgreement.partyA.name}}">
+                        {{request.masterAgreement.partyA.name | truncate:30}}</div>
+                </td>
+                <td class="text-left longtooltips party-b-request">
+                    <a href="" tooltip-compile="{'template': 'tooltips\/partyBRequestedAdded', 'class': 'partyTooltip', 'data': {{toStringJson(request.partyBAdded)}} }"
+                        class="badge badge-add" ng-class="{'badge-add-null' : request.partyBAdded.length == 0}"
+                        ng-disabled="request.partyBAdded.length == 0">{{request.partyBAdded.length}}</a>
+                    <a href="" tooltip-compile="{'template': 'tooltips\/partyBRequestedRemoved', 'class': 'partyTooltip', 'data': {{toStringJson(request.partyBRemoved)}} }"
+                        class="badge badge-remove" ng-class="{'badge-remove-null' : request.partyBRemoved.length == 0}"
+                        ng-disabled="request.partyBRemoved.length == 0">{{request.partyBRemoved.length}}</a>
+                    <a href="" tooltip-compile="{'template': 'tooltips\/partyBRequestedModification', 'class': 'partyTooltip', 'data': {{toStringJson(request.partyBModification)}} }"
+                        class="badge badge-modification" ng-class="{'badge-modification-null' : !request.partyBModification.length}"
+                        ng-disabled="!request.partyBModification.length">{{request.partyBModification.length}}</a>
+                </td>
+                <td colspan="4">
+                    <table class="table-action">
+                        <tr>
+                            <td><a href="" tooltip-compile="{'template': 'tooltips\/partyBRequestedAccepted', 'class': 'partyTooltip', 'data': {{toStringJson(request.partyBAccepted)}} }"
+                                    class="badge badge-accepted" ng-class="{'badge-accepted-null' : request.partyBAccepted.length == 0}"
+                                    ng-disabled="request.partyBAccepted.length == 0">{{request.partyBAccepted.length}}</a></td>
+                            <td><a href="" tooltip-compile="{'template': 'tooltips\/partyBRequestedRejected', 'class': 'partyTooltip', 'data': {{toStringJson(request.partyBRejected)}} }"
+                                    class="badge badge-rejected" ng-class="{'badge-rejected-null' : request.partyBRejected.length == 0}"
+                                    ng-disabled="request.partyBRejected.length == 0">{{request.partyBRejected.length}}</a></td>
+                            <td><a href="" tooltip-compile="{'template': 'tooltips\/partyBRequestedPending', 'class': 'partyTooltip', 'data': {{toStringJson(request.partyBPending)}} }"
+                                    class="badge badge-pending" ng-class="{'badge-pending-null' : request.partyBPending.length == 0}"
+                                    ng-disabled="request.partyBPending.length == 0">{{request.partyBPending.length}}</a></td>
+                            <td><a href="" tooltip-compile="{'template': 'tooltips\/partyBRequestedWithdrawn', 'class': 'partyTooltip', 'data': {{toStringJson(request.partyBWithdrawn)}} }"
+                                    class="badge badge-withdrawn" ng-class="{'badge-withdrawn-null' : request.partyBWithdrawn.length == 0}"
+                                    ng-disabled="request.partyBWithdrawn.length == 0">{{request.partyBWithdrawn.length}}</a></td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="text-left status"><span>{{request.amendmentStatus.displayName}}</span></td>
+                <td class="text-left">{{request.submitedDate | date : 'dd-MMM-yyyy'}}</td>
+                <td class="my-status text-center bslegal" ng-if="data.credentials.companyType == 'BS'">
+                    <button ng-class="request.amendmentDeskOneStatus ? 'btn-check-status' : 'btn-uncheck-status'"
+                        ng-click="call('legalStatus', {grid:data.table.data,index:index})" tooltip-placement="bottom"
+                        tooltip-popup-delay='1000' audit-legal-tooltip-compile="{'template': 'audit\/bsRfalevelCheckboxAudit', 'class': 'audit-checkbox','data': {{toStringJson(request.id)}},'deskCode': 'BS-D1'}">{{mystatus.getDesk1Index}}</button>
+                    <button ng-class="request.amendmentDeskTwoStatus ? 'btn-check-status' : 'btn-uncheck-status'"
+                        ng-click="call('managerStatus', {grid:data.table.data,index:index})" tooltip-placement="bottom"
+                        tooltip-popup-delay='1000' audit-manager-tooltip-compile="{'template': 'audit\/bsRfalevelCheckboxAudit', 'class': 'audit-checkbox','data': {{toStringJson(request.id)}},'deskCode': 'BS-D2'}">{{mystatus.getDesk2Index}}</button>
+                </td>
+                <td class="next-step">
+                    <span ng-if="request.nextActions.eSign && data.credentials.companyType == 'SS' && request.amendmentStatus.trueName !='Deleted'" ng-hide="!hasPermissions('ss.rfa.signatory') && (hasPermissions('ss.rfa') || hasPermissions('ss.rfa.read')) || request.amendmentStatus.displayName === 'Completed'">
+                        <button ng-if="request.nextActions.eSign && request.eSigncount == '00' && !request.signDisabled" tooltip-html-unsafe="{{request.nextActions.esignHover.signedCount == '0' ? 'E-Sign' : request.nextActions.esignHover.signedCount + ' of '+ request.nextActions.esignHover.totalCount + ' signature placeholders signed'}}"
+                            class="btn button-sign" ng-click="call('eSign', {id: request.id, fileId: request.fileId})">
+                            <p class="sign-count">{{request.eSigncount}}</p>
+                        </button>
+                        <button ng-if="request.nextActions.eSign && request.eSigncount != 00 && !request.signDisabled"  esign-tooltip-compile="{'class': 'esign-checkbox', 'data': {{toStringJson(request.eSignHoverMetadata || [])}},'deskCode':'onboarding_Escalation'}"
+                            tooltip-placement="{{placementTooltips(index,data.pages.items_per_page)}}"
+                            tooltip-popup-delay='0' class="btn button-sign" ng-click="call('eSign', {id: request.id, fileId: request.fileId})">
+                            <p class="sign-count">{{request.eSigncount}}</p>
+                        </button>
+                        <button ng-if="request.nextActions.eSign && request.signDisabled" esign-tooltip-compile="{'class': 'esign-checkbox', 'data': {{toStringJson(request.eSignHoverMetadata || [])}},'deskCode':'onboarding_Escalation'}"
+                            tooltip-placement="{{placementTooltips(index,data.pages.items_per_page)}}"
+                            tooltip-popup-delay='0' disabled class="btn button-esign-dis" ng-click="call('eSign', {id: request.id, fileId: request.fileId})">
+                            <p class="sign-count inactiveLink">00</p>
+                        </button>
+                    </span>
+                    <span ng-if="request.nextActions.eSign && data.credentials.companyType == 'SS' && request.amendmentStatus.trueName !='Deleted'" ng-hide="!hasPermissions('ss.rfa.signatory') && (hasPermissions('ss.rfa') || hasPermissions('ss.rfa.read')) || request.amendmentStatus.displayName === 'Completed'">
+                        <button ng-if="request.nextActions.eSign && request.wSignCount == '00' && !request.signDisabled" tooltip-html-unsafe="Wet Sign"
+                            class="btn button-sign button-sign-1" ng-click="call('eSign', {id: request.id, fileId: request.fileId})">
+                            <p class="sign-count">{{request.wSignCount}}</p>
+                        </button>
+                        <button ng-if="request.nextActions.eSign && request.wSignCount != '00' && !request.signDisabled" wetsign-tooltip-compile="{'class': 'wetsign-checkbox', 'data': {{toStringJson(request.wSignHoverMetadata || [])}},'deskCode':'onboarding_Escalation'}"
+                            tooltip-placement="{{placementTooltips(index,data.pages.items_per_page)}}"
+                            tooltip-popup-delay='0' class="btn button-sign button-sign-1" ng-click="call('eSign', {id: request.id, fileId: request.fileId})">
+                            <p class="sign-count">{{request.wSignCount}}</p>
+                        </button>
+                        <button ng-if="request.nextActions.eSign  && request.signDisabled" 
+                        wetsign-tooltip-compile="{'class': 'wetsign-checkbox', 'data': {{toStringJson(request.wSignHoverMetadata || [])}},'deskCode':'onboarding_Escalation'}"
+                            tooltip-placement="{{placementTooltips(index,data.pages.items_per_page)}}"
+                            tooltip-popup-delay='0' class="btn button-wsign-dis" disabled ng-click="call('eSign', {id: request.id, fileId: request.fileId})">
+                            <p class="sign-count inactiveLink">00</p>
+                        </button>
+                    </span>
+                    <span ng-hide="(!hasPermissions('bs.rfa.signatory') || request.amendmentStatus.displayName === 'Completed') && request.amendmentStatus.trueName !='Deleted'">
+                        <button ng-if="request.nextActions.eSign && request.eSigncount == '00'" tooltip-html-unsafe="{{request.nextActions.esignHover.signedCount == '0' ? 'E-Sign' : request.nextActions.esignHover.signedCount + ' of '+ request.nextActions.esignHover.totalCount + ' signature placeholders signed'}}"
+                            class="btn button-sign" ng-click="call('eSign', {id: request.id, fileId: request.fileId})">
+                            <p class="sign-count">{{request.eSigncount}}</p>
+                        </button>
+                        <button ng-if="request.nextActions.eSign && request.eSigncount != 00" esign-tooltip-compile="{'class': 'esign-checkbox', 'data': {{toStringJson(request.eSignHoverMetadata || [])}},'deskCode':'onboarding_Escalation'}"
+                            tooltip-placement="{{placementTooltips(index,data.pages.items_per_page)}}"
+                            tooltip-popup-delay='0' class="btn button-sign" ng-click="call('eSign', {id: request.id, fileId: request.fileId})">
+                            <p class="sign-count">{{request.eSigncount}}</p>
+                        </button>
+                    </span>
+                    <span ng-hide="(!hasPermissions('bs.rfa.signatory') || request.amendmentStatus.displayName === 'Completed') && request.amendmentStatus.trueName !='Deleted'">
+                        <button ng-if="request.nextActions.eSign && request.wSignCount == '00'" tooltip-html-unsafe="Wet Sign"
+                            class="btn button-sign button-sign-1" ng-click="call('eSign', {id: request.id, fileId: request.fileId})">
+                            <p class="sign-count">{{request.wSignCount}}</p>
+                        </button>
+                        <button ng-if="request.nextActions.eSign && request.wSignCount != '00'" wetsign-tooltip-compile="{'class': 'wetsign-checkbox', 'data': {{toStringJson(request.wSignHoverMetadata || [])}},'deskCode':'onboarding_Escalation'}"
+                            tooltip-placement="{{placementTooltips(index,data.pages.items_per_page)}}"
+                            tooltip-popup-delay='0' class="btn button-sign button-sign-1" ng-click="call('eSign', {id: request.id, fileId: request.fileId})">
+                            <p class="sign-count">{{request.wSignCount}}</p>
+                        </button>
+                    </span>
+                    <button tooltip-html-unsafe="{{'Edit Linked Exhibit'}}" ng-if="request.nextActions.editLinkedExhibit && request.amendmentStatus.trueName !='Deleted'"
+                        class="btn btn-default sprite-button-link_editrfa" ng-click="call('editLinkedExhibit', {id: request.id, exhibitId: request.exhibit.id})"></button>
+                    <button tooltip-html-unsafe="{{'Edit Response'}}" ng-if="request.nextActions.responsePending && request.amendmentStatus.trueName !='Deleted'"
+                        ng-disabled="hasPermissions('ss.rfa.read') && !(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory'))"
+                        class="btn btn-default sprite-button-response-bluerfa" ng-click="call('editResponse', {id: request.id, exhibitId: request.exhibit.id})"></button>
+                    <button ng-if="request.nextActions.editRFA && request.amendmentStatus.trueName !='Deleted'" class="btn btn-default sprite-button-edit-rfa" ng-click="call('editRFA', {id: request.id})"></button>
+                </td>
+                <td class="wet-sign-status"> 
+                    <span ng-if="request.amendmentStatus.trueName =='Deleted'"><Strong>---</Strong></span>
+                    <span ng-if="request.amendmentStatus.trueName !='Deleted'" tooltip-placement="{{tooltipAudit.placement}}" tooltip-popup-delay='{{tooltipAudit.delay}}'
+                        wetsign-tooltip-compile="{'class': 'wetsign-checkbox','data': {{toStringJson(request.wSignHoverMetadata || [])}},'deskCode':'onboarding_Escalation'}">{{request.wSignStatus}}</span></td>
+                <td>
+                    <div class="actions_view">
+                        <button tooltip-html-unsafe="{{'Edit Request for Amendment'}}" tooltip-placement="left" ng-if="request.nextActions.editAmendment && request.amendmentStatus.trueName !='Deleted'"
+                            class="btn btn-default btn-action sprite-button-editrfa" ng-click="call('editAmendment', {id: request.id, exhibitId: request.exhibit.id})"></button>
+                        <button tooltip-html-unsafe="{{'Edit Linked Exhibit'}}" ng-if="request.nextActions.editLinkedExhibitAction && data.credentials.companyType == 'BS' && request.amendmentStatus.trueName !='Deleted'"
+                            class="btn btn-default sprite-button-link_edit_actionrfa" ng-click="call('editLinkedExhibit', {id: request.id, exhibitId: request.exhibit.id})"></button>
+                        <button tooltip-html-unsafe="{{'Edit Response'}}" ng-disabled="data.credentials.companyType == 'SS' && hasPermissions('ss.rfa.read') && !(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory'))"
+                            tooltip-placement="left" ng-if="request.nextActions.responsePendingActions && request.amendmentStatus.trueName !='Deleted' " class="btn btn-default btn-action sprite-button-editrfa"
+                            ng-click="call('editResponse', {id: request.id, exhibitId: request.exhibit.id})"></button>
+                        <button tooltip-html-unsafe="{{'Link Exhibit'}}" tooltip-placement="left" ng-if="data.credentials.companyType == 'SS' && request.nextActions.linkExhibit && request.amendmentStatus.trueName !='Deleted'"
+                            class="btn btn-default btn-action sprite-button-link" ng-click="call('linkExhibit', {id: request.id})"></button>
+                        <!-- Force show Document History icon :: Hint: using true in ng-if -->
+                        <button tooltip-html-unsafe="{{'View RFA Document History'}}" tooltip-placement="left" ng-if="true || request.nextActions.viewHistory"
+                            class="btn btn-default btn-action sprite-button-historyrfa" ng-click="call('rfaHistory', {id: request.id})"></button>
+                        <button tooltip-html-unsafe="{{'Recall Request for Amendment'}}" tooltip-placement="left" ng-if="request.nextActions.recallAmendment && request.amendmentStatus.trueName !='Deleted'"
+                            class="btn btn-default btn-action sprite-button-recallrfa" ng-click="call('recallConfirmation', {id: request.id, name: request.name})"></button>
+                        <button tooltip-html-unsafe="{{'Withdraw Party B Accounts'}}" tooltip-placement="left" ng-if="request.nextActions.withdrawPartyB && request.amendmentStatus.trueName !='Deleted'"
+                            class="btn btn-default btn-action sprite-button-withdraw" ng-click="call('withdrawn', {id: request.id, data: request.partyBPending})"></button>
+                        <button tooltip-html-unsafe="{{'Reject RFA'}}" ng-disabled="hasPermissions('ss.rfa.read') && !(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory'))"
+                            tooltip-placement="left" ng-if="request.nextActions.rejectRFA && request.amendmentStatus.trueName !='Deleted'" class="btn btn-default btn-action sprite-button-rejectrfa"
+                            ng-click="call('rejectRFAReasonPopup', {id: request.id})"></button>
+                        <button tooltip-html-unsafe="{{'Send RFA'}}" ng-disabled="hasPermissions('ss.rfa.read') && !(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory'))"
+                            tooltip-placement="left" ng-if="request.nextActions.sendRFA && request.amendmentStatus.trueName !='Deleted' " class="btn btn-default btn-action sprite-button-sendrfa"
+                            ng-click="call('sendRFA', {id: request.id})"> </button>
+                        <a tooltip-html-unsafe="{{'On-Boarding Document'}}" tooltip-placement="left" ng-href="javascript:MUFETools_SwitchApp('MDE.MDE.Welcome?source=RFA&amp;page=counterpartyDocuments&amp;amendmentId={{request.id}}')"
+                            ng-if="request.nextActions.documentLink && request.amendmentStatus.trueName !='Deleted'" class="btn sprite-button-documentrfa"> </a>
+                            <button tooltip-html-unsafe="{{'Delete RFA'}}" tooltip-placement="left" ng-if="(request.amendmentStatus.trueName=='Draft' || request.amendmentStatus.trueName=='Recalled') && data.credentials.companyType == 'BS'"
+                            class="btn btn-default btn-action sprite-button-rfadelete" ng-click="call('deleterfa', {id: request.id, exhibitId: request.exhibit.id})"></button>
+                        
+                    </div>
+                </td>
+                <td>
+                    <div class="selected" style="margin-top:7px; padding-left: 4px;">
+                        <label><input type="checkbox" ng-checked="request.selected" ng-disabled="request.amendmentStatus.trueName =='Deleted' " ng-click="screenerCtrl.toogleRow(request)"
+                                class="checkbox"><span></span></label>
+                    </div>
+                </td>
+            </tr>
+            <tr id="collapse_{{index}}" class="collapse-table" ng-class="PartyBFilter === 'yes' ? 'collapse in' : 'collapse'">
+                <td>&nbsp;</td>
+                <td colspan="{{data.credentials.companyType == 'BS' ? 16 : 15}}">
+                    <table class="table table-responsive dd-grid-table">
+                        <thead class="collapse-head">
+                            <tr>
+                                <td width="12%" class="paddleft">
+                                    <div class="dd-wrap">Party B <br> True/Legal Name</div>
+                                </td>
+                                <td width="10%">
+                                    <div class="dd-wrap">Party B Client<br>Identifier</div>
+                                </td>
+                                <td width="8%">
+                                    <div class="dd-wrap">Request<br>Type</div>
+                                </td>
+                                <td width="7%">
+                                    <div class="dd-wrap">
+                                    <span ng-if="data.credentials.companyType == 'BS'">Dealer</span>
+                                    <span ng-if="data.credentials.companyType == 'SS'">My</span>
+                                    <br>Action</div>
+                                </td>
+                                <td colspan="6" class="table-inn-dark" width="{{data.credentials.companyType == 'BS' ? '50%' : '60%'}}">
+                                    <table class="table table-responsive table-inner border-left">
+                                        <tr ng-if="data.credentials.companyType == 'BS'">
+                                            <td class="text-center heading border-bottom" colspan="7">
+                                                <strong class="blackcolor">CPTY Status</strong>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="data.credentials.companyType == 'SS'">
+                                            <td class="text-center heading border-bottom border-right" colspan="7">
+                                                <strong class="blackcolor">My Status</strong>
+                                            </td>
+                                        </tr>
+                                        <!-- MyStatus Internal workflow Checkbox Header -->
+                                        <tr ng-if="data.credentials.companyType == 'SS'">
+                                            <!-- ON Boarding Header Details-->
+                                            <td class="border-right paddleft" width="16%">
+                                                <span>Onboarding</span>
+                                                <div class="audit-row dd-grid-inn">
+                                                    <div class="blankDiv">
+                                                        <input ng-disabled="true" class="checkbox-audit" type="checkbox" />
+                                                        <span class="checked-1"></span>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">N</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' || request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.onboarding_Notified"
+                                                                ng-checked="request.partyBEntities.onboarding_Notified"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'onboarding_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">P</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' || request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.onboarding_InProgress"
+                                                                ng-checked="request.partyBEntities.onboarding_InProgress"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'onboarding_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">C</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' || request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.onboarding_Completed"
+                                                                ng-checked="request.partyBEntities.onboarding_Completed"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'onboarding_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- KYC Header Inner Details -->
+                                            <td class="border-right" width="14%">
+                                                KYC
+                                                <div class="audit-row dd-grid-inn">
+                                                    <div class="blankDiv">&nbsp;</div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">N</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.kyc_Notified"
+                                                                ng-checked="request.partyBEntities.kyc_Notified"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'kyc_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">P</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.kyc_InProgress"
+                                                                ng-checked="request.partyBEntities.kyc_InProgress"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'kyc_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">C</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.kyc_Completed"
+                                                                ng-checked="request.partyBEntities.kyc_Completed"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'kyc_Completed', (request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- TAX Header Inner Details -->
+                                            <td class="border-right" width="14%">
+                                                Tax
+                                                <div class="audit-row dd-grid-inn">
+                                                    <div class="blankDiv">&nbsp;</div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">N</span>
+                                                        <label>
+                                                            <input class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.tax_Notified"
+                                                                ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-checked="request.partyBEntities.tax_Notified"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'tax_Notified', (request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">P</span>
+                                                        <label>
+                                                            <input class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.tax_InProgress"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-checked="request.partyBEntities.tax_InProgress"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'tax_InProgress', (request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">C</span>
+                                                        <label>
+                                                            <input class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.tax_Completed"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-checked="request.partyBEntities.tax_Completed"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'tax_Completed', (request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- Credit Header Inner Details -->
+                                            <td class="border-right" width="14%">
+                                                Credit
+                                                <div class="audit-row dd-grid-inn">
+                                                    <div class="blankDiv">&nbsp;</div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">N</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.credit_Notified"
+                                                                ng-checked="request.partyBEntities.credit_Notified"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'credit_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">P</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.credit_InProgress"
+                                                                ng-checked="request.partyBEntities.credit_InProgress"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'credit_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">C</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.credit_Completed"
+                                                                ng-checked="request.partyBEntities.credit_Completed"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'credit_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- Legal Header Inner Details -->
+                                            <td class="border-right" width="14%">
+                                                Legal
+                                                <div class="audit-row dd-grid-inn">
+                                                    <div class="blankDiv">&nbsp;</div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">N</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.legal_Notified"
+                                                                ng-checked="request.partyBEntities.legal_Notified"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'legal_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">P</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.legal_InProgress"
+                                                                ng-checked="request.partyBEntities.legal_InProgress"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'legal_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">C</span>
+                                                        <label>
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' || request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.legal_Completed"
+                                                                ng-checked="request.partyBEntities.legal_Completed"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'legal_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- Operation Header Inner Details -->
+                                            <td class="border-right" width="14%">
+                                                Operations
+                                                <div class="audit-row dd-grid-inn">
+                                                    <div class="blankDiv">&nbsp;</div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">N</span>
+                                                        <label>
+                                                            <input class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.operations_Notified"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-checked="request.partyBEntities.operations_Notified"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'operations_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">P</span>
+                                                        <label>
+                                                            <input class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.operations_InProgress"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-checked="request.partyBEntities.operations_InProgress"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'operations_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">C</span>
+                                                        <label>
+                                                            <input class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.operations_Completed"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-checked="request.partyBEntities.operations_Completed"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'operations_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- Manager Header Inner Details -->
+                                            <td class="border-right" width="14%">
+                                                Manager
+                                                <div class="audit-row dd-grid-inn">
+                                                    <div class="blankDiv">&nbsp;</div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">N</span>
+                                                        <label>
+                                                            <input class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.manager_Notified"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-checked="request.partyBEntities.manager_Notified"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'manager_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">P</span>
+                                                        <label>
+                                                            <input class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.manager_InProgress"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-checked="request.partyBEntities.manager_InProgress"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'manager_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header audit-col">
+                                                        <span class="span-audit">C</span>
+                                                        <label>
+                                                            <input class="checkbox-audit" type="checkbox" ng-model="request.partyBEntities.manager_Completed"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-checked="request.partyBEntities.manager_Completed"
+                                                                ng-click="screenerCtrl.updateToggleSalesAuditClicked($event,data.table.data,index,'manager_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="small"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="data.credentials.companyType == 'BS'" class="bs-status">
+                                            <!-- ON Boarding Header Details-->
+                                            <td class="border paddleft" width="16%">Onboarding </td>
+                                            <!-- KYC Header Inner Details -->
+                                            <td class="border" width="14%">KYC </td>
+                                            <!-- TAX Header Inner Details -->
+                                            <td class="border" width="14%"> Tax </td>
+                                            <!-- Credit Header Inner Details -->
+                                            <td class="border" width="14%"> Credit </td>
+                                            <!-- Legal Header Inner Details -->
+                                            <td class="border" width="14%"> Legal </td>
+                                            <!-- Operation Header Inner Details -->
+                                            <td class="border" width="14%"> Operations </td>
+                                            <!-- Manager Header Inner Details -->
+                                            <td class="border" width="14%"> Manager </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <!-- BS legal and Manager Header status -->
+                                <td class="text-center" colspan="2" ng-if="data.credentials.companyType == 'BS'" width="10%">
+                                    <table class="table table-responsive table-inn-sts border-left">
+                                        <tr>
+                                            <td class="text-center sts-head-center" colspan="2"><strong> My Status</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center" width="50%" style="height: 20px;">{{mystatus.getDesk1Name}}</td>
+                                            <td class="text-center" width="50%">{{mystatus.getDesk2Name}}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td colspan="2" class="col-smwidth" width="3%"> &nbsp; </td>
+                            </tr>
+                        </thead>
+                        <!-- Inner Body Details -->
+                        <tbody class="collapse-body">
+                            <tr ng-repeat="item in request.partyBEntities" ng-if="item.partyBHidden==false">
+                                <td width="12%" class="paddleft">
+                                    <div title="{{item.entity.trueLegalName}}" class="dd-col-wrap-1">{{item.entity.trueLegalName}}</div>
+                                </td>
+                                <td width="10%">
+                                    <div title="{{item.entity.clientIdentifier}}" class="dd-col-wrap-3">{{item.entity.clientIdentifier}}</div>
+                                </td>
+                                <td width="8%">
+                                    <div title="{{item.requestType}}" class="dd-col-wrap-2">{{item.requestType}}</div>
+                                </td>
+                                <td width="7%">
+                                    <div class="dd-col-wrap-3">
+                                        <span tooltip-compile="{'template': 'tooltips\/dealerAction', 'class': 'partlyTooltip', 'data':  '{{item.dealerAction}}' }">
+                                            {{item.dealerAction}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td colspan="6" class="table-status no-padding" width="{{data.credentials.companyType == 'BS' ? '50%' : '63%'}}">
+                                    <!-- MyStatus Internal WorkFlow Checkbox Body .. -->
+                                    <table>
+                                        <tr ng-if="data.credentials.companyType == 'BS'">
+                                            <!-- ON Boarding -->
+                                            <td width="16%">
+                                                <div>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.ONBOARDING == 'N'">Notified</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.ONBOARDING == 'P'">In Progress</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.ONBOARDING == 'C'">Completed</span>
+                                                </div>
+                                            </td>
+                                            <!-- KYC Inner Details -->
+                                            <td width="14%">
+                                                <div>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.KYC == 'N'">Notified</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.KYC == 'P'">In Progress</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.KYC == 'C'">Completed</span>
+                                                </div>
+                                            </td>
+                                            <!-- Tax Inner Details -->
+                                            <td width="14%">
+                                                <div>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.TAX == 'N'">Notified</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.TAX == 'P'">In Progress</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.TAX == 'C'">Completed</span>
+                                                </div>
+                                            </td>
+                                            <!-- Credit Inner Details -->
+                                            <td width="14%">
+                                                <div>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.CREDIT == 'N'">Notified</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.CREDIT == 'P'">In Progress</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.CREDIT == 'C'">Completed</span>
+                                                </div>
+                                            </td>
+                                            <!-- Legal Inner Details -->
+                                            <td width="14%">
+                                                <div>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.LEGAL == 'N'">Notified</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.LEGAL == 'P'">In Progress</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.LEGAL == 'C'">Completed</span>
+                                                </div>
+                                            </td>
+                                            <!-- Operation Inner Details -->
+                                            <td width="14%">
+                                                <div>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.OPERATIONS == 'N'">Notified</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.OPERATIONS == 'P'">In Progress</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.OPERATIONS == 'C'">Completed</span>
+                                                </div>
+                                            </td>
+                                            <!-- Manager Inner Details -->
+                                            <td width="14%">
+                                                <div>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.MANAGER == 'N'">Notified</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.MANAGER == 'P'">In Progress</span>
+                                                    <span ng-if="item.deskStatus.bsCPDeskStatus.MANAGER == 'C'">Completed</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+
+                                        <tr ng-if="data.credentials.companyType == 'SS'">
+                                            <!-- ON Boarding -->
+                                            <td width="16%">
+                                                <div class="audit-row ss_status">
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected' || (hasPermissions('ss.rfa.read') &&
+                        										!(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory') || hasPermissions('ss.rfa.onboarding')
+                        	 										|| hasPermissions('ss.rfa.kyc') || hasPermissions('ss.rfa.tax') || hasPermissions('ss.rfa.credit') 
+                        	 										|| hasPermissions('ss.rfa.legal') || hasPermissions('ss.rfa.operations') || hasPermissions('ss.rfa.manager'))) ) ||request.amendmentStatus.trueName =='Deleted' ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.onboarding_Escalation"
+                                                                ng-model="item.onboarding_Escalation" ng-click="call('escalation',{grid:data.table.data,index:index,deskCode:'onboarding_Escalation',request:request.amendmentStatus.displayName,item:item})"
+                                                                ng-class="isSalesAuditDisable(item,'onboarding_Escalation',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="info" tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-escaltion="{'class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'onboarding_Escalation'}"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' || request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.onboarding_Notified"
+                                                                ng-model="item.onboarding_Notified" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'onboarding_Notified',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'onboarding_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'onboarding_Notified'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' || request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.onboarding_InProgress"
+                                                                ng-model="item.onboarding_InProgress" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'onboarding_InProgress',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'onboarding_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox', 'data': {{toStringJson(item.id)}},'deskCode':'onboarding_InProgress'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' || request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.onboarding_Completed"
+                                                                ng-model="item.onboarding_Completed" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'onboarding_Completed',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'onboarding_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'onboarding_Completed'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- KYC Inner Details -->
+                                            <td width="14%">
+                                                <div class="audit-row ss_status">
+                                                    <div class="audit-header">
+                                                        <label class="padLeft bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected' || (hasPermissions('ss.rfa.read') &&
+                        										!(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory') || hasPermissions('ss.rfa.onboarding')
+                        	 										|| hasPermissions('ss.rfa.kyc') || hasPermissions('ss.rfa.tax') || hasPermissions('ss.rfa.credit') 
+                        	 										|| hasPermissions('ss.rfa.legal') || hasPermissions('ss.rfa.operations') || hasPermissions('ss.rfa.manager'))) ) ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.kyc_Escalation"
+                                                                ng-model="item.kyc_Escalation" ng-click="call('escalation',{grid:data.table.data,index:index,deskCode:'kyc_Escalation',request:request.amendmentStatus.displayName,item:item})"
+                                                                ng-class="isSalesAuditDisable(item,'kyc_Escalation',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="info" tooltip-placement=" {{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-escaltion=" {'class': 'audit-checkbox' , 'data' : {{toStringJson(item.id)}} ,'deskCode':'kyc_Escalation'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.kyc_Notified"
+                                                                ng-model="item.kyc_Notified" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'kyc_Notified',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'kyc_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'kyc_Notified'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.kyc_InProgress"
+                                                                ng-model="item.kyc_InProgress" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'kyc_InProgress',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'kyc_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox', 'data': {{toStringJson(item.id)}},'deskCode':'kyc_InProgress'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.kyc_Completed"
+                                                                ng-model="item.kyc_Completed" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'kyc_Completed',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'kyc_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'kyc_Completed'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- Tax Inner Details -->
+                                            <td width="14%">
+
+                                                <div class="audit-row ss_status">
+                                                    <div class="audit-header">
+                                                        <label class="padLeft bslegal">
+                                                            <input ng-disabled="request.amendmentStatus.trueName =='Deleted' ||(hasPermissions('ss.rfa.read') &&
+                        										!(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory') || hasPermissions('ss.rfa.onboarding')
+                        	 										|| hasPermissions('ss.rfa.kyc') || hasPermissions('ss.rfa.tax') || hasPermissions('ss.rfa.credit') 
+                        	 										|| hasPermissions('ss.rfa.legal') || hasPermissions('ss.rfa.operations') || hasPermissions('ss.rfa.manager')) ) ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.tax_Escalation"
+                                                                ng-model="item.tax_Escalation" ng-click="call('escalation',{grid:data.table.data,index:index,deskCode:'tax_Escalation',request:request.amendmentStatus.displayName,item:item})"
+                                                                ng-class="isSalesAuditDisable(item,'tax_Escalation',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="info" tooltip-placement=" {{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-escaltion=" {'class': 'audit-checkbox' , 'data' : {{toStringJson(item.id)}} ,'deskCode':'tax_Escalation'}"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input class="checkbox-audit" type="checkbox" ng-checked="item.tax_Notified"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-model="item.tax_Notified" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'tax_Notified',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'tax_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'tax_Notified'}"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input class="checkbox-audit" type="checkbox" ng-checked="item.tax_InProgress"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-model="item.tax_InProgress" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'tax_InProgress',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'tax_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'tax_InProgress'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input class="checkbox-audit" type="checkbox" ng-checked="item.tax_Completed"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-model="item.tax_Completed" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'tax_Completed',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'tax_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'tax_Completed'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- Credit Inner Details -->
+                                            <td width="14%">
+
+                                                <div class="audit-row ss_status">
+                                                    <div class="audit-header">
+                                                        <label class="padLeft bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected' || (hasPermissions('ss.rfa.read') &&
+                        										!(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory') || hasPermissions('ss.rfa.onboarding')
+                        	 										|| hasPermissions('ss.rfa.kyc') || hasPermissions('ss.rfa.tax') || hasPermissions('ss.rfa.credit') 
+                        	 										|| hasPermissions('ss.rfa.legal') || hasPermissions('ss.rfa.operations') || hasPermissions('ss.rfa.manager'))) ) ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.credit_Escalation"
+                                                                ng-model="item.credit_Escalation" ng-click="call('escalation',{grid:data.table.data,index:index,deskCode:'credit_Escalation',request:request.amendmentStatus.displayName,item:item})"
+                                                                ng-class="isSalesAuditDisable(item,'credit_Escalation',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="info" tooltip-placement=" {{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-escaltion="{'class': 'audit-checkbox' , 'data' : {{toStringJson(item.id)}} ,'deskCode':'credit_Escalation'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.credit_Notified"
+                                                                ng-model="item.credit_Notified" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'credit_Notified',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'credit_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'credit_Notified'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.credit_InProgress"
+                                                                ng-model="item.credit_InProgress" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'credit_InProgress',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'credit_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'credit_InProgress'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.credit_Completed"
+                                                                ng-model="item.credit_Completed" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'credit_Completed',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'credit_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'credit_Completed'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- Legal Inner Details -->
+                                            <td width="14%">
+
+                                                <div class="audit-row ss_status">
+                                                    <div class="audit-header">
+                                                        <label class="padLeft bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected' || (hasPermissions('ss.rfa.read') &&
+                        										!(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory') || hasPermissions('ss.rfa.onboarding')
+                        	 										|| hasPermissions('ss.rfa.kyc') || hasPermissions('ss.rfa.tax') || hasPermissions('ss.rfa.credit') 
+                        	 										|| hasPermissions('ss.rfa.legal') || hasPermissions('ss.rfa.operations') || hasPermissions('ss.rfa.manager'))) ) ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.legal_Escalation"
+                                                                ng-model="item.legal_Escalation" ng-click="call('escalation',{grid:data.table.data,index:index,deskCode:'legal_Escalation',request:request.amendmentStatus.displayName,item:item})"
+                                                                ng-class="isSalesAuditDisable(item,'legal_Escalation',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="info" tooltip-placement=" {{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-escaltion="{'class': 'audit-checkbox' , 'data' : {{toStringJson(item.id)}} ,'deskCode':'legal_Escalation'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.legal_Notified"
+                                                                ng-model="item.legal_Notified" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'legal_Notified',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'legal_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'legal_Notified'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.legal_InProgress"
+                                                                ng-model="item.legal_InProgress" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'legal_InProgress',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'legal_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'legal_InProgress'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input ng-disabled="(request.amendmentStatus.trueName =='Deleted' ||request.amendmentStatus.displayName == 'Completed' || request.amendmentStatus.displayName == 'Recalled' || request.amendmentStatus.displayName == 'Rejected') ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.legal_Completed"
+                                                                ng-model="item.legal_Completed" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'legal_Completed',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'legal_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'legal_Completed'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- Operation Inner Details -->
+                                            <td width="14%">
+
+                                                <div class="audit-row ss_status">
+                                                    <div class="audit-header">
+                                                        <label class="padLeft bslegal">
+                                                            <input ng-disabled="request.amendmentStatus.trueName =='Deleted' ||(hasPermissions('ss.rfa.read') &&
+                        										!(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory') || hasPermissions('ss.rfa.onboarding')
+                        	 										|| hasPermissions('ss.rfa.kyc') || hasPermissions('ss.rfa.tax') || hasPermissions('ss.rfa.credit') 
+                        	 										|| hasPermissions('ss.rfa.legal') || hasPermissions('ss.rfa.operations') || hasPermissions('ss.rfa.manager')) ) ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.operations_Escalation"
+                                                                ng-model="item.operations_Escalation" ng-click="call('escalation',{grid:data.table.data,index:index,deskCode:'operations_Escalation',request:request.amendmentStatus.displayName,item:item})"
+                                                                ng-class="isSalesAuditDisable(item,'operations_Escalation',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="info" tooltip-placement=" {{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-escaltion="{'class': 'audit-checkbox' , 'data' : {{toStringJson(item.id)}} ,'deskCode':'operations_Escalation'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input class="checkbox-audit" type="checkbox" ng-checked="item.operations_Notified"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-model="item.operations_Notified" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'operations_Notified',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'operations_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'operations_Notified'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input class="checkbox-audit" type="checkbox" ng-checked="item.operations_InProgress"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-model="item.operations_InProgress" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'operations_InProgress',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'operations_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'operations_InProgress'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input class="checkbox-audit" type="checkbox" ng-checked="item.operations_Completed"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-model="item.operations_Completed" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'operations_Completed',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'operations_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.placement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'operations_Completed'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- Manager Inner Details -->
+                                            <td width="14%">
+
+                                                <div class="audit-row ss_status">
+                                                    <div class="audit-header">
+                                                        <label class="padLeft bslegal">
+                                                            <input ng-disabled="request.amendmentStatus.trueName =='Deleted' ||(hasPermissions('ss.rfa.read') &&
+                        										!(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory') || hasPermissions('ss.rfa.onboarding')
+                        	 										|| hasPermissions('ss.rfa.kyc') || hasPermissions('ss.rfa.tax') || hasPermissions('ss.rfa.credit') 
+                        	 										|| hasPermissions('ss.rfa.legal') || hasPermissions('ss.rfa.operations') || hasPermissions('ss.rfa.manager')) ) ? true : false"
+                                                                class="checkbox-audit" type="checkbox" ng-checked="item.manager_Escalation"
+                                                                ng-model="item.manager_Escalation" ng-click="call('escalation',{grid:data.table.data,index:index,deskCode:'manager_Escalation',request:request.amendmentStatus.displayName,item:item})"
+                                                                ng-class="isSalesAuditDisable(item,'manager_Escalation',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span class="info" tooltip-placement="{{tooltipAudit.leftplacement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-escaltion=" {'class': 'audit-checkbox' , 'data' : {{toStringJson(item.id)}} ,'deskCode':'manager_Escalation'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input class="checkbox-audit" type="checkbox" ng-checked="item.manager_Notified"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-model="item.manager_Notified" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'manager_Notified',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'manager_Notified',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.leftplacement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'manager_Notified'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input class="checkbox-audit" type="checkbox" ng-checked="item.manager_InProgress"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-model="item.manager_InProgress" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'manager_InProgress',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'manager_InProgress',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.leftplacement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'manager_InProgress'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="audit-header">
+                                                        <label class="bslegal">
+                                                            <input class="checkbox-audit" type="checkbox" ng-checked="item.manager_Completed"
+                                                            ng-disabled="request.amendmentStatus.trueName =='Deleted'"
+                                                                ng-model="item.manager_Completed" ng-click="screenerCtrl.updateSalesAuditClicked($event,item,index,'manager_Completed',(request.amendmentStatus.displayName | lowercase))"
+                                                                ng-class="isSalesAuditDisable(item,'manager_Completed',(request.amendmentStatus.displayName | lowercase))" />
+                                                            <span tooltip-placement="{{tooltipAudit.leftplacement}}"
+                                                                tooltip-popup-delay='{{tooltipAudit.delay}}'
+                                                                audit-tooltip-compile="{'template': 'audit\/ssCheckboxAudit','class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode':'manager_Completed'}">
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                    </table>
+                                </td>
+                                <!-- BS Legal and Manager status -->
+                                <td class="text-center" colspan="2" ng-if="data.credentials.companyType == 'BS'" width="10%">
+                                    <table class="table table-responsive table-inn-sts">
+                                        <tr>
+                                            <td class="text-center paddtop5" width="50%">
+                                                <label class="bslegal">
+                                                    <input ng-disabled="(request.amendmentStatus.displayName != 'Draft' || request.amendmentStatus.trueName =='Deleted') ? true : false"
+                                                        class="checkbox" type="checkbox" ng-checked="item.deskStatus.deskOneStatus"
+                                                        ng-click="screenerCtrl.toogleLegalEntityRow($event,item,index,'legal')">
+                                                    <span tooltip-placement="bottom" tooltip-popup-delay='1000'
+                                                        audit-bs-tooltip-compile="{'template': 'audit\/bsCheckboxAudit', 'class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode': 'BS-D1'}">
+                                                    </span>
+                                                </label>
+                                            </td>
+                                            <td class="text-center paddtop5" width="50%">
+                                                <label class="bslegal">
+                                                    <input ng-disabled="(request.amendmentStatus.displayName != 'Draft' || request.amendmentStatus.trueName =='Deleted') ? true : false"
+                                                        class="checkbox" type="checkbox" ng-checked="item.deskStatus.deskTwoStatus"
+                                                        ng-click="screenerCtrl.toogleManagerEntityRow($event,item,index,'manager')">
+                                                    <span tooltip-placement="bottom" tooltip-popup-delay='1000'
+                                                        audit-bs-tooltip-compile="{'template': 'audit\/bsCheckboxAudit', 'class': 'audit-checkbox','data': {{toStringJson(item.id)}},'deskCode': 'BS-D2'}" />
+                                                    </span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="paddtop5" width="3%" ng-class="{'paddleft-action' : data.credentials.companyType == 'SS', 'paddleft-bsaction' : data.credentials.companyType == 'BS'}">
+                                    <div ng-class="{'col-mdwidth' : data.credentials.companyType == 'SS'}">
+                                        <label>
+                                            <input class="checkbox" type="checkbox" ng-disabled="request.amendmentStatus.trueName =='Deleted'" ng-click="screenerCtrl.partyBChecked(request,item,index)"
+                                                ng-checked="item.selected"><span></span>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="table-loader" ng-if="data.loading">
+        <span><i class="fa fa-spin fa-circle-o-notch"></i> Loading...</span>
+    </div>
+    <div class="table-no-results" ng-if="data.table.data.dataList.length == 0 && !data.loading">
+        <span>No search results found for this query.</span>
+    </div>
+</div>

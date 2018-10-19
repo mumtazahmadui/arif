@@ -1,0 +1,20 @@
+<div class="modal-add-attribute">
+    <div class="modelHeader" style="padding: 15px;">
+            <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+                    <span>x</span></button>
+        <h3 class="modal-title">Add Attribute</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-repeat="attribute in vm.templateModel">
+            <label class="pointer">
+                <input type="checkbox" ng-model="attribute.isShow" class="checkbox">
+                <span></span>&nbsp;{{attribute.fieldIdentifier}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-lightgreen" ng-click="$dismiss()">Close</button>
+            <button class="btn btn-green" ng-disabled="vm.canAdd()" ng-click="vm.add()">Add</button>
+        </div>
+    </div>
+</div>
+</div>

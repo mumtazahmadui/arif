@@ -1,0 +1,50 @@
+<div class="modal-body">
+    <div class="row tight-fix">
+        <div class="col-xs-2">Counterparty True<br />Legal Name</div>
+        <div class="col-xs-2">Agreement Type</div>
+        <div class="col-xs-2">Masterlist<br />Identifier</div>
+        <div class="col-xs-2">Reference Master<br />Agreement Date</div>
+    </div>
+    <div class="long-holder" class="fixed-size-blue"
+         >
+        <div class="scroll-area-blue" slim-scroll
+             data-show-scroll="inputData.selectedPartyA.length >= maxLength"
+             settings="{{getScrollSettings(inputData.selectedPartyA.length)}}">
+            <div class="row step2-items" ng-repeat="entity in inputData.selectedPartyA track by $index"
+                 ng-if="!entity.deleted">
+                <div class="col-xs-2"> {{ entity.partyA.trueLegalName }}</div>
+                <div class="col-xs-2"> {{ entity.agreementType }}</div>
+                <div class="col-xs-2 fix-left-margin-ml"> {{ entity.masterlistIdentifier }}</div>
+                <div class="col-xs-2 fix-left-margin-date"> {{ entity.agreementDate | date : 'dd-MMM-yyyy'}}</div>
+                <div class="col-xs-4">
+					<span class="dropdown" dropdown dropdown-toggle>
+						<a href class="dropdown-toggle word-wrap">
+                            <p class="margin-clear">
+                                <span class="file-sprite"></span>
+                                {{entity.letterTemplateName}}
+                                <span ng-if="!entity.letterTemplateName.length"></span>
+                            </p>
+                            <i class="fa fa-chevron-down select-chevron-down"></i>
+                        </a>
+						<ul class="dropdown-menu big-dropdown">
+                            <li class="text-center" ng-show="inputData.letterTemplates.length<=0">
+                                <h3 ng-show="!ts.loaded">&nbsp;<i class="fa fa-circle-o-notch fa-spin"></i>Loading...</h3>
+                                <h3 ng-show="ts.loaded" style="color:red;">&nbsp;<i class="fa fa-exclamation-triangle"></i>No Templates</h3>
+                            </li>
+                            <li ng-repeat="choice in inputData.letterTemplates" ng-show="!choice.deleted">
+                                <a ng-click="ts.select(entity,choice)"><span class="file-sprite"></span>{{choice.name}}</a>
+                            </li>
+                        </ul>
+					</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <span ng-show="waiting"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</span>
+    <button class="btn btn-green" autofocus ng-click="ts.back()">Back</button>
+    <button class="btn btn-lightgreen" ng-click="ts.next()" ng-disabled="!ts.letterTemplatesSelected() || !ts.loaded">
+        Next
+    </button>
+</div>

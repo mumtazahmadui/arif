@@ -1,0 +1,36 @@
+<div class="exhibit-value-file-upload">
+    <div class="text-center col-xs-12 loader" ng-show="!ExValueFileUploadCtrl.loaded">
+        <span><i class="fa fa-circle-o-notch fa-spin"></i> <span>Uploading...</span></span>
+    </div>
+    <div class="modelHeader" style="padding: 15px;">
+            <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+                    <span>x</span></button>
+        <h3 class="modal-title">Bulk Exhibit Upload</h3>
+    </div>
+    <div class="modal-body">
+        Browse file and click on Upload
+        <div class="upload-control">
+            <div class="line">
+                <span class="upload-file-name">
+                    <span class="content" ng-bind="ExValueFileUploadCtrl.file.name"></span>
+                </span>
+                <span class="browse">
+                    <label>
+                        <input type="file"
+                            name="file"
+                            class="upload-file"
+                            ng-model="ExValueFileUploadCtrl.file",
+                            file-input
+                        >
+                        <div class="btn btn-danger" ng-disabled="!ExValueFileUploadCtrl.loaded">Browse File</div>
+                    </label>
+                </span>
+            </div>
+        </div>
+        <div class="exhibit-value-file-upload--error" ng-if="ExValueFileUploadCtrl.errorOccurred" ng-bind="ExValueFileUploadCtrl.errorMsg">Error</div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-green" ng-disabled="!ExValueFileUploadCtrl.loaded" ng-click="$dismiss()">Cancel</button>
+        <button class="btn btn-lightgreen" ng-disabled="!ExValueFileUploadCtrl.loaded || !ExValueFileUploadCtrl.file" ng-click="ExValueFileUploadCtrl.upload()">Upload</button>
+    </div>
+</div>

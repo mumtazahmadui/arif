@@ -1,0 +1,46 @@
+// we are importing .button, .text-input
+@import "../../masterlistCreate.less";
+
+.modal-mst-title .modal-dialog {
+  width: 500px;
+  .modal-masterlist-title {
+    &--loading {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      text-align: center;
+      padding-top: 24px;
+      background-color: rgba(255,255,255,0.5);
+    }
+    &--error {
+      color: #ff3228;
+    }
+    .modal-header {
+      border-bottom: none;
+      padding-bottom: 0;
+      .title {
+        display: inline-block;
+        margin-top: 0;
+      }
+    }
+    .modal-body {
+      .title-input {
+        input {
+          .text-input(400px);
+        }
+      }
+      .modal-buttons {
+        margin-top: 10px;
+        text-align: right;
+        .btn-primary {
+          .button(#045a8c, #033a5a);
+        }
+        .btn-success {
+          .button(#7fb74b, #66943b)
+        }
+      }
+    }
+  }
+}

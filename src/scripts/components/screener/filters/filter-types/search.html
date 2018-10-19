@@ -1,0 +1,37 @@
+<div click-outside="handleClose()" handler="filter.opened">
+    <label class="btn btn-search" ng-click="handleOpen()" ng-class="{selected:filter.view_value != 'All'}">
+        <div class="viewed-value">{{filter.view_value}}</div>
+        <i ng-show="!filter.opened" class="fa fa-angle-down pull-right"></i><i ng-show="filter.opened" class="fa fa-angle-up pull-right"></i>
+    </label>
+    <div class='filter-popup' ng-if="filter.opened">
+        <div class="container-fluid">
+            <h5>Search for {{filter.label}}</h5>
+            <button class="btn btn-close" ng-click="handleClose()"><i class="fa fa-close"></i></button>
+            <div class='header row' ng-if="filter.needSearch">
+                <i class="fa fa-search input-label-overlay"></i><input type='text' ng-model-options="{debounce: 500}" ng-model="filter.search_value" class='form-control' autofocus placeholder='{{filter.view_value}}' ng-change="call('filterSearch', {filterName: filter.id, query: filter.search_value})"/>
+            </div>
+            <div class="content row">
+                <ul class="list-unstyled" ng-if="filter.data.length && !filter.loading">
+                    <li ng-repeat="item in filter.data track by $index">
+                        <a href="" ng-click="select(item)">
+                            <input name="(item.value || item)" ng-checked="checkSelected(item)" ng-model="item" class="hide" type="checkbox">
+                            <label>
+                                <div class="custom-checkbox" ng-class="{'checked': checkSelected(item)}"></div>
+                                <span ng-bind-html="(item.value || item) | typeahead: filter.search_value"></span>
+                            </label>
+                        </a>
+                    </li>
+                </ul>
+                <div class="loader" ng-if="filter.loading">
+                    <span><i class="fa fa-spin fa-circle-o-notch"></i> Loading...</span>
+                </div>
+                <div class="no-results" ng-if="!filter.data.length && !filter.loading">
+                    <span>No search results found for "{{filter.search_value}}"</span>
+                </div>
+            </div>
+            <div class="footer row">
+                <button class="btn btn-sm btn-link btn-clear-link" ng-click="clear()">Clear All Selectors</button>
+            </div>
+        </div>
+    </div>
+</div>

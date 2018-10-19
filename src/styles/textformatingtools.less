@@ -1,0 +1,113 @@
+.font-size-select {
+  border-radius: 6px !important;
+}
+
+.text-formating-tools {
+    margin-bottom: .2em;
+    padding: 1em;
+    border-radius: 0;
+    border: solid 1px #CCC;
+
+    &-span {
+        width: 678px;
+        select {
+            border-radius: 6px;
+            height: 27px;
+        }
+
+        select,
+        a {
+            margin-right: 4px;
+        }
+    }
+
+    & .btn-success {
+		border: 0 none;
+		background-color: #7fb74b;
+		&:hover {
+	    	background-color: darken(#7fb74b, 10%);
+		}
+    }
+
+    .btn-print{
+        width: 41px;
+        height: 30px;
+    	background: url("../images/assets_sprite.png") 77px 301px;
+    }
+}
+
+.helper{
+  position: relative;
+  top: -5px;
+}
+
+.dynamic-placeholders {
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.wysiwyg-text-align-left {
+	text-align: left;
+}
+
+.wysiwyg-text-align-center {
+	text-align: center;
+}
+
+.wysiwyg-text-align-right {
+	text-align: right;
+}
+
+.unselectable{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.place-holder {
+  display: inline;
+  line-height: 19.6px;
+  height: 19.6px;
+  background: transparent!important;
+  border: 0 none!important;
+  color: #00598c!important;
+  font-weight: 700!important;
+  padding: 0 20px!important;
+  text-align: center!important;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif!important;
+  font-size: 14px!important;
+  position:relative;
+ 
+
+  &[readonly] {
+    color: #00598c!important;
+    width: 250px;
+  }
+
+  &:before {
+    content: "<";
+  }
+  &:after {
+    content: ">";
+  }
+
+  &.empty{
+  	&:before, &:after{
+  		content: ""
+  	}
+  }
+}
+
+.btn.btn-placeholder {
+  color: #FFFFFF;
+  background-color: #009697;
+  border-radius: 0px;
+  margin-top: 4px;
+  margin-right: 4px;
+}
+
+.tiny-select {
+  text-align: left;
+}

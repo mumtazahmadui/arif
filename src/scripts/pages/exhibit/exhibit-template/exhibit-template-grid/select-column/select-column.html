@@ -1,0 +1,28 @@
+<thead class="select-control-column" ng-if="isShowSelectControlColumn.flag">
+<tr>
+    <td class="scroll-buttons transparent"></td>
+    <td class="transparent" colspan="{{3 - columnsOffset}}" ng-if="columnsOffset < 3"></td>
+    <td class="transparent select-control-column__text" colspan="{{tableData.rows[0].length - 3 + columnsOffset + 1}}">
+        <div class="select-control-column__text_type_title">Select Column which indicates Appropriate Exhibit</div>
+        <div class="select-control-column__text_type_note">Note: Input provided will be sorted in distinct groups</div>
+    </td>
+</tr>
+<tr>
+    <td class="transparent"></td>
+    <td class="transparent"
+        ng-repeat="cell in tableData.rows[0] | filter: shownColumn track by $index"
+        ng-show="$index >= columnsOffset && $index < columnsOffset + columnsPerPage"
+            >
+        <label class="select-control-column__radio">
+            	<span
+                        ng-if="$index > 2"
+                        ng-value="$index"
+                        ng-class="{checked: cell.controlColumn}"
+                        class="btn sprite-radio"
+                        ng-click="controlColumnClick(cell)"
+                        ></span>
+        </label>
+    </td>
+    <td class="scroll-buttons transparent"></td>
+</tr>
+</thead>

@@ -1,0 +1,182 @@
+<div class="bulk-esign-sign">
+    <!-- Loader -->
+    <div class="loading" ng-hide="loaded">
+        <i class="fa fa-circle-o-notch fa-spin"></i> Loading...
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <a ng-click="linkTo('/rfa/company/amendmentLetter')" class="a-green">← Back to Dashboard</a>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12" ng-if="rfas.length">
+        <h2>Bulk Electronic Signature</h2>
+        <p>By clicking on <strong>Accept</strong>, you will be deemed to have validly signed 
+            the selected document(s) set out below on behalf of your firm. 
+            Pursuant to the <a href class="tou-link" ng-click="showTermsOfUse()">Terms of Use</a>, you hereby confirm and represent that 
+            you are authorised to sign and attest to the truth, accuracy and 
+            completeness of the document(s).</p>
+
+    </div>
+    <!-- ESign Form -->
+    <div class="col-xs-12" ng-if="rfas.length">
+        <div class="frame-border">
+            <div class="documents-count">Documents Selected - {{rfas.length}}</div>
+            <form class="form-horizontal" name="eSignForm" ng-submit="saveChanges()" ng-init="setForm(this)" novalidation>
+                <div class="col-xs-12 single-line">
+                    <div class="form-group col-xs-12 col-md-12"
+                        ng-click="vm.checkIsError()">
+                        <label class="agreement"> Pursuant to the 
+                            <a href ng-click="showTermsOfUse()" class="tou-link">Terms of Use</a>, I
+                            hereby confirm that I am an authorised signatory
+                            and hereby attest to the truth, <br />accuracy
+                            and completeness of the document(s).
+                            <label class="btn btn-link esign-acceptance" ng-click="vm.setAccepted(true)"><span ng-class="{checked: vm.accepted == true}" class="btn sprite-radio"></span>Accept</label> 
+                            <label class="btn btn-link esign-acceptance" ng-click="vm.setAccepted(false)"><span ng-class="{checked: vm.accepted == false}" class="btn sprite-radio"></span>Decline</label>
+                        </label> 
+                        <span class="guard" ng-show="submited && eSignForm.agree.$error.required ">This is a required field</span>
+                    </div>
+                </div>
+                <div class="col-xs-12 single-line">
+                    <div class="form-inline">
+                        <label class="control-label" for="name">I </label>
+                        <input class="form-control" type="text" id="name" name="name"
+                               ng-model="vm.data.name"
+                               ng-change="loadSign(vm.data.esignStyle || 1);"
+                               required=""
+                               style="width:300px;"
+                               ng-pattern="/^(?!\s*$).+/"
+                               placeholder="Name of authorized signatory"
+                               taiplaceholder="Name of authorized signatory"
+                               ng-disabled="!vm.accepted">, attest
+                        to the accuracy of the contents of this document.
+                        <span class="guard" ng-show="eSignForm.name.$error.pattern">Not valid Name</span>
+                        <span class="guard" 
+                              ng-show="submited && eSignForm.name.$error.required ">This is a required field</span>
+                    </div>
+                </div>
+                
+                <div class="col-xs-12 single-line">
+                    <div class="col-xs-6 col-sm-4">
+                        <label class="control-label" for="name2">NAME OF SIGNATORY</label>
+                        <input class="form-control" 
+                               type="text" 
+                               id="name2" 
+                               name="name2" 
+                               ng-model="vm.data.name" 
+                               disabled="disabled">
+                    </div>
+                    <div class="col-xs-6 col-sm-4">
+                        <label class="control-label" for="title">TITLE</label>
+                        <input class="form-control" 
+                               type="text" 
+                               id="title" 
+                               name="title" 
+                               ng-model="vm.data.title" 
+                               required="" 
+                               ng-disabled="!vm.accepted" 
+                               ng-change="vm.changeDate('title');showPreview()">
+                        <span class="guard" 
+                              ng-show="submited && eSignForm.title.$error.required ">This is a required field</span>
+                    </div>
+                    <div class="col-xs-6 col-sm-4">
+                        <label class="control-label" for="companyName">COMPANY</label>
+                        <input class="form-control" 
+                               type="text" 
+                               id="companyName" 
+                               name="companyName" 
+                               ng-model="vm.companyName" 
+                               ng-change="vm.changeDate('company')" 
+                               disabled="disabled">
+                    </div>
+                </div>
+                
+                <div class="col-xs-12">
+                    <hr>
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="col-xs-6 col-sm-4 single-line">
+                        <label class="control-label" for="phone">CONTACT TELEPHONE</label>
+                        <input class="form-control" 
+                               type="text" 
+                               id="phone" 
+                               name="phone" 
+                               ng-model="vm.data.phone" 
+                               ng-pattern="/^\+?\d{1,}[-\.\ )]?\(?\d{2,}\)?[-\.\ )]?\d{3,}[-\.\ )]?\d{2,}[-\.\ )]?\d{2,}$/" 
+                               ng-disabled="!vm.accepted">
+                        <span class="guard" ng-show="eSignForm.phone.$error.pattern">Not valid phone number</span>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 single-line">
+                        <label class="control-label" for="mail">CONTACT EMAIL</label>
+                        <input class="form-control" 
+                               type="text" 
+                               id="mail" 
+                               name="mail" 
+                               ng-model="vm.data.mail" 
+                               ng-pattern="/^([a-zA-Z0-9_\.-]+)@([\da-zA-Z\.-]+)\.([a-zA-Z\.]{2,6})$/" 
+                               ng-disabled="true" 
+                               ng-change="showPreview()">
+                        <span class="guard" ng-show="eSignForm.mail.$error.pattern">Not valid EMail</span>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 single-line">
+                        <label class="control-label" for="date">DATE</label>
+                        <p class="input-group form-control date-field" ng-class="{'ng-invalid': eSignForm.date.$pristine}">
+                            <input type="date" 
+                                   id="date" 
+                                   name="date" 
+                                   class="form-control" 
+                                   ng-model="vm.data.date" 
+                                   ng-required="true" 
+                                   disabled="disabled" />
+                            <span class="input-group-btn">
+                                <button type="button"
+                                        class="btn btn-default form-control"
+                                        ng-class="{'btn-date-pristine': eSignForm.date.$pristine}"
+                                        style="margin-left: 0px;"
+                                        ng-click="vm.setEsignDate(this)"
+                                        ng-disabled="!vm.accepted">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </p>
+                        <span class="guard" ng-if="vm.accepted && eSignForm.date.$pristine">Please click above to acknowledge the signature date!</span>
+                    </div>
+                </div>
+                <div class="col-xs-12" ng-show="previewVisible && vm.data.name && vm.accepted">
+                    <hr>
+
+                    <div class="col-xs-6 single-line">
+                        <label class="control-label">PREVIEW</label>
+                        <div class="sign-preview">
+                            <img ng-repeat="eImage in vm.imagetStack" ng-show="esignImage == eImage" ng-src="{{eImage}}">
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 single-line">
+                        <label class="control-label">CHANGE STYLE</label>
+                        <div class="sign-style-container">
+                            <table class="sign-table">
+                                <tbody>
+                                    <tr ng-repeat="n in [1,2,3,4,5]">
+                                        <td>
+                                            <a class="{{'sign-style sign-style-' + n}}" ng-click="loadSign(n)">{{vm.data.name}}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <hr class="last">
+                    <p class="col-xs-12 col-sm-9">
+                        By clicking "Confirm", I agree that this marking (which is currently a preview of my digital signature) will become the electronic representation of my signature for this specific document. I will need to accept and acknowledge that a digital representation of my signature will be applied for each subsequent document I wish to electronically sign. Also, I understand that recipients of documents which have been electronically signed within the Markit System, will be able to see my Markit Counterparty Manager login, which may be the same as my business email address.
+                    </p>
+                    <div class="col-xs-12 col-sm-3 text-right">
+                        <a ng-href="{{'#/rfa/company/amendmentLetter'}}" class="btn btn-default">Cancel</a>
+                        <button type="button" class="btn btn-success" ng-click="saveChanges()" ng-disabled="eSignForm.$invalid || vm.accepted != true || !esignImage || eSignForm.name.$error.pattern || eSignForm.phone.$error.pattern || eSignForm.mail.$error.pattern || eSignForm.date.$pristine">Confirm</button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+</div>

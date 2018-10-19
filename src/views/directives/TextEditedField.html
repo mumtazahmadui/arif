@@ -1,0 +1,3 @@
+<div class="brick wrapped vmiddle text-edited-field" ng-mouseenter="showEdit()" ng-mouseleave="hideEdit()">
+	<span class="actioned" ng-transclude ng-bind="editValue" ng-if="!edited" ng-click="editMode()"></span><input class="hidden" type="text" ng-model="editValue" ng-keypress="checkKeyValue($event)" ng-change="changeNgValue()" ng-required="true" placeholder="Enter Template Name" maxlength="250" ng-blur="blurInput()"/><span class="actioned sprite-icon-edit" ng-click="editMode()"></span>	
+</div>

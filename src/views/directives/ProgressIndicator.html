@@ -1,0 +1,17 @@
+<div class="progress-indicator">
+
+	<div class="progress-round" ng-class="{ active: $index<state }"  ng-repeat-start="label in labels track by $index">
+		<!-- <div class="progress-round" ng-class="{ passed: $index<state-1, active: $index==state-1 }"  ng-repeat-start="label in labels"> -->
+		<span class="step">
+			<i ng-show="$index<state" class="fa fa-check"></i>
+			<span ng-show="$index>=state" class="normal">{{$index+1}}</span>
+		</span>
+		<div class="progress-label">
+			<span>{{ label }}</span>
+		</div>
+	</div>
+	<div class="progress-bar"
+		ng-class="{ active: $index<state }"
+		ng-if=" !$last "
+		ng-repeat-end></div>
+</div>

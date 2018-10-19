@@ -1,0 +1,67 @@
+<div class="masterlist-create">
+    <div class="row" style=" background-color: #EFEFEF; padding: 15px; ">
+        <div class="col-md-7 col-sm-12 col-xs-12">
+            <a ui-sref="rfa.dashboard" class="a-green">&larr; Back to Dashboard</a>
+            <h2 class="col-md-12">Create Masterlist Template</h2>
+        </div>
+        <div class="col-md-5 col-sm-12 col-xs-12 masterlist-create_buttons">
+            <button class="btn btn-green" ng-click="mstCreate.showWarning()">Cancel</button>
+            <button class="btn btn-lightgreen" ng-click="mstCreate.save()">Save</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 masterlist-create_form">
+            <form name="masterlistForm">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">&nbsp;</div>
+                </div>
+                <table class="table">
+                    <thead style="background: #efefef;">
+                    <tr>
+                        <th>Masterlist Attribute</th>
+                        <th>Label</th>
+                        <th>Show / Hide</th>
+                        <th>Set Order</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in mstCreate.templateModel"
+                        ng-class="{'masterlist-create_form_category': row.category}">
+                        <td colspan="{{row.category ? 4 : 1}}">
+                            <span ng-bind="row.attributeName" ng-class="{'masterlist-create_form_attribute--required': row.required }"></span>
+                        </td>
+                        <td ng-if="row.showLabel" class="masterlist-create_form_label">
+                            <input ng-if="row.label === 'input'" type="text" ng-model="row.fieldLabel"
+                                   ng-class="{'invalid': masterlistForm.$submitted && masterlistForm[row.alias + 'Label'].$invalid}"
+                                   ng-disabled="mstCreate.isDisabled(row)"
+                                   name="{{row.alias + 'Label'}}"
+                                   ng-required="mstCreate.isInputRequired(row)"
+                                   maxlength="250">
+                            <span ng-if="row.label === 'placeholder'" class="masterlist-create_form_label_placeholder" ng-bind="row.labelText"></span>
+                            <select ng-if="row.label === 'select'" class="masterlist-create_form_label_select"></select>
+                        </td>
+                        <td ng-if="row.ableToHide">
+                            <show-hide ng-model="row.fieldVisibility"
+                                       name="{{row.alias + 'ShowHide'}}"
+                                       invalid-class="masterlistForm.$submitted && masterlistForm[row.alias + 'ShowHide'].$invalid"
+                                       ng-required="mstCreate.isShowHideRequired(row)"
+                                       on-hide="mstCreate.clearValuesOnHide" row="row"
+                                       ng-disabled="row.disabledShowHide">
+                            </show-hide>
+                        </td>
+                        <td ng-if="row.ableToOrder" class="masterlist-create_form_order">
+                            <input type="text" ng-model="row.fieldOrder" select-on-click
+                                   ng-disabled="mstCreate.isDisabled(row)"
+                                   ng-change="mstCreate.checkForInvalidOrder()"
+                                   ng-pattern="mstCreate.orderPattern"
+                                   name="{{row.alias + 'Order'}}"
+                                   ng-required="mstCreate.isOrderRequired(row)"
+                                   ng-class="{'invalid': masterlistForm.$submitted && masterlistForm[row.alias + 'Order'].$invalid}">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

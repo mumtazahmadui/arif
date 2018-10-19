@@ -1,0 +1,196 @@
+ /* Fix for Bootstrap 3 with Angular UI Bootstrap */
+
+.modal-dialog{
+  margin-top: 120px;
+//   transform: translate(-50%, -60%) !important;
+//   top: 50%;
+//   left: 50%;
+//   position: fixed;
+}
+
+.modals {
+
+	& .modal-header{
+		border: 0;
+
+		& h5{
+			padding-bottom: 0;
+			margin-bottom: -.25em;
+			font-size: 1.25em;
+			color: @mcpm-ocean;
+		}
+	}
+
+	& input[type="radio"]{
+		display: none;
+
+		& + span {
+	    -webkit-appearance: none;
+	    background-color: #FFF;
+	    border: 1px solid @mcpm-lighterblue;
+	    border-radius: 100%;
+	    display: inline-block;
+	    width: 1.5em;
+			height: 1.5em;
+			vertical-align: bottom;
+		}
+
+		&:checked + span {
+			background-color: @mcpm-task-kyc;
+			box-shadow: inset 0 0 2px 4px #FFF;
+		}
+
+		&:disabled + span {
+			background-color: @gray-lighter;
+			box-shadow: inset 0 0 10px 5px @input-color-placeholder;
+			opacity: 0.25;
+		}
+	}
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  background-color: #000;
+  height: 100%;
+}
+
+.modal-rfa{
+  &_type_rejectReason {
+    .modal-content {
+      width: 500px;
+
+      .rejectReason_error-container {
+        position: absolute;
+        margin-top: 4px;
+        margin-left: 21px;
+      }
+    }
+  }
+
+  .loader {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255,255,255, 0.5);
+    z-index: 1;
+  }
+
+  .pdf-view {
+  	width: 100%;
+  	height:100%;
+  	overflow-x: auto;
+  	overflow-y: auto;
+  }
+
+  .btn{
+    // padding: 8px 16px;
+    // border-radius: 2px;
+    // min-width: 90px;
+
+    &.btn-danger {
+      background-color: #045a8c;
+      border: 0 none;
+      &:hover {
+        background-color: darken(#045a8c, 10%);
+      }
+    }
+
+    &.btn-success {
+      border: 0 none;
+      background-color: #7fb74b;
+      &:hover {
+        background-color: darken(#7fb74b, 10%);
+      }
+    }
+  }
+
+  & .scroll-area, & .scroll-area-small, & .scroll-area-blue{
+    margin-right: 1.2em;
+    min-height: 1.5em !important;
+  }
+
+  & .fixed-size-blue {
+    max-height: 452px;
+    overflow-y: hidden;
+    min-height: 120px;
+    height: auto;
+  }
+
+  .table > thead > tr > th{
+    font-weight: 100;
+    font-size: 0.8em;
+    border-bottom-width: 1px;
+    padding-bottom: 1px;
+  }
+
+  .table > tbody > tr:last-child > td{
+    border-bottom: 1px solid #ddd;
+  }
+
+  .table > tbody > tr > td{
+    padding: 8px 8px 0 8px;
+    vertical-align: bottom;
+    font-size: 0.9em;
+    &.truncated{
+    	max-width: 300px;
+
+    	.truncated{
+	    	overflow: hidden;
+	    	white-space: nowrap;
+	    	text-overflow: ellipsis;
+	    }
+    }
+  }
+
+  .table > tbody > tr > td a{
+    font-weight: 600;
+  }
+
+  .modal-header{
+    padding: 15px 15px 0;
+    border: 0 none;
+  }
+  .modal-footer{
+    padding: 0 15px 15px;
+    border: 0 none;
+  }
+
+  .request-name{
+    color: #00A9D0;
+    font-size: 1.8em;
+    word-wrap: break-word;
+  }
+
+  .modal-body {
+    .rejection-reason-textarea {
+      height: 190px;
+      min-height: 190px;
+      resize: vertical;
+
+      &_type_error {
+        border-color: red;
+      }
+    }
+  }
+
+    // &>.modal-dialog{
+    //   transform: translate(-50%,-50%) !important;
+    //   top: 50%;
+    //   left: 50%;
+    //   position: absolute;
+    // }
+
+
+  & a.bigLink{
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 1.7em;
+    color: @link;
+  }
+}

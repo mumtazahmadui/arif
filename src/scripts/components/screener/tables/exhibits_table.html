@@ -1,0 +1,46 @@
+<div class="table-contayner">
+    <table class="table table-hover" ng-if="!data.loading">
+        <thead>
+        <tr>
+            <th class="text-left" rowspan="2">Exhibits Name</th>
+            <th class="text-left" rowspan="2">Date Created</th>
+            <th class="text-left" rowspan="2">Created By</th>
+            <th class="text-center" colspan="3"><b>Exhibit-Masterlist Linkage</b></th>
+            <th class="text-left" rowspan="2">Date Linked</th>
+            <th class="text-left" rowspan="2">Linked By</th>
+            <th class="text-left" rowspan="2">Actions</th>
+        </tr>
+        <tr>
+            <th class="text-center min-width-133px no-padding">Party A True/Legal Name</th>
+            <th class="text-center no-padding">Ref. ISDA Date</th>
+            <th class="text-center no-padding min-width-97px">Masterlist Identifier</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="request in data.table.data.dataList | limitTo:data.pages.items_per_page">
+            <!-- <td><a ng-click="call('open', {id: request.fileIid})" title="{{request.name}}">{{request.name}}</a></td> -->
+            <td class="text-left">
+                <a ng-click="call('edit', {id: request.id})" title="{{request.name}}">{{request.name}}</a>
+            </td>
+            <td class="text-left">{{request.createdDate | date : 'dd-MMM-yyyy'}}</td>
+            <td class="text-left">{{request.createdByString }}</td>
+            <td class="text-left word-wrap">{{request.partyATrueLegalName}}</td>
+            <td class="text-left">{{request.agreementDate | date : 'dd-MMM-yyyy'}}</td>
+            <td class="text-left word-wrap">{{request.masterlistIdentifier}}</td>
+            <td class="text-left">{{request.linkedDate | date : 'dd-MMM-yyyy'}}</td>
+            <td class="text-left">{{request.linkedByString}}</td>
+            <td class="text-left">
+                <button tooltip-html-unsafe="{{'Link Exhibit-Masterlist'}}" tooltip-placement="left" ng-if="request.showExhibitLink" class="btn btn-default btn-action sprite-button-link" ng-click="call('linkExhibit', {data: request})"></button>
+                <button tooltip-html-unsafe="{{'Edit Exhibit Template'}}" title="Edit Exhibit template" ng-click="call('edit', {id: request.id})" class="btn sprite-button-edit"></button>
+                <button tooltip-html-unsafe="{{'Delete Exhibit Template'}}" ng-if="request.showExhibitLink"  tooltip-placement="left" ng-click="call('remove', {exhibitId: request.id, exhibitName: request.name})" class="btn sprite-button-remove"></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="table-loader" ng-if="data.loading">
+        <span><i class="fa fa-spin fa-circle-o-notch"></i>Loading...</span>
+    </div>
+    <div class="table-no-results" ng-if="data.table.data.dataList.length == 0 && !data.loading">
+        <span>No search results found for this query.</span>
+    </div>
+</div>

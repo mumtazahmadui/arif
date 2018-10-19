@@ -1,0 +1,93 @@
+.progress-indicator{
+	// padding: 1.25em;
+	font-size: 10px;
+	width: auto;
+	display: inline-block;
+
+	& .progress-round{
+		width: 25px;
+		height: 25px;
+		border-radius: 55%;
+		float: left;
+		background-color: #d7d7d7;
+		position: relative;
+		z-index: 10;
+		text-align: center;
+		padding-top: 2px;
+		color: #d7d7d7;
+
+		& .step{
+			color: white;
+			font-size: 1.5em;
+		}
+
+		&.active{
+			bottom: 5px;
+			background-color: #8dc63f;
+			font-weight: bold;
+			color: #8dc63f;
+			border: 1px solid #8dc63f;
+			width: 30px;
+			height: 30px;
+			padding-top: 3px;
+			box-shadow: inset 0 0 0 3px white;
+		}
+
+		&.passed{
+			background-color: #009697; 
+			color: #009697;
+			font-weight: 700;
+		}
+
+		&:first-child span{
+			text-align: left;
+			right: 0;
+			margin-right: 0;
+			min-width: 5em;
+		}
+
+		&:last-child span{
+			text-align: right;
+			left: -100%;
+		}
+	}
+
+	& .progress-bar{
+		width: 5em;
+		height: 2px;
+		margin: .65em -0.25em;
+		float: left;
+		background-color:#d7d7d7;
+		position: relative;
+		margin-top: 10px;
+
+		&.passed{
+			background-color: #009697; 
+		}
+
+		&.active{
+			background-color:#8dc63f;
+		}
+	}
+
+	& .progress-label{
+		width: 50px;
+		margin: 0 auto;
+		top: .5em;
+		position: relative;
+		font-size: 11px;
+		right: 7px;
+
+		& span{
+			display: block;
+			position: relative;
+			text-align: center;
+			right: 50%;
+			margin-right: -100%;
+		}
+	}
+  & .no-animate {
+	-webkit-transition: none !important;
+	transition: none !important;
+  }
+}

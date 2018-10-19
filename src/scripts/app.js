@@ -1,0 +1,40 @@
+(function() {
+    angular
+        .module('app', [
+            'ipCookie',
+            'base64',
+            'ngAnimate',
+            'toastr',
+            'ngRoute',
+            'ngResource',
+            "ui.bootstrap",
+            'ui.router',
+            "app.configs",
+            "mc.textEditor",
+            "mc.textEditorSS",
+            "app.templates",
+            'ngStorage',
+            'ngFitText',
+            'ngSanitize',
+            'angularFileUpload',
+            'app.directives',
+            'app.controllers',
+            'app.services',
+            'app.filters',
+            'rfa.components',
+            'rfa.dashboard',
+            'rfa.exhibit-template-list',
+            'rfa.exhibit-template-editor',
+            'rfa.exhibits-linked',
+            'rfa.letters',
+            'rfa.masterlist',
+            'app.placeholders',
+            'angularMoment',
+            'taiPlaceholderCustom',
+            'partyABCreator',
+            'app.bulk',
+            'app.bulk.upload',
+            'ui.slimscroll'
+        ]);
+
+}).call(this);

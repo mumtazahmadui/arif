@@ -1,0 +1,50 @@
+<div ng-class="{mceNonEditable: !tablesLength}" ng-hide="hidePlaceholder">
+    <div class="iefixer">
+        <table ng-if="tablesLength">
+            <tr ng-repeat="lineBreak in data.previousLineBreaks" class='tiny-mce tiny-editor'>
+                <td ng-bind="lineBreak.text"></td>
+            </tr>
+            <tbody ng-repeat="table in tables track by $index">
+                <tr class='tiny-mce tiny-editor nonRemovable'>
+                    <td ng-bind-html="trustAsHtml(table.lineBreak.showHeaderText || '&#65279')" class='headerText'></td>
+                </tr>
+                <tr class='mceNonEditableBlock'>
+                    <td>
+                        <div class="mceNonEditable">
+                            <table class="table-bordered unselectable nonRemovable" unselectable="on">
+                                <tr>
+                                    <th ng-repeat="column in table.columns | orderBy: 'order'" ng-class="{nobordered: column.nobordered, splitter: column.splitter}" unselectable="on">{{column.label || column.name}}</th>
+                                </tr>
+                                <tr ng-repeat='item in table.rows'>
+                                    <td ng-repeat="column in table.columns | orderBy: 'order'" ng-class="{nobordered: column.nobordered, splitter: column.splitter}" unselectable="on">
+                                        <span ng-if="checkDefaults(column.name)">{{item[column.columnName || column.name]}}</span>
+                                        <span ng-if="column.name === 'Sell Side Response'">
+                                            <label ng-repeat="response in column.responses" ng-click="setResponseValue(item, response.value)">
+                                                <span ng-class="{checked: item[column.name] === response.value}" class='btn sprite-radio'></span>
+                                                {{response.text}}
+                                            </label>
+                                        </span>
+                                        <span ng-if="column.name === 'Reason for Rejection/Pending'">
+                                            <form name="SellSideResponse">
+                                                <span class='length-error' ng-if='SellSideResponse.textarea.$error.maxlength'>Maximum 500 characters allowed!</span>
+                                                <textarea ng-maxlength='501'
+                                                    name="textarea"
+                                                    ng-disabled="item['Sell Side Response'] === 'Accepted'"
+                                                    ng-model='item[column.name]'
+                                                    placeholder="Add Comment"
+                                                    ng-required="item['Sell Side Response'] === 'Rejected' || item['Sell Side Response'] === 'Pending'"
+                                                    taiplaceholder="Add Comment"
+                                                    ng-class='{"mark-invalid": isMarkInvalid(item, item[column.name])}'>
+                                                </textarea>
+                                            </form>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

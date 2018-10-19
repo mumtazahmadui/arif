@@ -1,0 +1,34 @@
+<div class="modelHeader" style="padding: 15px;">
+        <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+                <span>x</span></button>
+    <h3 class="modal-title">Make a Selection to Begin</h3>
+</div>
+<div class="modal-body">
+	<a ng-click="partyA()" class="bigLink">
+		Party A (Sell side Counterparty)
+	</a>
+    <div class="sprite-info"
+         tooltip-html-unsafe="<div class='tooltip-left-align'>Begin the Amendment Process by first selecting the agreements (Party A) you would like to amend</div>"
+         tooltip-placement="right"
+         title="Begin the Amendment Process by first selecting the agreements (Party A) you would like to amend"
+         tooltip-class="customClass"></div>
+    <br>
+    <a ng-click="partyB()" class="bigLink">
+		Party B (Entity Account)
+	</a>
+    <div class="sprite-info"
+         tooltip-html-unsafe="<div class='tooltip-left-align'>Begin the Amendment Process by first selecting the accounts (Party B) you would like to add/remove/modify from an agreement"
+         title="Begin the Amendment Process by first selecting the accounts (Party B) you would like to add/remove/modify from an agreement</div>"
+         tooltip-placement="right"></div>
+    <br>
+    <a ng-click="sleeves()" class="bigLink">
+        Parent / Sleeve (Manage Sleeves)
+    </a>
+    <div class="sprite-info"
+         tooltip-html-unsafe="<div class='tooltip-left-align'>Use this flow to add or remove sleeve/sub-accounts which have identical exhibit information as their parent accounts to an agreement. This flow can also be used to add/remove/modify stand-alone entities. Note: the sleeve account’s information will appear as a merged cell in the agreement’s Master List"
+         title="Use this flow to add or remove sleeve/sub-accounts which have identical exhibit information as their parent accounts to an agreement. This flow can also be used to add/remove/modify stand-alone entities. Note: the sleeve account’s information will appear as a merged cell in the agreement’s Master List</div>"
+         tooltip-placement="right"></div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-green" autofocus ng-click="cancel()">Close</button>
+</div>

@@ -1,0 +1,49 @@
+<table id="exhibit-columns" cellspacing="0" cellpadding="0">
+    <thead text-editor-select-control-column></thead>
+    <tbody>
+    <tr ng-repeat="row in $parent.tableData.rows | filter:textEditorLinkedTableShownRow">
+        <td class="scroll-buttons"
+            ng-class="{disabled: columnsOffset <= 0, transparent: $index > 0}"
+            ng-click="columnScrollLeft()">
+            <i class="fa fa-caret-left"></i>
+        </td>
+        <td ng-repeat="cell in row | filter:shownColumn | orderBy: 'order'"
+            ng-if="($index <= LAST_LINKED_DEFAULT_INDEX) || (!cell.isSleeve || (cell.sleeveWithoutParents && cell.rowspan))"
+            rowspan="{{($index > LAST_LINKED_DEFAULT_INDEX) ? cell.rowspan : 1}}"
+            tooltip-enable="{{cell.name && $parent.$index > 0}}"
+            tooltip-html-unsafe="<span class='multiline-tooltip'>{{tooltipBody(cell, $parent.$index)}}</span>"
+            tooltip-append-to-body="true"
+            ng-show="$index >= columnsOffset && ($index < columnsOffset + columnsPerPage)"
+            ng-class="{'error-cell': $parent.invalid && !cell.name && $index > LAST_LINKED_DEFAULT_INDEX,
+            'table-cell-disabled': ($index <= LAST_LINKED_DEFAULT_INDEX)||cell.isSleeve}">
+            <span class="error-text"
+                  ng-show="$parent.invalid && !cell.name && $index > (LAST_LINKED_DEFAULT_INDEX - 1)">
+                Column <span>cell</span> missing
+            </span>
+            <div class="table-cell-title" ng-if="($index <= LAST_LINKED_DEFAULT_INDEX)||cell.isSleeve"
+                 ng-bind="cell.label || cell.name"></div>
+            <input ng-if="($index > LAST_LINKED_DEFAULT_INDEX) && !cell.isSleeve && cell.label"
+                   class="{{cell.controlColumn && isShowSelectControlColumn.flag ? 'asterisk-input' : ''}}"
+                   ng-class="cell.style"
+                   type="text"
+                   ng-required="$index > (LAST_LINKED_DEFAULT_INDEX - 1)"
+                   ng-model="cell.label"
+                   autocomplete="off"/>
+            <input ng-if="($index > LAST_LINKED_DEFAULT_INDEX) && !cell.isSleeve && !cell.label"
+                   class="{{cell.controlColumn && isShowSelectControlColumn.flag ? 'asterisk-input' : ''}}"
+                   ng-class="cell.style"
+                   type="text"
+                   ng-required="$index > (LAST_LINKED_DEFAULT_INDEX - 1)"
+                   ng-model="cell.name"
+                   autocomplete="off"/>
+            <div class="{{cell.controlColumn && isShowSelectControlColumn.flag? 'asterisk': 'display-none'}}"></div>
+        </td>
+        <td class="scroll-buttons"
+            ng-class="{disabled: !availableToScrollRight()}"
+            ng-click="columnScrollRight()"
+            ng-show="$index === 0">
+            <i class="fa fa-caret-right"></i>
+        </td>
+    </tr>
+    </tbody>
+</table>

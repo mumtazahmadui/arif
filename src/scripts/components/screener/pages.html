@@ -1,0 +1,47 @@
+<div class="container-fluid pages" ng-if="!data.loading">
+    <div class="dropup pull-right mb15" dropdown ng-if="data.pages.last > 0">
+        <button type="button" class="btn btn-green btn-sm dropdown-toggle" dropdown-toggle>
+            {{data.pages.items_per_page}}  <i class="fa fa-angle-down text-right"></i>
+        </button><span style="color:#009697;margin-left: 2px;">Items per page</span>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="pp in data.pages.per_page" ng-click="updatePages(1, pp)"><a href="">{{pp}} per page</a></li>
+        </ul>
+    </div>
+
+    <ul class="list-unstyled" ng-if="data.pages.last > 1">
+        <li ng-if="boundaryLinks" ng-class="{ disabled : data.pages.page == 1 }">
+            <a href="" ng-click="updatePages(1, data.pages.items_per_page)" class="btn btn-pages">
+                <span class="sprite-pagination-left-double"></span>
+            </a>
+        </li>
+        <li ng-if="directionLinks" ng-class="{ disabled : data.pages.page == 1 }">
+            <a href="" ng-click="updatePages(data.pages.page - 1, data.pages.items_per_page)" class="btn btn-pages">
+                <span class="sprite-pagination-left-single"></span>
+            </a>
+        </li>
+        <li class="pages-info">
+            <form name="pagesForm" class="css-form">
+                <input type="text" name="page"
+                ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"
+                min="1"
+                max="{{data.pages.last}}"
+                ng-minlength="1"
+                ng-change="updatePages(data.pages.page, data.pages.items_per_page)"
+                ng-keyup="updatePages(data.pages.page, data.pages.items_per_page)"
+                ng-model="data.pages.page"
+                class=" form-control">
+                <span class="total"> of {{data.pages.last}}</span>
+            </form>
+        </li>
+        <li ng-if="directionLinks" ng-class="{ disabled : data.pages.page == data.pages.last }">
+            <a href="" ng-click="updatePages(data.pages.page + 1, data.pages.items_per_page)" class="btn btn-pages">
+                <span class="sprite-pagination-right-single"></span>
+            </a>
+        </li>
+        <li ng-if="boundaryLinks"  ng-class="{ disabled : data.pages.page == data.pages.last }">
+            <a href="" ng-click="updatePages(data.pages.last, data.pages.items_per_page)" class="btn btn-pages">
+                <span class="sprite-pagination-right-double"></span>
+            </a>
+        </li>
+    </ul>
+</div>

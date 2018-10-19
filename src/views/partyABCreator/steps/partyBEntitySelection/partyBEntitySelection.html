@@ -1,0 +1,94 @@
+<div class="modal-body">
+    <div class="text-center col-xs-12" ng-show="inputData.availablePartyB.length<=0 && es.entityFilter==''">
+        <h1><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</h1>
+    </div>
+    <div class="row" ng-show="inputData.availablePartyB.length>0 || es.entityFilter.length>0">
+        <div class="col-sm-6">
+            <div class="title-heading">AVAILABLE PARTY B ACCOUNTS IN MCPM</div>
+
+            <div class="framed blue-frame">
+                <div class="searchHolder">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <input type="text" class="form-control search input-sm"
+                           placeholder="Search by using Party B Legal Name / Client Identifier / LEI"
+                           taiplaceholder="Search by using Party B Legal Name / Client Identifier / LEI"
+                           ng-model="es.entityFilter"
+                           ng-init="es.entityFilter=''"
+                           ng-change="es.loadEntities(es.entityFilter,1)">
+                </div>
+
+                <div class="available-party-b-header">
+                    <span class="true-legal-name">True Legal Name</span>
+                    <span class="client-identifier">Client Identifier</span>
+                </div>
+
+                <div class="long-holder fixed-size" slim-scroll settings="{height:'400px', showScrollOnStart: true}">
+                    <div class="scroll-area" id="partyB">
+                        <div class="available-party-b-item"
+                             ng-repeat="entity in inputData.availablePartyB"
+                             ng-if="inputData.ignoreIndex.indexOf(entity.id)<0">
+                            <span class="truncated pointer true-legal-name" title="{{entity.name}}">{{entity.name}}</span>
+                            <span class="truncated pointer client-identifier" title="{{entity.clientIdentifier}}">{{entity.clientIdentifier}}</span>
+                            <a class="pull-right action" ng-click="es.toPartyB(entity, false)"><i class="glyphicon glyphicon-minus"></i></a>
+                            <a class="pull-right action" ng-click="es.toPartyB(entity, true)"><i class="glyphicon glyphicon-plus"></i></a>
+                            <a class="pull-right action" ng-click="es.toModificationPartyB(entity)">M</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="title-heading">PARTY B FOR ADDITION <i class="glyphicon glyphicon-plus info"></i></div>
+
+            <div class="short-holder framed">
+                <div class="scroll-area-small" slim-scroll settings="{showScrollOnStart: true}">
+                    <div class="available-party-b-item blue-frame"
+                         ng-repeat="entity in inputData.selectPartyB | filter:es.filterAddition track by entity.entity.id">
+                        <span class="opacity50">|||</span> <span
+                            class="truncated pointer" title="{{entity.entity.trueLegalName}}">{{entity.entity.trueLegalName}}</span>
+                        <a class="pull-right action" ng-click="es.fromPartyB(entity)">&times;</a>
+                    </div>
+                </div>
+            </div>
+            <div class="sub-title-heading">PARTY B FOR REMOVAL <i class="glyphicon glyphicon-minus info"></i></div>
+            <div class="short-holder framed">
+                <div class="scroll-area-small" slim-scroll settings="{showScrollOnStart: true,alwaysVisible:true,}">
+                    <div ng-show="inputData.loadings.removePartyB" class="framed-area-loader"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</div>
+                    <div class="available-party-b-item blue-frame"
+                         ng-repeat="entity in inputData.selectPartyB | filter:es.filterRemoval">
+                        <span class="opacity50">|||</span> <span
+                            class="truncated pointer" title="{{entity.entity.trueLegalName}}">{{entity.entity.trueLegalName}}</span>
+                        <a class="pull-right action" ng-click="es.fromPartyB(entity, true)">&times;</a>
+                        <div class="pull-right sleeve-warning"
+                             ng-if="entity.sleeveItems.length"
+                             tooltip-html-unsafe="<div class='tooltip-left-align'>Removing parent account will result in removal of all  sleeves that are currently active and linked with the Parent Account on Masterlist</div>"
+                             tooltip-placement="top"
+                             tooltip-append-to-body="true">!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sub-title-heading">PARTY B FOR MODIFICATION <strong class="sign-blue">M</strong></div>
+
+            <div class="short-holder framed">
+                <div class="scroll-area-small" slim-scroll settings="{showScrollOnStart: true}">
+                    <div class="available-party-b-item blue-frame"
+                         ng-repeat="entity in inputData.selectPartyB | filter:es.filterModification track by $index">
+                        <span class="opacity50">|||</span> <span
+                            class="truncated pointer" title="{{entity.entity.trueLegalName}}">{{entity.entity.trueLegalName}}</span>
+                        <a class="pull-right action" ng-click="es.fromModificationPartyB(entity)">&times;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <span ng-show="waiting"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</span>
+    <button class="btn btn-green" autofocus ng-click="es.back()" ng-disabled="inputData.flow==='editB' || inputData.flow === 'editSleeve'">Back</button>
+    <button class="btn btn-lightgreen" ng-click="es.next()" ng-disabled="inputData.flow !== 'sleeves' && inputData.flow !== 'editSleeve' && !(inputData.selectPartyB | filter:{entity:{deleted:0}}).length">
+        Next
+    </button>
+</div>

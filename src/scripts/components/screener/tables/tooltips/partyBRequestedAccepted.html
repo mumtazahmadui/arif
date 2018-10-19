@@ -1,0 +1,22 @@
+<div class="{{content.class}}">
+    <h3>
+        <span class="badge badge-add"></span>
+        Party B Actioned - Accepted
+    </h3>
+    <table class="table table-tooltip">
+        <thead>
+        <tr>
+            <th class="text-left tooltip-table-name">True Legal Name</th>
+            <th class="text-left tooltip-table-id">Client Identifier</th>
+            <th class="text-left tooltip-table-lei">Pre-LEI/LEI</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in content.data | limitTo : 15">
+            <td class="text-left tooltip-table-name">{{item.entity.name | decodeUri | truncate:30}}</td>
+            <td class="text-left tooltip-table-id">{{item.entity.clientIdentifier | decodeUri | truncate:25}}</td>
+            <td class="text-left tooltip-table-lei">{{item.entity.lei | decodeUri | truncate:20}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

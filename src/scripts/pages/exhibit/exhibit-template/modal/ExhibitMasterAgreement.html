@@ -1,0 +1,42 @@
+<div class="master-agreement">
+    <div class="modelHeader" style="padding: 15px;">
+            <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+                    <span>x</span></button>
+        <h3 class="modal-title">Select Masterlist for Exhibit-Masterlist Linkage</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row tight-fix header">
+            <div class="col-xs-4">Counterparty True Legal Name</div>
+            <div class="col-xs-2">Investment Manager</div>
+            <div class="col-xs-2">Masterlist Identifier</div>
+            <div class="col-xs-3">Reference Master Agreement Date</div>
+            <div class="col-xs-1 text-right">Select</div>
+        </div>
+        <div class="text-center col-xs-12" ng-show="data.items.length <=0">
+            <p class="error">
+                <i class="fa fa-exclamation-triangle"></i>
+                All Masterlists are linked with Exhibit Templates. No data to display
+            </p>
+        </div>
+        <div class="long-holder fixed-size-blue" ng-if="data.items.length">
+            <div class="scroll-area-blue"  slim-scroll >
+                <div class="row step2-items" ng-repeat="item in data.items track by $index">
+                    <div class="col-xs-4 long-holder break-text"> {{ item.partyA.trueLegalName || item.partyA.name }}</div>
+                    <div class="col-xs-2 long-holder break-text"> {{ item.investmentManager.trueLegalName ||
+                        item.investmentManager.name }}
+                    </div>
+                    <div class="col-xs-2 long-holder break-text"> {{ item.masterlistIdentifier }}</div>
+                    <div class="col-xs-3 long-holder"> {{ item.agreementDate | date : 'dd-MMM-yyyy'}}</div>
+                    <div class="col-xs-1 text-right long-holder">
+                        <label><input ng-click="setSelected(item)" type="radio" class="hide" name="selected" ng-model="$parent.selected" ng-value="item"><span></span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-green" autofocus ng-click="cancel()">Cancel</button>
+        <button class="btn btn-lightgreen" ng-click="ok()" ng-disabled="selected==false">Save</button>
+    </div>
+</div>
+

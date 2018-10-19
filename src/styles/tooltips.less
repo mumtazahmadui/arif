@@ -1,0 +1,87 @@
+.longtooltips .tooltip {
+  .table-tooltip {
+    td {
+      vertical-align: top;
+    }
+    max-width: none;
+    width: 530px;
+  }
+  .tooltip-inner{
+    width: 560px;
+  }
+}
+.tooltip{
+  .tooltip-table-name,
+  .tooltip-table-id,
+  .tooltip-table-lei{
+    overflow: hidden;
+    text-overflow: ellipsis;
+      & span {
+        word-wrap: break-word;
+        white-space: normal;
+        display: inline-block;
+        width: 200px;
+      }
+  }
+
+  &.in{
+    opacity: 1!important;
+  }
+
+  &.left .tooltip-arrow{
+    border-left-color: #4D525A;
+  }
+
+  &.right .tooltip-arrow{
+    border-right-color: #4D525A;
+  }
+
+  &.top .tooltip-arrow{
+    border-top-color: #4D525A;
+  }
+
+  &.bottom .tooltip-arrow{
+    border-bottom-color: #4D525A;
+  }
+
+  .tooltip-inner{
+    background: #4D525A;
+    padding: 15px;
+    border-radius: 0;
+    max-width: 560px;
+  }
+
+  .partyTooltip {
+    width: 530px;
+
+    .table,
+    .table .table,
+    .table *{
+      background: transparent!important;
+    }
+
+    th, td{
+      border: 0 none!important;
+      padding: 0!important;
+      vertical-align: top;
+      height: 15px!important;
+    }
+
+    tr{
+      border-bottom: 1px white solid;
+    }
+
+    h3{
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: left;
+      margin-top: 0px;
+
+      .badge{
+        height: 10px;
+        width: 10px;
+        cursor: default;
+      }
+    }
+  }
+}

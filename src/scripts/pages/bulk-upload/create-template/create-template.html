@@ -1,0 +1,131 @@
+<div class="template-create">
+    <div class="row" style="
+    background-color: #EFEFEF;
+    padding: 15px;
+">
+        <div class="col-md-7 col-sm-12 col-xs-12">
+            <a ui-sref="rfa.dashboard" class="a-green">&larr; Back to Dashboard</a>
+            <h2 class="col-md-12" ng-if="!vm.originTemplate.id && !vm.loading">Create Upload Template</h2>
+            <h2 class="col-md-12" ng-if="vm.originTemplate.id && !vm.loading">
+                <text-edited-field type="Exhibit Name" ng-model="vm.originTemplate.templateName" match="[a-z0-9\-\!\@\#\$\%\^\&amp;\*\(\)\_\+\\\|\}\{\[\]\�\�\:\;\&lt;\&gt;\/\~\* ]">
+                </text-edited-field>
+            </h2>
+        </div>
+        <div class="col-md-5 col-sm-12 col-xs-12 template-create_buttons" ng-if="!vm.loading">
+            <button class="btn btn-green" ng-click="vm.cancel()">Cancel</button>
+            <button class="btn btn-success" ng-click="vm.save()">Save</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 template-create_form" ng-show="!vm.loading">
+            <form name="uploadTemplateForm">
+                <div class="row" style="float:right;margin-right: 0px;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 template-create_buttons template-create_buttons-additional">
+                        <span class="btn btn-green" formnovalidate ng-click="vm.showPopupAddAttribute()"
+                            ng-disabled="vm.allAttributesAdded()">Add Attribute</span>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Label<span class="required">*</span></th>
+                            <th>Rules</th>
+                            <th>Entity Identifier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in vm.templateModel" ng-class="{'template-create_form_category': row.category}"
+                            ng-if="row.isShow">
+                            <td width="30%" class="attribute-name" ng-class="[row.class]">
+                                <span ng-class="{'template-create_form_attribute--required': row.redIndicator}" ng-bind="row.attributeName"></span>
+                                <span ng-class="[row.class]"></span>
+                            </td>
+                            <td width="30%" class="template-create_form_label" style="margin:5px;">
+                                <input ng-if="row.label === 'input'" type="text" ng-model="row.fieldLabel" ng-class="{'invalid': uploadTemplateForm.$submitted && uploadTemplateForm[row.alias + 'Label'].$invalid}"
+                                    ng-disabled="vm.isDisabled(row)" name="{{row.alias + 'Label'}}" ng-required="row.required && !vm.isDisabled(row)"
+                                    minlength="1" maxlength="250">
+                                <span ng-if="row.label === 'placeholder'" class="template-create_form_label_placeholder"
+                                    ng-bind="row.labelText"></span>
+                                <select ng-if="row.label === 'select'" class="template-create_form_label_select"></select>
+                            </td>
+                            <td width="30%">
+                                <div ng-if="vm.rules[row.fieldRuleIdentifier].values.length > 1">
+                                    <input type="hidden" name="{{row.aliasRule}}" ng-model="row.rule" required>
+                                    <div class="dropdown" dropdown dropdown-toggle ng-class="{'invalid': uploadTemplateForm.$submitted && uploadTemplateForm[row.aliasRule].$invalid}">
+                                        <span href class="dropdown-toggle">
+                                            <span class="file-sprite" title="{{row.rule}}">{{row.rule? row.rule :
+                                                '&nbsp;'}}</span>
+                                            <i class="fa fa-chevron-down pull-right"></i>
+                                        </span>
+                                        <ul class="dropdown-menu big-dropdown">
+                                            <li ng-repeat="choice in vm.rules[row.fieldRuleIdentifier].values">
+                                                <span class="dropdown-menu_select" ng-click="row.rule = choice" title="{{choice}}">
+                                                    {{choice}}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="template-create_form_label_placeholder" title="{{vm.rules[row.fieldRuleIdentifier].values[0]}}"
+                                    ng-if="vm.rules[row.fieldRuleIdentifier].values.length === 1">
+                                    {{vm.rules[row.fieldRuleIdentifier].values[0]}}
+                                </div>
+                            </td>
+                            <td width="10%">
+                                <label ng-if="row.ableToIdentify" class="pointer identify">
+                                    <input type="checkbox" class="checkbox" name="{{row.alias + 'Checkbox'}}" ng-model="row.entityIdentifier"
+                                        ng-required="vm.isRequiredIdentifier(row)" ng-change="vm.checkboxSelect(row)">
+                                    <span ng-class="{'invalid_checkbox': uploadTemplateForm.$submitted && uploadTemplateForm[row.alias + 'Checkbox'].$invalid}"></span>
+                                </label>
+                                <span class="removable" ng-if="row.removable" ng-click="vm.hideAtrribute(row)"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row" style="float:right;margin-right: 2px;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 template-create_buttons template-create_buttons-additional">
+                        <span class="btn btn-green btn-sm" ng-click="vm.addExhibit(evt)">Add Exhibit Column</span>
+                    </div>
+                </div>
+                <table class="table table_exhibits">
+                    <thead style="background: #efefef;">
+                        <tr>
+                            <th>Exhibit</th>
+                            <th>Label<span class="required">*</span></th>
+                            <th>Alias Label</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="exhibit in vm.exhibits">
+                            <td width="30%">
+                                {{exhibit.fieldIdentifier}}
+                            </td>
+                            <td width="30%" class="template-create_form_label">
+                                <input type="text" name="{{'exhibit'+($index+1)}}" maxlength="250" minlength="1"
+                                    ng-change="vm.checkExhibitsDuplicate()" ng-model="exhibit.fieldLabel" ng-disabled="exhibit.isDisabled"
+                                    ng-class="{'invalid': uploadTemplateForm.$submitted && uploadTemplateForm['exhibit'+($index+1)].$invalid}"
+                                    required>
+                            </td>
+                            <td class="template-create_form_label">
+                                <input type="text" name="{{'exhibit'+($index+1)+'alias'}}" ng-model="exhibit.aliasLabel"
+                                    ng-change="vm.checkExhibitsDuplicate()" ng-class="{'invalid': uploadTemplateForm.$submitted && uploadTemplateForm['exhibit'+($index+1)+'alias'].$invalid}">
+                            </td>
+                            <td>
+                                <span class="removable" ng-if="$index > 0" ng-click="vm.removeExhibit(exhibit)"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </form>
+        </div>
+        <div class="table-loader" ng-if="vm.loading">
+            <span>
+                <i class="fa fa-spin fa-circle-o-notch"></i> Loading...</span>
+        </div>
+    </div>
+
+</div>

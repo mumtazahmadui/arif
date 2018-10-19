@@ -1,0 +1,205 @@
+<div class="esign">
+  <div class="col-md-5 col-sm-12 col-xs-12">
+      <progress-indicator state=1 labels="Response Required, Electronic Signature"></progress-indicator>
+  </div>
+  <div class="col-md-5 col-md-offset-2 col-sm-12 col-xs-12">
+      <quick-links></quick-links>
+  </div>
+
+  <!-- Preview of Letter -->
+  <div class="col-xs-12">
+    <div class="topline text-right">
+        <a class="btn sprite-button-print" ng-href="{{PDFLinkClick}}" target="blank"></a>
+        <span class="btn btn-danger" ng-click="uploadSignedRFA()">Upload Signed RFA</span>
+        <span class="btn btn-danger" ng-click="downloadRFA()">Download RFA</span>
+      <a class="btn btn-danger" ng-href="{{'#/rfa/company/amendmentLetter'}}">Exit</a>
+    </div>
+  </div>
+  <div class="col-xs-12">
+      <div class="pdf-header">
+          A signature is required for the document. Please use e-Sign below or click on “Download RFA” to download Request for Amendment. Click on “Upload Signed RFA” to upload signed Request for Amendment.<br>
+          For e-Sign please scroll through entire document to activate the e-Sign panel below for completion.<br>
+          For wet Sign IHS Markit shall have no responsibility in respect of or in connection with (i) any inaccuracy, error or omission, regardless of cause, in any of the Service (including, but not limited to, any incorrect document uploads by you or your users); or (ii) any advice, opinion, recommendation, guidance, forecast, judgment, publication, conclusion or any course of action (or inaction) you made or took in reliance of, or based on, any of the Service.
+       </div>
+  </div>
+  <div class="col-xs-12">
+     <!-- PDF -->
+     <div id="pdf-holder"></div>
+
+  </div>
+
+
+  <!-- ESign Form -->
+  <div class="col-xs-12">
+    <div class="frame-border">
+      <form class="form-horizontal" name="eSignForm" ng-submit="saveChanges()" ng-init="setForm(this)" novalidation>
+
+      	<div class="col-xs-12 single-line">
+      		<div><i>Signatory must select signature placeholders signing for</i></div>
+      		<div class="row">
+      			<div class="col-xs-3">
+      				<b>SIGNATURE PLACEHOLDERS</b>
+      			</div>
+      			<div class="col-xs-4">
+      				<div ng-repeat="i in vm.signaturesPH track by $index">
+					<label ng-for="'placeholder-checkbox' + $index" class="for-checkbox nowrap">
+						<input type="checkbox" class="checkbox" ng-id="'placeholder-checkbox-' + $index" ng-model="vm.signaturesPH[$index]" ng-change="changeSignPlaceholders()">
+						<span></span>
+						Sellside Sign ({{$index + 1}})
+					</label>
+
+      				<!-- input type="checkbox" -->
+
+      				</div>
+      			</div>
+      		</div>
+      	</div>
+
+
+        <p class="text-danger" ng-show="!docsReaded && showError">&nbsp;You must scroll down to the end of the document before you can accept the Terms of Use</p>
+        <div class="col-xs-12 single-line">
+
+          <div class="form-group col-xs-12 col-md-12" ng-click="vm.checkIsError()">
+            <label class="agreement">
+                Pursuant to the <a href="" ng-disabled="!docsReaded" ng-click="showTermsOfUse()">Terms of Use</a>, I hereby confirm that I am an authorised signatory and hereby attest to the truth, <br/>accuracy and completeness of the document(s).
+
+                <label class="btn btn-link esign-acceptance" ng-disabled="!docsReaded" ng-click="docsReaded && vm.setAccepted(true)"><span ng-class="{disabled: !docsReaded, checked: vm.accepted == true}" class="btn sprite-radio"></span>Accept</label>
+                <label class="btn btn-link esign-acceptance" ng-disabled="!docsReaded" ng-click="docsReaded && vm.setAccepted(false)"><span ng-class="{disabled: !docsReaded, checked: vm.accepted == false}" class="btn sprite-radio"></span>Decline</label>
+            </label>
+            <span class="guard" ng-show="submited && eSignForm.agree.$error.required ">This is a required field</span>
+          </div>
+
+        </div>
+
+        <div class="col-xs-12 single-line">
+          <div class="form-inline">
+            <label class="control-label" for="name">I </label>
+            <input class="form-control" type="text" id="name" name="name"
+            	ng-model="vm.data.name"
+            	ng-change="loadSign(vm.data.esignStyle || 1)"
+            	required=""
+            	style="width:300px;"
+            	ng-pattern="/^(?!\s*$).+/"
+            	placeholder="Name of authorized signatory"
+            	taiplaceholder="Name of authorized signatory"
+            	ng-disabled="!vm.accepted || !vm.atleastOnePlaceholders"
+            >, attest to the accuracy of the contents of this document.
+            <span class="guard" ng-show="eSignForm.name.$error.pattern">Not valid Name</span>
+            <span class="guard" ng-show="submited && eSignForm.name.$error.required ">This is a required field</span>
+          </div>
+        </div>
+
+		<div class="col-xs-12 single-line">
+			<textarea ng-disabled="!vm.accepted || !vm.atleastOnePlaceholders" class="form-control wide" rows="4" ng-model="vm.data.signText" ng-change="vm.changeDate('signText');showPreview()" maxlength="300"></textarea>
+		</div>
+
+        <div class="col-xs-12 single-line">
+          <div class="col-xs-6 col-sm-4">
+            <label class="control-label" for="name2">NAME OF SIGNATORY</label>
+            <input class="form-control" type="text" id="name2" name="name2" ng-model="vm.data.name" disabled="disabled">
+          </div>
+          <div class="col-xs-6 col-sm-4">
+            <label class="control-label" for="title">TITLE</label>
+            <input class="form-control" type="text" id="title" name="title" ng-model="vm.data.title" required="" ng-disabled="!vm.accepted || !vm.atleastOnePlaceholders" ng-change="vm.changeDate('title'); showPreview()">
+            <span class="guard" ng-show="submited && eSignForm.title.$error.required ">This is a required field</span>
+          </div>
+          <div class="col-xs-6 col-sm-4">
+            <label class="control-label" for="companyName">COMPANY</label>
+            <input class="form-control" type="text" id="companyName" name="companyName" ng-model="vm.companyName" disabled="disabled">
+          </div>
+        </div>
+
+        <div class="col-xs-12">
+          <hr>
+        </div>
+
+        <div class="col-xs-12">
+          <div class="col-xs-6 col-sm-4 single-line">
+            <label class="control-label" for="phone">CONTACT TELEPHONE</label>
+            <input class="form-control" type="text" id="phone" name="phone" ng-model="vm.data.phone" ng-pattern="/^\+?\d{1,}[-\.\ )]?\(?\d{2,}\)?[-\.\ )]?\d{3,}[-\.\ )]?\d{2,}[-\.\ )]?\d{2,}$/" ng-disabled="!vm.accepted || !vm.atleastOnePlaceholders">
+            <span class="guard" ng-show="eSignForm.phone.$error.pattern">Not valid phone number</span>
+          </div>
+          <div class="col-xs-6 col-sm-4 single-line">
+            <label class="control-label" for="mail">CONTACT EMAIL</label>
+            <input class="form-control" type="text" id="mail" name="mail" ng-model="vm.data.mail" ng-pattern="/^([a-zA-Z0-9_\.-]+)@([\da-zA-Z\.-]+)\.([a-zA-Z\.]{2,6})$/" ng-disabled="true" ng-change="showPreview()">
+            <span class="guard" ng-show="eSignForm.mail.$error.pattern">Not valid EMail</span>
+          </div>
+          <!-- <div class="col-xs-6 col-sm-4 single-line">
+            <label class="control-label" for="name3">SIGNATORY</label>
+
+            <p class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="showPreview()" ng-disabled="!vm.accepted">
+                  <i class="fa fa-pencil"></i>
+                </button>
+              </span>
+                      <input class="form-control {{vm.signatoryStyle}}" type="text" id="name3" name="name3" ng-model="vm.data.name" disabled="disabled">
+                  </p>
+          </div> -->
+          <div class="col-xs-6 col-sm-4 single-line">
+            <label class="control-label" for="date">DATE</label>
+             <p class="input-group form-control date-field" ng-class="{'ng-invalid': eSignForm.date.$pristine}">
+                <input type="date" id="date" name="date" class="form-control" ng-model="vm.data.date" ng-required="true" disabled="disabled" />
+                <span class="input-group-btn">
+                  <button
+                    type="button"
+                    class="btn btn-default form-control"
+                          ng-class="{'btn-date-pristine': eSignForm.date.$pristine}"
+                    style="margin-left: 0px;"
+                    ng-click="vm.setEsignDate($event)"
+                    ng-disabled="!vm.accepted || !vm.atleastOnePlaceholders">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                   </button>
+                </span>
+              </p>
+              <span class="guard" ng-if="vm.accepted && vm.atleastOnePlaceholders && eSignForm.date.$pristine">Please click above to acknowledge the signature date!</span>
+          </div>
+        </div>
+
+        <div class="col-xs-12" ng-show="privewShown && vm.data.name && vm.accepted && vm.atleastOnePlaceholders">
+          <hr>
+
+          <div class="col-xs-6 single-line">
+            <label class="control-label">PREVIEW</label>
+            <div class="sign-preview">
+              <!--<img ng-src="{{esignImage+vm.data.esignStyle}}">-->
+              <img ng-repeat="eImage in vm.imagetStack" ng-show="esignImage == eImage" ng-src="{{eImage}}">
+            </div>
+          </div>
+
+          <div class="col-xs-6 single-line">
+            <label class="control-label">CHANGE STYLE</label>
+              <div class="sign-style-container">
+                  <table class="sign-table">
+                      <tbody>
+                      <tr ng-repeat="n in [1,2,3,4,5]">
+                          <td>
+                              <a class="{{'sign-style sign-style-' + n}}" ng-click="loadSign(n)">{{vm.data.name}}</a>
+                          </td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12">
+          <hr class="last">
+          <p class="col-xs-12 col-sm-9">
+            By clicking "Confirm", I agree that this marking (which is currently a preview of my digital signature) will become the electronic representation of my signature for this specific document. I will need to accept and acknowledge that a digital representation of my signature will be applied for each subsequent document I wish to electronically sign. Also, I understand that recipients of documents which have been electronically signed within the Markit System, will be able to see my Markit Counterparty Manager login, which may be the same as my business email address.
+          </p>
+          <div class="col-xs-12 col-sm-3 text-right">
+            <a ng-href="{{'#/rfa/company/amendmentLetter'}}" class="btn btn-default">Cancel</a>
+            <button type="button" class="btn btn-success" ng-click="saveChanges()" ng-disabled="eSignForm.$invalid || !vm.accepted || !esignImage || eSignForm.name.$error.pattern || eSignForm.phone.$error.pattern || eSignForm.mail.$error.pattern || eSignForm.date.$pristine || !vm.atleastOnePlaceholders">Confirm</button>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div class="loading" ng-hide="loaded">
+    <i class="fa fa-circle-o-notch fa-spin"></i> {{ notificationText }}
+  </div>
+</div>

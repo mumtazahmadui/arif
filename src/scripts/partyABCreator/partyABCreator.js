@@ -1,0 +1,1 @@
+/*TODO move config there from controller file after changing gulp build or adding angularFileSort task*/

@@ -1,0 +1,214 @@
+.terms-of-use .modal-dialog{
+  width: 614px;
+}
+.esign {
+  button.btn.btn-date-pristine{
+    background: rgb(204, 34, 36);
+    color: white;
+  }
+
+  .ng-invalid {
+    border-color: red !important;
+  }
+
+  .tooltip.tooltip-danger{
+    .tooltip-arrow{
+      border-top-color:#CC2224!important;
+    }
+    .tooltip-inner{
+      background: #CC2224!important;
+    }
+  }
+
+  & .agreement {
+    font-weight: 100;
+
+    & a{
+      color: black;
+      text-decoration: underline;
+    }
+
+    & .esign-acceptance{
+      text-decoration: none;
+      color: black;
+      cursor: pointer;
+
+      &:hover{
+        text-decoration: none;
+        color: black;
+      }
+
+      & span {
+        margin: -5px 5px 0 0;
+      }
+    }
+  }
+  & .pdf-header {
+    padding: 0 10px 10px 10px;
+    background: #f5f5f5;
+    color: #7f7777;
+    font-size: 12px;
+  }
+  & #pdf-holder{
+    border: 1px solid @filter-background;
+    width: 100%;
+    max-height: 30em;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: @task-panel-background;
+    text-align: center;
+  }
+  & p.date-field {
+    padding: 0;
+  }
+  & .frame-border{
+    border: 1px solid @filter-background;
+  }
+  & .topline {
+    background-color: @task-panel-background;
+    padding: .8em 1.2em;
+  }
+  & .btn {
+    border-radius: 2px;
+
+    &.sprite-button-print{
+      min-width: 30px;
+    }
+    &.btn-danger {
+      background-color: #045a8c;
+      border: 0 none;
+      height: 30px;
+      padding: 6px 16px;
+      min-width: 90px;
+      &:hover {
+        background-color: darken(#045a8c, 10%);
+      }
+    }
+
+    &.btn-success {
+      border: 0 none;
+      background-color: #7fb74b;
+      height: 30px;
+      padding: 6px 16px;
+      min-width: 90px;
+      &:hover {
+        background-color: darken(#7fb74b, 10%);
+      }
+    }
+  }
+
+  & .single-line{
+    margin: 1em 0;
+  }
+
+  & ul.dropdown-menu {
+    & table .btn {
+      background: none;
+      border: none
+    }
+  }
+
+  & form.ng-dirty{
+    & input.ng-invalid{
+      border-color: @input-error-color;
+    }
+  }
+
+  & span.guard{
+    font-weight: normal;
+    font-size: .75em;
+    color: @input-error-color;
+    display: block;
+    margin-left: 2.5em;
+    margin-bottom: -1.4em;
+  }
+
+  & .panel-blue{
+    margin: .15em 0;
+    background-color: @navigation;
+    color: #fff;
+    padding: .25em;
+  }
+
+  & hr{
+    border-top: 2px solid @filter-background;
+    margin: 0;
+    &.last{
+    	margin-bottom: 3em;
+    }
+  }
+
+
+  & .sign-preview{
+    border: 1px solid @filter-background;
+    padding: 1em;
+    height: 182px;
+    overflow-y: auto;
+  }
+  & .sign-style-container{
+    overflow-y: auto;
+    & .sign-table{
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 19px;
+      .sign-style{
+        border: 1px solid @filter-background;
+        padding: 7px 11px;
+        font-size: 1.5em;
+        display: block;
+        color: @side-module-title-bar;
+        &:hover{
+          color: black;
+        }
+      }
+    }
+  }
+  & .sign-style-1{
+    font-family: 'blackjackregular';
+  }
+
+  & .sign-style-2{
+    font-family: 'bilboregular';
+  }
+
+  & .sign-style-3{
+    font-family: 'calligraffittiregular';
+  }
+
+  & .sign-style-4{
+    font-family: 'alex_brushregular';
+  }
+
+  & .sign-style-5{
+    font-family: 'alluraregular';
+
+  }
+
+  & .loading {
+    position: fixed;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    opacity: .75;
+    text-align: center;
+    color: #444;
+    padding-top: 10%;
+    font-size: 1.5em;
+    transition: .5s linear all;
+    z-index: 1000;
+    & i {
+      padding: .3em;
+    }
+    &.ng-hide {
+      opacity: 0;
+    }
+  }
+}
+
+.tooltip .tooltip-inner {
+  padding: 10px;
+}
+.audit-tooltip .border-btn {
+    padding-bottom: 4px !important;
+    margin-bottom: 4px;
+}

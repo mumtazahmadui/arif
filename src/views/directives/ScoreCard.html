@@ -1,0 +1,15 @@
+<div class="score-card">
+	<div class="step" ng-repeat="label in labels" ng-class="{ passed: $index<state-2, dashed: $index<labels.length-1 }">
+		<div class="progress-round pull-left vcenter" ng-class="{ passed: $index<state-1, active: $index==state-1 }">
+			<span ng-show="$index>=state-1">{{ $index+1 }}</span>
+			<i class="fa fa-check" ng-show="$index<state-1"></i>
+		</div>
+		<!-- <div class="progress-label pull-right vcenter">
+			Actions<br>Actions2<br>Actions3<br>Actions4
+		</div> -->
+		<div class="progress-label vcenter">
+			<a ng-href="{{label[1]}}">{{ label[0] }}</a>
+		</div>
+		<span class="clearfix"></span>
+	</div>
+</div>

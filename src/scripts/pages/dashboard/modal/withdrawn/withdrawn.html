@@ -1,0 +1,43 @@
+<div class="modelHeader" style="padding: 15px;">
+        <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+                <span>x</span></button>
+    <h3 class="modal-title">Select Pending Party B to be Withdrawn</h3>
+</div>
+<div class="modal-body fixed-size-blue">
+    <div class="file-table scroll-area-blue">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="nowrap text-left">True Legal Name</th>
+                    <th class="nowrap text-center">Client Identifier</th>
+                    <th class="nowrap text-right">Pre LEI/LEI</th>
+                    <th class="nowrap text-right">Select</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in data.data track by $index" ng-if="item.isAdded && item.acknowledgementStatus == 'PENDING'">
+                <td class="text-left">
+                    <a href="">{{ item.entity.name | truncate:50 }}</a>
+                </td>
+                <td class="text-center">
+                    {{ item.entity.clientIdentifier | truncate:25 }}
+                </td>
+                <td class="text-right">
+                    {{ item.entity.lei | truncate:20}}
+                </td>
+                <td class="text-right">
+                    <input type="checkbox" class="hide" ng-model="item.selected">
+
+                    <label ng-click="item.selected = !item.selected">
+                        <span class="sprite-checkbox" ng-class="{'sprite-checkbox-checked' : item.selected}"></span>
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-green" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-lightgreen" autofocus ng-click="ok()">Withdraw</button>
+</div>

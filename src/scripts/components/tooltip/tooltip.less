@@ -1,0 +1,101 @@
+.rfa-tooltip-content {
+    h6 {
+        font-size: 14px;
+        font-weight: bold;
+        text-align: left;
+        margin-top: 0;
+        line-height: 16px;
+    }
+    //styles for loaders inside tooltip
+    .loading {
+        position: absolute;
+        background: none;
+        padding-top: 0;
+        margin: 0;
+        min-width: 40px;
+        min-height: 40px;
+        top: 0;
+        left: 0;
+    }
+    .loader {
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(12, 93, 145, 1) 50% 50% no-repeat;
+    }
+    //styles for grid
+    //Note we use table on div because of scrollable body
+    .rfa-tooltip-grid {
+        &__head {
+            font-weight: bold;
+        }
+        &__body {
+            max-height: 200px;
+            .rfa-tooltip-grid__row:last-child {
+                border: none;
+            }
+        }
+        &__row {
+            border-bottom: 1px solid #fff;
+        }
+        &__cell {
+            line-height: 15px;
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 9px;
+            &--in-row {
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            //part for overriding depends on table
+            width: 100px;
+        }
+    }
+}
+
+@controls-links: #4D525A;
+
+.popover.top > .arrow {
+    border-top-color: transparent;
+    margin-left: -21px;
+}
+
+.popover {
+    background-color: @controls-links;
+    border-color: @controls-links;
+    max-width: 100%;
+    border-radius: 0;
+}
+
+.popover.top > .arrow:after {
+    border-top-color: @controls-links;
+}
+
+.popover.bottom > .arrow:after {
+    border-bottom-color: @controls-links;
+}
+
+.popover.left > .arrow:after {
+    border-left-color: @controls-links;
+}
+
+.popover.right > .arrow:after {
+    border-right-color: @controls-links;
+}
+
+.popover-content {
+    background-color: @controls-links;
+    padding: 15px;
+    color: #fff;
+}
+
+.bslegal {
+    left: 957px !important;
+}
+
+.bslegal div.audit-tooltip .audit-tooltip-inner {
+    padding: 5px !important;
+    border-radius: 3px !important;
+    min-width: 200px !important;
+}

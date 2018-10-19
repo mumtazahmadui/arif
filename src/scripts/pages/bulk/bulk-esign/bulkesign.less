@@ -1,0 +1,273 @@
+.bulk-esign-list {
+    .error-message {
+        color: #cf2026;
+        margin-bottom: 15px;
+        a.sprite-file-pdf {
+            line-height: 21px;
+        }
+    }
+    .tou-link {
+        color: black;
+        text-decoration: underline;
+    }
+    .bulk-operation-list-panel {
+        background-color: #f8f8f8;
+        margin-top:30px;
+        .rfa-count {
+            position: relative;
+            top: -20px;
+            margin-right: 5px;
+            font-weight: bold;
+            color: #00598c;
+        }
+        .table-header-container {
+            padding: 10px 0 0;
+            table {
+                width: 100%;
+                th {
+                    border-bottom: 2px solid #ddd;
+                    color: #666;
+                    font-size: 10px;
+                    font-weight: normal;
+                    padding: 6px;
+                    line-height: 1.4;
+                    vertical-align: middle;
+                    &:last-child {
+                        text-align: right;
+                    }
+                }
+            }
+        }
+        .table-scroller {
+            table {
+                width: 100%;
+                tr.amendment-row > td {
+                    vertical-align: top;
+                    padding: 6px;
+                    line-height: 1.4;
+                    font-size: 12px;
+                    border-bottom: 1px solid #ddd;
+                    &:last-child {
+                        text-align: right;
+                    }
+                    textarea {
+                        height: 60px;
+                        width: 100%;
+                    }
+                    table {
+                        tr.amendment-placeholder-row td {
+                            vertical-align: top;
+                            line-height: 20px;
+                            padding-right: 5px;
+                            label {
+                                color: #ccc;
+                                margin-bottom: 2px;
+                                &.selected {
+                                    color:inherit;
+                                }
+                                span {
+                                    vertical-align: middle;
+                                }
+                            }
+                        }
+                    }
+                }
+                tr.amendment-row:last-child > td {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+    .buttons {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+}
+.rfa-viewer {
+    .modal-dialog {
+        width: 90%;
+        h1 {
+            margin-top:0;
+        }
+        .modal-header {
+            padding: 10px;
+            border-bottom: none;
+        }
+        .modal-body {
+            padding: 0 20px 10px;
+        }
+        .modal-pdf {
+            height: 600px;
+            overflow: hidden;
+            margin-right: -15px;
+        }
+        .amendment-id {
+            color: #00598c;
+            margin-bottom: 15px;
+        }
+    }
+}
+.bulk-esign-sign {
+    .single-line{
+        margin: 1em 0;
+    }
+    .frame-border{
+        border: 1px solid #cbcaca;
+        margin-top: 30px;
+        .documents-count {
+            float: right;
+            position: relative;
+            top: -20px;
+        }
+        .agreement {
+            font-weight: 100;
+            a {
+                color: black;
+                text-decoration: underline;
+            }
+            .esign-acceptance{
+                text-decoration: none;
+                color: black;
+                cursor: pointer;
+        
+                &:hover{
+                    text-decoration: none;
+                    color: black;
+                }
+        
+                span {
+                    margin: -5px 5px 0 0;
+                }
+            }
+        }
+        .ng-invalid {
+            border-color: red !important;
+        }
+        p.date-field {
+            padding: 0;
+        }
+        span.guard {
+            font-weight: normal;
+            font-size: .75em;
+            color: #cf2026;
+            display: block;
+            margin-left: 2.5em;
+            margin-bottom: -1.4em;
+        }
+        hr {
+            border-top: 2px solid #cbcaca;
+            margin: 0;
+            &.last{
+                margin-bottom: 3em;
+            }
+        }
+    }
+    .sign-preview{
+        border: 1px solid #cbcaca;
+        padding: 1em;
+        height: 182px;
+        overflow-y: auto;
+    }
+    .sign-style-container {
+        overflow-y: auto;
+        .sign-table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 19px;
+            .sign-style {
+                border: 1px solid #cbcaca;
+                padding: 7px 11px;
+                font-size: 1.5em;
+                display: block;
+                color: #545E6B;
+                &:hover{
+                    color: black;
+                }
+            }
+        }
+    }
+    .sign-style-1{
+        font-family: 'blackjackregular';
+    }
+
+    .sign-style-2{
+        font-family: 'bilboregular';
+    }
+
+    .sign-style-3{
+        font-family: 'calligraffittiregular';
+    }
+
+    .sign-style-4{
+        font-family: 'alex_brushregular';
+    }
+
+    .sign-style-5{
+        font-family: 'alluraregular';
+    }
+    .tou-link {
+        color: black;
+        text-decoration: underline;
+    }
+    .btn {
+        border-radius: 2px;
+        &.btn-date-pristine {
+            background: #cc2224;
+            color: #fff;
+        }
+        &.btn-danger {
+            background-color: #045a8c;
+            border: 0 none;
+            height: 30px;
+            padding: 6px 16px;
+            min-width: 90px;
+            &:hover {
+                background-color: darken(#045a8c, 10%);
+            }
+        }
+
+        &.btn-success {
+            border: 0 none;
+            background-color: #7fb74b;
+            height: 30px;
+            padding: 6px 16px;
+            min-width: 90px;
+            &:hover {
+                background-color: darken(#7fb74b, 10%);
+            }
+        }
+    }
+    .loading {
+        position: fixed;
+        background: #fff;
+        width: 100%;
+        height: 100%;
+        opacity: .75;
+        text-align: center;
+        color: #444;
+        padding-top: 10%;
+        font-size: 1.5em;
+        transition: .5s linear all;
+        z-index: 1000;
+        top: 0;
+        i {
+            padding: .3em;
+        }
+        .ng-hide {
+            opacity: 0;
+        }
+    }
+}
+
+.esign-bulk-view {
+    .loading {
+        height: 84%;
+    }
+    #pdf-holder{
+        width: 100%;
+        max-height: 40em;
+        overflow-y: auto;
+        overflow-x: auto;
+        text-align: center;
+    }
+}

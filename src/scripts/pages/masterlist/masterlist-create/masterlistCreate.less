@@ -1,0 +1,141 @@
+.button (@color, @color-hover) {
+  padding: 8px 16px;
+  border-radius: 2px;
+  min-width: 90px;
+  background-color: @color;
+  &:hover {
+    background-color: @color-hover;
+  }
+}
+
+.text-input (@width) {
+    border-radius: 0px;
+    height: 25px;
+    width: @width;
+    padding-left: 7px;
+    background: #ecfaf3;
+    border: 1px solid #a9d3d3;
+    &.invalid {
+      border-color: red;
+    }
+  }
+
+.masterlist-create {
+  &_buttons {
+    text-align: right;
+    margin-top: 50px;
+    .btn:focus {
+      outline: none;
+    }
+    .btn-primary {
+      .button(#045a8c, #033a5a);
+    }
+    .btn-success {
+      .button(#7fb74b, #66943b);
+      &:focus {
+        border-color: #4cae4c;
+      }
+    }
+  }
+  &_form {
+     margin-top: 15px;
+   .table {
+          thead {
+            tr {
+              border-top: 1px solid #ddd;
+            }
+          }
+          td {
+            border: 1px solid #ddd;
+          }
+          tbody {
+            tr:first-child {
+              td {
+                padding-top: 5px;
+              }
+            }
+          }
+        }
+    &_category {
+      position: relative;
+      td {
+        font-weight: bold;
+        span {
+          display: inline-block;
+          background-color: #ffffff;
+          padding-right: 10px;
+        }
+      }
+      &::after {
+        content: '';
+        display: block;
+        width: 95%;
+        height: 1px;
+        background-color: #ddd;
+        position: absolute;
+        left: 5%;
+        margin-top: 15px;
+        z-index: -1;
+      }
+    }
+    &_attribute--required{
+      position: relative;
+      &::after {
+        content: '*';
+        color: red;
+        display: inline-block;
+        position: absolute;
+        right: -10px;
+      }
+    }
+   &_order {
+          input {
+            width: 25px;
+            height: 25px;
+            border-radius: 0px;
+            border: 1px solid #a9d3d3;
+            padding-left: 7px;
+            background: #ecfaf3;
+            outline: none;
+            &:not(disabled) {
+              cursor: pointer;
+            }
+            &:disabled {
+              background-color: #dfece6;
+            }
+            
+          }
+        }
+        .invalid {
+          border-color: red;
+          &_checkbox{
+            border: 1px solid red;
+          }
+        }
+        &_label {
+          input {
+            .text-input(300px);
+            &:disabled {
+              background-color: #dfece6;
+            }
+          }
+          &_placeholder {
+            cursor: pointer;
+            width: 300px;
+            display: block;
+            border-radius: 0px;
+            // border: 1px #ddd solid;
+            margin-left: 0px;
+            padding: 3px 15px 2px 10px;
+            height: 25px !important;
+            overflow: visible !important;
+            // background: #ddd;
+            font-weight: 600;
+          }
+          &_select {
+            width: 300px;
+            height: 25px;
+          }
+        }
+      }
+  }

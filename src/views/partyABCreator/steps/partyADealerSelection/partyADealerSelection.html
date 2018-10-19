@@ -1,0 +1,46 @@
+<!-- <div class="modal-title">
+    <h1>Select Party A Relationships</h1>
+</div> -->
+<div class="modal-body">
+    <div class="row tight-fix">
+        <div class="col-xs-2">Counterparty True<br/> Legal Name</div>
+        <div class="col-xs-2">Investment Manager</div>
+        <div class="col-xs-2">Masterlist Identifier</div>
+        <div class="col-xs-2">Agreement Type</div>
+        <div class="col-xs-2">Reference Master<br/> Agreement Date</div>
+        <div class="col-xs-2 lastdiv">
+            <a ng-if="!ds.showDeselect()" ng-click="ds.selectAll()"><u>Select All</u></a>
+            <a ng-if="ds.showDeselect()" ng-click="ds.deselectAll()"><u>Deselect All</u></a>
+        </div>
+    </div>
+    <div class="long-holder fixed-size-blue" slim-scroll settings="{height:'430px'}">
+        <div class="scroll-area-blue">
+            <div class="text-center col-xs-12" ng-show="!inputData.masterAgreements.length">
+                <h1 ng-show="!ds.loaded"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</h1>
+                <h1 ng-show="ds.loaded"><i class="fa fa-exclamation-triangle"></i>There is no Party A items!</h1>
+            </div>
+            <div class="row step2-items" ng-repeat="entity in inputData.masterAgreements track by $index"
+                 ng-show="!entity.deleted">
+                <div class="col-xs-2 long-holder break-word"> {{ entity.partyA.trueLegalName || entity.partyA.name }}</div>
+                <div class="col-xs-2 long-holder break-word fix-left-alignment"> {{ entity.investmentManager.trueLegalName ||
+                    entity.investmentManager.name }}
+                </div>
+                <div class="col-xs-2 long-holder break-word fix-left-alignment"> {{ entity.masterlistIdentifier }}</div>
+                <div class="col-xs-2 long-holder break-word fix-left-alignment"> {{ entity.agreementType }}</div>
+                <div class="col-xs-2 fix-left-alignment-date"> {{ entity.agreementDate | date : 'dd-MMM-yyyy'}}</div>
+                <div class="col-xs-2 text-center">
+                    <label ng-for="'party-a-checbox-'+$index" class="for-checkbox">
+                        <input type="checkbox" class="hide" ng-id="'party-a-checbox-'+$index"
+                               ng-model="entity.selected" ng-change="ds.selectPartyA()">
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <span ng-show="waiting"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</span>
+    <button class="btn btn-green" autofocus ng-click="ds.back()">Back</button>
+    <button class="btn btn-lightgreen" ng-click="ds.next()" ng-disabled="inputData.selectedPartyA.length<=0">Next</button>
+</div>

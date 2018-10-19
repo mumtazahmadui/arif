@@ -1,0 +1,8 @@
+<div class="{{content.class}}">
+    <ul class="list-unstyled border-btn" ng-repeat="data in auditData.data | limitTo:5">
+        <li ng-if="data.deskStatus">Checked on {{data.actionDate}} by</li>
+        <li ng-if="!data.deskStatus">Unchecked on {{data.actionDate}} by</li>
+        <li>{{data.actionedBy}}</li>
+    </ul>
+<!--     <div ng-if="auditData.data.length == 5 || auditData.data.length > 5">Detailed audit available in export</div> -->
+</div>

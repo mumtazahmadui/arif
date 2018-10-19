@@ -1,0 +1,44 @@
+<!doctype html>
+<!--[if gt IE 8]><!-->
+<html data-ng-app="app" data-ng-strict-di>
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title ng-bind="title">MCPM / Markit</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <meta name="_csrf" content="${_csrf.token}"/>
+
+<!--     <link type="text/css" rel="stylesheet" href="styles/skin.min.css" />
+
+    <link type="text/css" rel="stylesheet" href="styles/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="styles/fileicon.css" />
+    <link type="text/css" rel="stylesheet" href="http://localhost:8080/build/textEditor.min.css" /> -->
+    <link type="text/css" rel="stylesheet" href="css/app.css" />
+    <!-- <link type="text/css" rel="stylesheet" href="styles/angular-toastr.css" /> -->
+    <!--[if lt IE 10]>
+        <link media="screen" type="text/css" rel="stylesheet" href="styles/app-ie.css" />
+    <![endif]-->
+</head>
+<body data-ng-controller="AppController">
+  <div rfa-iframe-double-scroll data-iframe-selector="iframe[name='MFrame']">
+    <!--<section data-ng-include=" '/views/header.html' " id="header" class="top-header"></section>-->
+    <!--section data-ng-include=" '/views/menu.html' " id="menu" class="top-menu"></section -->
+    <!--<section ng-hide="hideSubMenu" data-ng-include=" '/views/subheader.html' " id="subheader" class="sub-header"></section>-->
+    <mcpm-header></mcpm-header>
+    <div class="view-container">
+        <section ui-view="" id="content" class="nga-default nga-stagger nga-slide-up clear-fix"></section>
+    </div>
+    <!--<div class="pixel-perfect"></div>-->
+    <!-- rev-hash -->
+    <script src="js/vendor.js"></script>
+    <script src="js/app.js"></script>
+    <!-- end -->
+    <!-- rev-hash -->
+    <!-- end -->
+    <!-- script src="http://172.31.159.146:8081/build/textEditor.min.js"></script -->
+  </div>
+</body>
+</html>

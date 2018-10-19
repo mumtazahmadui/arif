@@ -1,0 +1,42 @@
+<div class="letter-editor">
+    <div class="col-md-7 col-sm-12 col-xs-12 back">
+        <a ng-click="linkTo('/rfa/company/amendmentLetter')" class="a-green">&larr; Back to Dashboard</a>
+        <h2 class="col-md-12" ng-show="vm.isNew">Create Letter Template</h2>
+        <h2 class="col-md-12" ng-show="!vm.isNew">
+            <text-edited-field type="Letter Name" ng-model="name" match="[a-z0-9\.\-\!\@\#\$\%\^\&amp;\*\(\)\_\+\\\|\}\{\[\]\�\�\:\;\&lt;\&gt;\/\~\* ]"></text-edited-field>
+        </h2>
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-12">
+        <quick-links></quick-links>
+    </div>
+    <!--  <text-editor type="letter" remove-onchange="true" editor-data="editorData" on-save="save(data)" redirect-after-save="'/rfa/company/letterTemplate/'"></text-editor> -->
+    <div class="text-editor">
+        <!--         <mc-text-editor data-content="vm.amendment.content" data-placeholders="vm.placeholders" data-options = "vm.editorOptions" data-on-validation="vm.onValidation(errors)" data-validation-rules="vm.validationRules" data-disabled="vm.disabled"> -->
+        <mc-text-editor data-options="vm.editorOptions" data-editor-instance="vm.editorInstance">
+            <div class="text-formating-tools panel hidden-print" id="toolbar">
+                <div class="row">
+                    <div class="dynamic-placeholders col-md-12">
+                        <letter-placeholder-toolbar editor-instance="vm.editorInstance"></letter-placeholder-toolbar>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-12">
+                        <div id="tiny-toolbar"></div>
+                        <!-- <div class="form-inline commands">
+                            <span class="text-formating-tools-span">
+                                <mc-text-editor-toolbar-standard/>
+                            </span>
+                        </div> -->
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-12 pull-right text-right" style="top:6px;">
+                        <button type="button" ng-click="vm.print()" class="btn sprite-button-print"></button>
+                        <button type="button" ng-click="vm.save()" ng-disabled="!vm.enableSave()" class="btn btn-green">Save</button>
+                    </div>
+                </div>
+            </div>
+        </mc-text-editor>
+        <loader is-show="isShowLoader" notification-text="notificationText"></loader>
+    </div>
+</div>
+<loader is-show="isShowLoader" notification-text="notificationText"></loader>
+</div>

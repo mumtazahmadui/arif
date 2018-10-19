@@ -1,0 +1,26 @@
+<div class="modelHeader" style="padding: 15px;">
+        <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+                <span>x</span></button>
+    <h3 class="modal-title">Add Rejection Reason</h3>
+</div>
+<form name="saveDialog" novalidate>
+    <div class="modal-body">
+        <div ng-if="isShowErrors">
+            <div class="text-danger rejectReason_error-container" ng-show="saveDialog.reasonField.$error.required">Enter reason for rejection</div>
+            <div class="text-danger" ng-show="saveDialog.reasonField.$error.maxlength">Reason must not exceed 500 characters long</div>
+        </div>
+        <textarea
+            required
+            ng-maxlength="500"
+            ng-trim="false"
+            ng-model="reason"
+            name="reasonField"
+            class="form-control no-offset rejection-reason-textarea"
+            ng-class="{'rejection-reason-textarea_type_error': (isShowErrors && !saveDialog.$valid)}"
+        ></textarea>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-green" autofocus ng-click="exit()">Exit</button>
+        <input type="submit" class="btn btn-lightgreen" ng-class="{disabled:isDisabled}" ng-click="confirm()" value="Confirm">
+    </div>
+</form>

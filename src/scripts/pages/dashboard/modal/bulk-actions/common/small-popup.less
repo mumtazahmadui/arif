@@ -1,0 +1,36 @@
+.small-popup {
+  .modal-dialog {
+    width: 430px;
+    margin: 13% auto;
+    .modal-header{
+      color: #FFFFFF;
+      background-color: #003D66;
+      h4 {
+        display: inline-block;
+        font-size: 18px;
+      }
+      .close-item {
+        float: right;
+        width: 18px;
+        height: 18px;
+        border: none;
+        margin-top: 5px;
+        background: url("../images/assets_sprite.png") -18px -232px;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    .modal-body {
+      font-size: 17px;
+      padding-top: 25px;
+    }
+    .btn-danger {
+      padding: 5px 12px;
+      min-width: inherit;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

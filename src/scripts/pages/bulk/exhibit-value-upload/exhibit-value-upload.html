@@ -1,0 +1,86 @@
+<div class="exhibit-value-upload">
+    <div class="loading" ng-show="ExValueUploadCtrl.processing">
+        <i class="fa fa-circle-o-notch fa-spin"></i> Loading...
+    </div>
+    <div class="warning-list">
+        <div class="warning" ng-if="ExValueUploadCtrl.errorRFAs">
+            [<span ng-bind="::ExValueUploadCtrl.errorCount"></span>] Selected RFA(s) are not eligible for bulk exhibit upload.
+            Please review the Error Report for details.
+            <span class="pdf-download" ng-click="ExValueUploadCtrl.downloadError()"></span>
+        </div>
+        <div class="warning" ng-if="ExValueUploadCtrl.errorMessage">
+            <span ng-bind-html="::ExValueUploadCtrl.errorMessage"></span>
+            <span class="pdf-download" ng-click="ExValueUploadCtrl.showPdfError()"></span>
+        </div>
+    </div>
+    <div class="back-link"><a ui-sref="rfa.dashboard" class="a-green">&larr; Back to Dashboard</a></div>
+    <h2>Bulk Exhibit Upload</h2>
+
+    <div class="row">
+        <div class="col-xs-4 valign-middle">
+            <a class="link" ng-class="{'not-allowed': !ExValueUploadCtrl.selectedCount()}" ng-click="ExValueUploadCtrl.selectedCount() && ExValueUploadCtrl.downloadTemplate()"
+                ng-disabled="!ExValueUploadCtrl.loaded || !ExValueUploadCtrl.selectedCount()" ng-show="ExValueUploadCtrl.items.length">
+                Download Template&nbsp;&nbsp;<span class="sprite-file-xls"></span>
+            </a>
+        </div>
+        <div class="col-xs-4 unit valign-middle">
+            <a class="link" ng-click="ExValueUploadCtrl.downloadPreview()" ng-if="ExValueUploadCtrl.uploadExists" ng-disabled="!ExValueUploadCtrl.loaded">
+                Preview Exhibit&nbsp;&nbsp;<span class="sprite-file-xls"></span>
+            </a>
+        </div>
+        <div class="col-xs-4 unit right">
+            <button class="btn btn-blue" ng-click="ExValueUploadCtrl.uploadExhibit()" ng-disabled="!ExValueUploadCtrl.loaded || !ExValueUploadCtrl.selectedCount()">
+                <span ng-if="!ExValueUploadCtrl.uploadExists">Upload Exhibit</span>
+                <span ng-if="ExValueUploadCtrl.uploadExists">Replace Exhibit</span>
+            </button>
+        </div>
+    </div>
+    <div class="row spaced">
+        <div class="col-xs-12 unit">
+           If exhibit values are not provided in the bulk upload file, the RFA(s) will remain in it's current state of 'Edit Linked Exhibit'
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 table-wrapper">
+            <table class="gray">
+                <thead>
+                    <tr>
+                        <th>RFA ID</th>
+                        <th>ISDA Master Agreement Date</th>
+                        <th>Investment Manager</th>
+                        <th>Party A True Legal Name</th>
+                        <th>Masterlist Identifier</th>
+                        <th>Exhibit Template Linked</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ExValueUploadCtrl.items">
+                        <td><a target="_blank" ng-click="ExValueUploadCtrl.showPdfRfa(item.validRfaId)" ng-bind="::item.validRfaId"></a></td>
+                        <td ng-bind="::item.masterAgreementDate | date : 'dd-MMM-yyyy'"></td>
+                        <td style="max-width: 20%"><span class="truncated"><span ng-bind="::item.investmentManager" title="{{::item.investmentManager}}"></span></span>
+                        </td>
+                        <td style="max-width: 20%"><span class="truncated"><span ng-bind="::item.partyATrueLegalName" title="{{::item.partyATrueLegalName}}"></span></span>
+                        </td>
+                        <td style="max-width: 20%"><span class="truncated"><span ng-bind="::item.masterlistIdentifier" title="{{::item.masterlistIdentifier}}"></span></span>
+                        </td>
+                        <td style="max-width: 20%"><span class="truncated"><span ng-bind="::item.linkedExhibitTemplate" title="{{::item.linkedExhibitTemplate}}"></span></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center col-xs-12 loader" ng-show="!ExValueUploadCtrl.loaded">
+                <i class="fa fa-circle-o-notch fa-spin"></i> <span ng-bind="ExValueUploadCtrl.loaderMessage"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+        </div>
+        <div class="col-xs-6 unit right">
+            <button class="btn btn-blue" ng-click="ExValueUploadCtrl.back()">Back</button>
+            <button style="height: 35px;" class="btn btn-success" ng-disabled="!ExValueUploadCtrl.loaded || !ExValueUploadCtrl.uploadExists"
+                ng-click="ExValueUploadCtrl.complete()">Continue</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="modal-rfa">
+    <div class="modelHeader" style="padding: 15px;">
+        <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+            <span>x</span></button>
+        <h3 class="modal-title">Custom Notifications</h3>
+    </div>
+    <div class="modal-body">
+        <div class="text-center col-xs-12" ng-show="!config.loaded">
+            <h1><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</h1>
+        </div>
+        <div class="row" ng-show="config.loaded">
+
+            <div class="col-md-12 topmargin" slim-scroll settings="{height:'{{slmHeight}}px'}">
+                <table class="table borderbtm">
+                    <thead>
+                        <tr>
+                            <th>RFA ID</th>
+                            <th>Party B True/Legal Name</th>
+                            <th>Party B Client Identifier</th>
+                            <th>Party B LEI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="element in rows">
+                            <td ng-bind="element.amendmentId"></td>
+                            <td ng-bind="element.entity.trueLegalName"> </td>
+                            <td ng-bind="element.entity.clientIdentifier"></td>
+                            <td ng-bind="element.masterAgreement.masterlistIdentifier"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <form name="myform" novalidate>
+                <div class="col-md-12">
+                    <h3>EMAIL ID OF RECIPIENT(S)</h3>
+                    <input type="text" multiple-emails required name="emailtext" ng-model="config.emailtext" class="form-control" ng-class="{ 'warningBorder' : myform.emailtext.$invalid}">
+                   <!--  <input class="form-control" type="email" id="emailtext" name="emailtext" multiple-emails  ng-model="config.emailtext" required
+                        ng-class="{ 'warningBorder' : myform.emailtext.$invalid}"> -->
+                </div>
+                <div class="col-md-12">
+                    <h3>NOTIFICATION SUBJECT</h3>
+                    <div class="text-danger warning" ng-show="myForm.subject.$error.maxlength">
+                        <span>Maximum 150 characters for Custom Notification Subject</span>
+                    </div>
+                    <input class="form-control" type="text" id="subject" name="subject" ng-minlength="3" maxlength="10" ng-model="config.subject" required
+                        ng-class="{ 'warningBorder' : myform.subject.$invalid}">
+                </div>
+                <div class="col-md-12" ng-form name="myForm">
+                <h3>CUSTOM NOTIFICATION MESSAGE
+                    <div class="pull-right">
+                        <span ng-show="config.preveiwWaiting"><i class="fa fa-circle-o-notch fa-spin"></i> Loading...</span>
+                        <a class="select-all" href href ng-click="preveiwEmail(rows)">Preview Email</a>
+                    </div>
+                </h3>
+                <div class="text-danger warning" ng-show="myForm.myInput.$error.maxlength">
+                    <span>Maximum 2000 characters for Custom Notification Message</span>
+                </div>
+                <textarea name="myInput" ng-model="config.message" ng-max="{{config.maxlength}}" 
+                          placeholder="Maximum 2000 characters for custom notification message"
+                          class="form-control dialog-textarea larger-text" rows="3" ng-class="{warningBorder: myForm.myInput.$invalid}">
+                </textarea>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span ng-show="config.waiting"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</span>
+        <button class="btn btn-green" ng-disabled="!config.loaded || config.waiting || config.preveiwWaiting" ng-click="close()">Close</button>
+        <button class="btn btn-lightgreen" ng-click="save(rows)" ng-disabled="!config.loaded  || config.waiting || config.preveiwWaiting || myform.emailtext.$invalid || myform.subject.$invalid || myForm.myInput.$invalid">
+            Save
+        </button>
+    </div>
+</div>

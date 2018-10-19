@@ -1,0 +1,79 @@
+.score-card{
+	padding: 1.25em;
+	font-size: 0.8em;
+	display: inline-block;
+	min-width: 20em;
+	margin-bottom: -25%;
+
+	& .progress-round{
+		width: 1.5em;
+		height: 1.5em;
+		border-radius: 55%;
+		background-color: @mcpm-task-rejected;
+		position: relative;
+		z-index: 10;
+		color: @mcpm-white;
+		font-size: 1.375em;
+		text-align: center;
+		padding-top: .05em;
+		font-weight: bold;
+		margin-right: .5em;
+		margin-left: -.85em;
+
+		&.active{
+			background-color: @mcpm-task-rejected;
+		}
+
+		&.passed{
+			background-color: @mcpm-task-kyc;
+			font-weight: normal; 
+		}
+
+		&:first-child span{
+			text-align: left;
+			right: 0;
+			margin-right: 0;
+		}
+
+		&:last-child span{
+			text-align: right;
+			left: -100%;
+		}
+	}
+
+	& .progress-bar{
+		width: 0;
+		height: 4em;
+		margin: 0;
+		
+		background-color: transparent;
+
+		&.passed{
+			border-left: .25em solid @mcpm-task-kyc;
+		}
+	}
+
+	& .progress-label{
+		 color: @mcpm-task-kyc;
+	}
+
+	.vcenter{
+		transform: translateY(-50%);
+		margin-top: -1.25em;
+		padding-bottom: 1em;
+	}
+
+	.step{
+		margin-left: 1em;
+		padding: 2.5em 0;
+		border-left: .25em solid transparent;
+
+		&.dashed{
+			border-left: .25em dotted @mcpm-midgray;
+
+			&.passed{
+				border-left: .25em solid @mcpm-task-kyc;
+			}
+		}
+	}
+}

@@ -1,0 +1,46 @@
+<div class="modal-title">
+    <h1> Select Exhibit Template to Link </h1>
+</div>
+<div class="modal-body">
+
+    <div class="row tight-fix">
+        <div class="col-xs-3">Request for Amendment Name</div>
+        <div class="col-xs-3">Counterparty True Legal Name</div>
+    </div>
+
+    <div class="long-holder">
+        <div class="scroll-area-blue" slim-scroll>
+            <div class="text-center col-xs-12" ng-show="inputData.savedRFA.length<=0">
+                <h1 ng-show="!es.loaded"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</h1>
+                <h1 ng-show="es.loaded"><i class="fa fa-exclamation-triangle"></i>There is no RFA available</h1>
+            </div>
+
+            <div class="row step2-items" ng-repeat="entity in inputData.savedRFA" ng-show="!entity.deleted">
+                <div class="col-xs-3 long-holder break-text">{{entity.name}}</div>
+                <div class="col-xs-3 long-holder break-text">{{ entity.masterAgreement.partyA.trueLegalName }}</div>
+                <div class="col-xs-6">
+                    <div class="text-danger" ng-show="linkSave && entity.exhibit==undefined">Please select Exhibit template to save</div>
+                    <div class="dropdown" dropdown dropdown-toggle>
+                        <a href class="dropdown-toggle">
+                            <span class="file-sprite"></span>{{entity.exhibit.name}} <i class="fa fa-chevron-down pull-right"></i>
+                        </a>
+                        <ul class="dropdown-menu big-dropdown">
+                            <li class="text-center" ng-show="es.exhibitsTemplates.length<=0">
+                                <h3 ng-show="!es.loaded"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</h3>
+                                <h3 ng-show="es.loaded" style="color:red;"><i class="fa fa-exclamation-triangle"></i> No Templates</h3>
+                            </li>
+                            <li ng-repeat="choice in es.exhibitsTemplates" ng-show="!choice.deleted">
+                                <a ng-click="entity.exhibit = choice; entity.exhibitTemplateId = choice.id"><span class="file-sprite"></span>{{choice.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <span ng-show="!es.loaded"><i class="fa fa-circle-o-notch fa-spin"></i> Loading... </span>
+    <button class="btn btn-success" ng-click="es.save()" ng-show="es.exhibitTemplatesSelected()" ng-disabled="!es.loaded">Save</button>
+</div>

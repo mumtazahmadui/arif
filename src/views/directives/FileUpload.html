@@ -1,0 +1,12 @@
+<div class="file-upload">
+	<div class="file-name">
+		<span class="button btn btn-default upload-button">Browse</span>
+		{{uploader.queue[0].file.name}}
+	</div>
+	<span class="status">
+		<i class="fa status-mark" ng-class="{'fa-spinner' : uploader.isUploading, 'fa-pulse' : uploader.isUploading, 'fa-check' : !uploader.isUploading && uploader.queue.length>0 }"></i>
+	</span>
+	<!-- <input type="text" class="form-control" disabled="disabled" ng-value="uploader.queue[0].file.name"> -->
+	<!-- <button class="btn btn-default" nv-file-select uploader="uploader">Browse</button> -->
+	<input type="file" nv-file-select uploader="uploader"/>
+</div>

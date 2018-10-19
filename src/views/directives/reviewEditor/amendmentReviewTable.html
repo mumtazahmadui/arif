@@ -1,0 +1,46 @@
+<div ng-repeat="lineBreak in data.previousLineBreaks">{{lineBreak.text}}</div>
+<div ng-repeat="table in data.tables track by $index">
+    <p class="table-header" style="vertical-align:top;" ng-if="table.lineBreak.isShowHeader" ng-bind-html="table.lineBreak.isShowHeader"></p>
+    <p class="table-header" style="vertical-align:top;" ng-if="!table.lineBreak && table.headerName" ng-bind-html="table.headerName"></p>
+    <table class="amendment-review-table">
+        <tr>
+            <td ng-repeat="column in table.columns | orderBy: 'index'"
+                ng-class="{nobordered: column.nobordered, splitter: column.splitter}"
+                ng-style="avoidAlign(column)">
+                {{column.label || column.name}}
+            </td>
+        </tr>
+        <tr ng-repeat='item in table.rows'>
+            <td ng-repeat="column in table.columns | orderBy: 'index'"
+                ng-class="{nobordered: column.nobordered, splitter: column.splitter}"
+                ng-style="avoidAlign(column)">
+                <span ng-if="checkDefaults(column.columnName || column.name)">{{item[column.columnName || column.name]}}</span>
+
+                <span ng-if="column.name === 'Sell Side Response'" class="sell-side-response">
+                    <label ng-repeat="response in column.responses"
+                        ng-click="setResponseValue(table.placeHolderType, item, response.value)"
+                        ng-class="{'disabled': !ableToResponse(table.placeHolderType, item, response.value)}"
+                    ><span ng-class="{checked: item[column.name] === response.value}" class='btn sprite-radio'></span>{{response.text}}</label>
+                </span>
+
+                <span ng-if="column.name === 'Reason for Rejection/Pending'">
+                    <form name="SellSideResponse">
+                        <span class='length-error' ng-if='SellSideResponse.textarea.$error.maxlength'>Maximum 500 characters allowed!</span>
+                        <textarea ng-maxlength='501'
+                            name="textarea"
+                            ng-change="setChildrenReasons(table.placeHolderType, item)"
+                            ng-disabled="item['Sell Side Response'] === 'Accepted'"
+                            ng-model='item[column.name]'
+                            placeholder="Add Comment"
+                            ng-required="item['Sell Side Response'] === 'Rejected' || item['Sell Side Response'] === 'Pending'"
+                            taiplaceholder="Add Comment"
+                            spellcheck="false"
+                            ng-class='{"mark-invalid": isMarkInvalid(item, item[column.name])}'>
+                        </textarea>
+                    </form>
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div ng-bind-html="table.lineBreak.text"></div>
+</div>

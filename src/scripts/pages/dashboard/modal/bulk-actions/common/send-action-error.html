@@ -1,0 +1,11 @@
+<div class="modal-rfa">
+    <div class="modal-body">
+        <p>[{{blkAct.notEligibCount}}] Selected RFA(s) are not ready for <span ng-bind="blkAct.txt"></span></p>
+        <p class="review">Please review the Error Report for details
+            <span ng-if="blkAct.link" class="pdf-download" ng-click="blkAct.downloadError()"></span>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="$dismiss()">Close</button>
+    </div>
+</div>

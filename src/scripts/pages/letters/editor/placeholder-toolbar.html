@@ -1,0 +1,6 @@
+<div>
+    <div class="helper text-muted">To insert placeholder, click on placeholder button and then click on the desired location in letter template</div>
+    <a href="" ng-disabled="placeholdersMap[placeholderKey].addingDisabled" class="btn btn-default btn-placeholder" ng-repeat="placeholderKey in placeholdersKey" ng-if="::placeholdersMap[placeholderKey].template" ng-click="selectPlaceholder(placeholderKey)">
+        <span class="sprite-pipes-white"></span> {{::placeholdersMap[placeholderKey].name}}
+    </a>
+</div>

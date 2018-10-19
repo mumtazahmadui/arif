@@ -1,0 +1,50 @@
+<div class="modal-upload-title">
+        <div class="modelHeader" style="padding: 15px;">
+                <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+                        <span>x</span></button>
+            <h3 class="modal-title">Upload Signed Document</h3>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <div class="upload-control">
+                                <div class="line">
+                                    <span class="upload-file-name float-right">
+                                        <label for="browse-file">
+                                            <span class="btn btn-green browse-btn">Browse</span>
+                                        </label>
+                                        <label class="float-left">
+                                            <span class="content" ng-bind="vm.file.name" title={{vm.file.name}} ng-class="{'invalid': vm.invalidField}"></span>
+                                            <input id="browse-file" type="file" name="file" class="upload-file" ng-model="vm.file" file-input
+                                            accept="image/jpeg, application/pdf, .tif, .tiff|images/*" ng-change="vm.checkFile(vm.file)">
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="format-support" ng-if="!vm.invalidField"> Supported File formats (.pdf, .jpg, .jpeg, .tiff)</div>
+                            <div class="error-msg format-support" ng-if="vm.invalidField || vm.errorMsgBE">{{vm.errorMsgBE || 'Supported File formats (.pdf, .jpg, .jpeg, .tiff)'}}</div>
+
+                            <div class="list-error" ng-if="vm.unWantedfile">
+                                <span>Upload Not Successful, please check the following and try again:<br></span>
+                                <ul class="bullet">
+                                    <li>Uploaded Document matches this Request for Amendment</li>
+                                    <li>QR Code is clear and visible on all pages in the uploaded Document</li>
+                                </ul>
+                                <span>If the issue persists, request your RFA Admin to override this error message.</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="modal-footer">
+            <span class="loader" ng-show="vm.uploading"><i class="fa fa-circle-o-notch fa-spin"></i><span>Uploading...</span></span>
+            <button class="btn btn-green" ng-disabled="vm.uploading" ng-click="$dismiss()">Cancel</button>
+            <button class="btn btn-lightgreen" ng-disabled="!vm.isUploadEnabled()" ng-click="vm.upload(false)">Upload</button>
+            <button class="btn btn-lightgreen" ng-if="vm.isAdmin()" ng-disabled="!vm.isUploadEnabled()" ng-click="vm.upload(true)">Overwrite Exception</button>
+        </div>
+</div>

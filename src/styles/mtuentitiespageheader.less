@@ -1,0 +1,57 @@
+.mtu-entities-page-header {
+
+	padding: 1em 1em 0 1em;
+	word-wrap: break-word;
+
+	 & .down{
+		margin-bottom: 0;
+		padding-bottom: 0;
+		margin-top: 1em;
+	}
+
+	& h5{
+		color: @mcpm-darkgray;
+	}
+
+	& h3{
+		margin-top: 0;
+		font-weight: bold;
+	}
+
+	& .nav{
+		border: 0 solid transparent;
+
+		& li{
+
+			border-bottom: .3em solid transparent;
+			transition: border-color linear .1s,
+						margin ease .1s,
+						padding ease .1s;
+
+			&:hover{
+				border-bottom-color: @mcpm-task-kyc;
+				margin-top: -.5em;
+				padding-bottom: .5em;
+			}
+
+			&>a{
+				background-color: transparent;
+				border: 0 solid transparent;
+				color: @mcpm-oceangray;
+			}
+
+			&.active{
+				border-bottom-color: @brand-primary;
+
+				&>a{
+					color: @brand-primary;
+					font-weight: bold;
+
+					&:hover{
+						border: 0 solid transparent;
+					}
+				}
+			}
+		}
+	}
+}

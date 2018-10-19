@@ -1,0 +1,14 @@
+<div class="modelHeader" style="padding: 15px;">
+		<button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+				<span>x</span></button>
+	<h3 class="modal-title">Save Template as</h3>
+</div>
+<form name="saveDialog" novalidate>
+	<div class="modal-body">
+		<input type="text" class="form-control no-offset" ng-model="data.data.name" required maxlength="250">
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-green" autofocus ng-click="cancel()">Cancel</button>
+	    <input type="submit" class="btn btn-lightgreen" ng-click="ok()" value="Save" ng-disabled="!saveDialog.$valid">
+	</div>
+</form>

@@ -1,0 +1,295 @@
+html {
+    position: relative;
+}
+
+body {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+h1 {
+    font-size: 26px;
+}
+
+h2 {
+    margin-top: 18px;
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+a:focus,
+a:hover {
+    text-decoration: none;
+}
+
+a {
+    cursor: pointer;
+}
+
+p:focus {
+    outline: none;
+}
+
+hr {
+    &.lightblue {
+        border-color: @mcpm-lighterblue;
+        &.lightblue-fat {
+            border-top-width: 2px;
+        }
+    }
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.nomargin {
+    margin: 0;
+}
+
+.inline-block,
+.brick {
+    display: inline-block;
+}
+
+.panel {
+    background: @modal-backdrop-bg;
+}
+
+.mce-tinymce {
+    &.mce-panel {
+        // margin: 0.2em;
+        display: block !important;
+        .mce-container-body {
+            .mce-container {
+                &.mce-panel {
+                    border: 0;
+                }
+            }
+        }
+        margin-bottom: 2px;
+        margin-top: 2px;
+    }
+}
+
+.arrow {
+    font-size: 18px;
+    padding: 0 10px;
+    color: blue !important;
+}
+
+.fonts {
+    margin-left: 4px;
+}
+
+td.headerText,
+td.linebreakText {
+    min-height: 19px;
+    display: block;
+}
+
+@media print {
+    .mce-item-table,
+    .mce-item-table td,
+    .mce-item-table th,
+    .mce-item-table caption {
+        border-left-style: solid!important;
+        border-right-style: solid!important;
+        border-top-style: solid!important;
+        border-bottom-style: solid!important;
+        word-wrap: break-word!important;
+        white-space: normal!important;
+    }
+    .placeholder {
+        &>.iefixer {
+            &>table {
+                border-width: 0;
+                max-width: 670px;
+                margin: 20px 0px 10px 0px;
+                padding: 0px;
+                border-collapse: collapse;
+                border-spacing: 0px;
+                display: block;
+                tr,
+                th,
+                td {
+                    border-width: 0;
+                }
+            }
+        }
+    }
+}
+
+.back {
+  margin: 18px 0 25px;
+}
+
+.mce-content-body {
+    #partyARelations + p,
+    .partAComment {
+      display: inline;
+      position: relative;
+      top: -8px;
+    }
+    @media screen {
+        .placeholder {
+            border: 1px dashed #00AAFF;
+            position: relative;
+            margin-bottom: 2px;
+            margin-top:10px;
+            padding-top: 7px;
+            &#partyARelations {
+                white-space: nowrap;
+                display: inline-block;
+            }
+            >div.iefixer {
+                display: inline;
+                width: 100%;
+                //margin-bottom: -19px;
+            }
+            &::after {
+                display: inline;
+                position: absolute;
+                font-size: 8px;
+                top: -8px;
+                left: 5px;
+                background-color: #F5F5F5;
+                border: 1px dashed #00AAFF;
+                border-radius: 8px;
+                padding: 1px 4px;
+                content: "placeholder";
+                color: #CECECE;
+            }
+            &#partyARelations::after {
+                content: "Party A Relations";
+            }
+            &#partyBAddition::after {
+                content: "Party B Addition";
+            }
+            &#partyBRemoval::after {
+                content: "Party B Removal";
+            }
+            &#fund_name_change::after {
+                content: "Fund Name Change";
+            }
+            &#exhibit_value_change::after {
+                content: "Exhibit Value Change";
+            }
+            &#sleeveAddition::after{
+                content: "Sleeve Addition";
+            }
+            &#sleeveRemoval::after{
+                content: "Sleeve Removal";
+            }
+            .mceNonEditable {
+                background-color: #F5F5F5;
+            }
+        }
+    }
+}
+
+.mce-window-head{
+    /* fallback */
+  background-color: #00ab4e;
+
+  /* Safari 4-5, Chrome 1-9 */
+  background: -webkit-gradient(linear, left top, right top, from(#00ab4e), to(#009697));
+
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(left, #00ab4e, #009697);
+
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(left, #00ab4e, #009697);
+
+  /* IE 10 */
+  background: -ms-linear-gradient(left, #00ab4e, #009697);
+
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(left, #00ab4e, #009697);
+}
+
+.mce-window-head .mce-title {
+    line-height: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    text-rendering: optimizelegibility;
+    padding-right: 10px;
+}
+
+.mce-window-head .mce-title {
+    line-height: 20px;
+    font-size: 15px;
+    /* font-weight: bold; */
+    text-rendering: optimizelegibility;
+    padding-right: 10px;
+    color: white;
+}
+
+.mce-edit-focus{
+    outline: none !important;
+}
+
+.mce-content-body{
+    border: 1px solid #9d9d9d !important;
+    overflow-x: scroll;
+}
+
+.mce-window-head .mce-close{
+    color:#FFFFFF;
+}
+
+.mce-window{
+    top: 20% !important;
+}
+
+.mce-txt {
+    color: none;
+}
+
+.mce-button-without-background,
+.mce-button-without-background:hover,
+.mce-button-without-background:active,
+.mce-button-without-background:focus,
+.mce-button-without-background:focus-within {
+    color: #8dc63f !important;
+    background-color: transparent;
+    border: none;
+}
+
+
+.mce-button-without-background span{
+    color: #8dc63f !important;
+}
+
+.mce-window {
+    width: 280px;
+}
+
+/*
+.mce-abs-layout-item .mce-btn {
+    background-color: transparent;
+}
+
+.mce-abs-layout-item .mce-btn button {
+    background-color: transparent;
+}
+.mce-abs-layout-item .mce-btn span{
+    color: #8dc63f;
+}
+
+.mce-btn{
+    background-color: transparent;
+    border: none;
+}
+
+.mce-btn :hover{
+    background-color: transparent;
+    border: none;
+    border-color: none;
+}
+*/

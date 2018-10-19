@@ -1,0 +1,140 @@
+<form class="modification-form" ng-submit="ms.next($event)" novalidate name="modificationForm">
+<div class="modal-body">
+
+    <div class="row tight-fix">
+        <div class="col-xs-6">Counterparty True Legal Name</div>
+    </div>
+
+    <div class="long-holder" ng-class="fixed-size-blue" slim-scroll settings="{height:'350px'}">
+        <div class="scroll-area-blue" >
+            <div class="step2-items" ng-repeat="entity in inputData.selectPartyB | filter:{isModified:true, deleted: '!1'}">
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            {{entity.entity.name | limitTo: 30}}{{entity.entity.name.length > 30 ? '...' : ''}}
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <select class='form-control' name="'changeType.' + $index" ng-model='entity.changeType'
+                                        ng-required="true"
+                                        ng-change="ms.onModificationTypeChange(entity.changeType,entity)"
+                                        name="{{'changeType.' + $index}}"
+                                        ng-options="modificationType.name as modificationType.label for modificationType in ms.modificationTypes">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="entity.changeType=='fundNameChange' || entity.changeType=='both'" ng-style="{'margin-bottom': entity.changeType=='both' ? '10px;': '0'}">
+                        <div class="subheader" ng-if="entity.changeType == 'both'">Fund Name Change</div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>New True Legal Name</label>
+                                <input type="text" class="form-control"
+                                       ng-model='entity.fundNameChange.currentTrueLegalName'
+                                       maxlength="250"
+                                       name="{{'fundNameChange.currentTrueLegalName.' + $index}}"
+                                       ng-required="true"
+                                       placeholder="">
+                            </div>
+                            <div class="checkbox" ng-show="entity.fundNameChange.currentTrueLegalName!=entity.fundNameChange.oldTrueLegalName">
+                                <label>
+                                    <input type="checkbox"
+                                           ng-model="entity.fundNameChange.updateMcpmLegalName" ng-init="entity.fundNameChange.updateMcpmLegalName=!!entity.fundNameChange.updateMcpmLegalName"> Update Entity on MCPM
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>New Client Identifier</label>
+                                <input type="text" class="form-control"
+                                       maxlength="250"
+
+                                       name="{{'fundNameChange.currentClientIdentifier.' + $index}}"
+                                       ng-model="entity.fundNameChange.currentClientIdentifier">
+                            </div>
+                            <div class="checkbox" ng-show="entity.fundNameChange.oldClientIdentifier!= entity.fundNameChange.currentClientIdentifier ">
+                                <label>
+                                    <input type="checkbox"
+                                           ng-model="entity.fundNameChange.updateMcpmClientIdentifier" ng-init="entity.fundNameChange.updateMcpmClientIdentifier=!!entity.fundNameChange.updateMcpmClientIdentifier"> Update Entity on MCPM
+                                </label>
+
+                                <!--entity.fundNameChange.oldLei = entity.entity.lei;-->
+                                <!--entity.fundNameChange.currentLei = entity.entity.lei;-->
+                                <!--entity.fundNameChange.oldTrueLegalName = entity.entity.trueLegalName;-->
+                                <!--entity.fundNameChange.currentTrueLegalName = entity.entity.trueLegalName;-->
+                                <!--entity.fundNameChange.oldClientIdentifier = entity.entity.clientIdentifier;-->
+                                <!--entity.fundNameChange.currentClientIdentifier = entity.entity.clientIdentifier;-->
+
+                            </div>
+                            <div class="form-group">
+                                <label>New Pre-LEI/LEI</label>
+                                <input type="text"
+                                       class="form-control"
+                                       tooltip="Please only enter the Pre-LEI / LEI {( 20 Alphanumeric characters (A-Z,0-9)} which corresponds directly to the True legal Name on this form."
+                                       tooltip-placement="top"
+                                       ng-required="entity.fundNameChange.oldLei.length"
+                                       maxlength="20"
+                                       ng-pattern="/^[A-Z0-9]{20}$/"
+                                       name="{{'fundNameChange.currentLei.' + $index}}"
+                                       ng-model="entity.fundNameChange.currentLei">
+                            </div>
+                            <div class="checkbox" ng-show="entity.fundNameChange.currentLei!= entity.fundNameChange.oldLei">
+                                <label>
+                                    <input type="checkbox"
+                                           ng-model="entity.fundNameChange.updateMcpmLei" ng-init="entity.fundNameChange.updateMcpmLei=!!entity.fundNameChange.updateMcpmLei"> Update Entity on MCPM
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Comments</label>
+                                <div class="length-error"
+                                     ng-show="entity.fundNameChange.comment.length > 300"
+                                        >
+                                    Maximum characters allowed- 300
+                                </div>
+                                <textarea rows='7'
+                                          class="form-control"
+                                          name=""
+                                          ng-model="entity.fundNameChange.comment"
+                                          name="{{'fundNameChange.comment.' + $index}}"
+                                        ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row step2-items" ng-if="entity.changeType=='exhibitValueChange' || entity.changeType=='both'">
+                        <div class="subheader" ng-if="entity.changeType == 'both'">Exhibit Value Change</div>
+                        <div class="col-xs-6">
+                            <div ng-show="entity.changeType=='both'">{{entity.entity.name | limitTo: 30}}{{entity.entity.name.length > 30 ? '...' : ''}}*</div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Comments</label>
+                                <div class="length-error"
+                                     ng-show="entity.exhibitValueChange.comment.length > 300"
+                                        >
+                                    Maximum characters allowed- 300
+                                </div>
+                                <textarea rows='7'
+                                          class="form-control"
+                                          ng-model="entity.exhibitValueChange.comment"
+                                          ng-required="true"
+                                          name="{{'exhibitValueChange.comment.' + $index}}"
+                                        ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-xs-6"> {{ entity.partyA.trueLegalName }} </div>-->
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <span ng-show="waiting"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</span>
+    <button class="btn btn-green" autofocus ng-click="ms.back()">Back</button>
+    <button class="btn btn-lightgreen" type="submit" ng-disabled="!modificationForm.$valid">
+        Next
+    </button>
+</div>
+</form>

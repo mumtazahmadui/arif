@@ -1,0 +1,91 @@
+<div class="col-md-3 screener-actions-container-title">
+    <div class="row margin-left35">
+        <h2>{{data.table.data.totalCount || 0}} {{data.title}}</h2>
+    </div>
+</div>
+<div class="col-md-9 screener-actions-container-buttons">
+    <div class="row margin_right_0">
+        <div class="top-margin pull-right">
+            <div class="content-main">
+                <div ng-if="data.credentials.companyType == 'BS'">
+                    <div class="content-action">
+                        <p>Party B <br />Requested</p>
+                        <div class="bdr bdr-addition"> Addition </div>
+                        <div class="bdr bdr-removal"> Removal </div>
+                        <div class="bdr bdr-modification"> Modification </div>
+                    </div>
+
+                    <div class="content-action">
+                        <p>Party B <br />Actioned</p>
+                        <div class="bdr bdr-accepted"> Accepted </div>
+                        <div class="bdr bdr-pending"> Pending </div>
+                        <div class="bdr bdr-rejected"> Rejected </div>
+                        <div class="bdr bdr-withdraw"> Withdrawn </div>
+                    </div>
+                    <div class="content-status">
+                        <p>My <br>Status</p>
+                        <div>
+                            <button ng-disabled="request.partyBEntities.legalSelected" ng-class="request.partyBEntities.legalSelected ?  'btn-uncheck-status' : 'btn-check-status'"
+                                ng-click="call('legalStatus', {grid:data.table.data,index:index,title:'test'})">{{mystatus.getDesk1Index}}</button>
+                            <span>{{mystatus.getDesk1Name}}</span>
+                        </div>
+                        <div>
+                            <button ng-disabled="request.partyBEntities.managerSelected" ng-class="request.partyBEntities.managerSelected ? 'btn-uncheck-status' : 'btn-check-status'"
+                                ng-click="call('managerStatus', {grid:data.table.data,index:index})">{{mystatus.getDesk2Index}}</button>
+                            <span>{{mystatus.getDesk2Name}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="data.credentials.companyType == 'SS'">
+                    <div class="content-action">
+                        <div><strong> Party B Requested </strong></div>
+                        <div class="bdrSS bdr-addition"> Addition </div>
+                        <div class="bdrSS bdr-removal"> Removal </div>
+                        <div class="bdrSS bdr-modification"> Modification </div>
+                    </div>
+                    <div class="content-action">
+                        <div> <strong> Party B Actioned</strong></div>
+                        <div class="bdrSS bdr-accepted"> Accepted </div>
+                        <div class="bdrSS bdr-pending"> Pending </div>
+                        <div class="bdrSS bdr-rejected"> Rejected </div>
+                        <div class="bdrSS bdr-withdraw"> Withdrawn </div>
+                    </div>
+                    <div class="content-action mb5">
+                        <div> <strong> My Status</strong></div>
+                        <div class="bdrStatus text-center"><strong class="info"></strong> <br> Escalation </div>
+                        <div class="bdrStatus paddtop5 text-center"><strong> N </strong><br> Notification </div>
+                        <div class="bdrStatus paddtop5 text-center"><strong> P </strong><br> In Progress </div>
+                        <div class="bdrStatus paddtop5 text-center"><strong> C </strong><br> Completed </div>
+                    </div>
+                </div>
+            </div>
+            <span class="print-guidance" print-guidance-tooltip-compile="{}" tooltip-placement="left"
+                tooltip-popup-delay='0'></span>
+            <div class="pull-right bulk-actions-dropdown" dropdown ng-if="data.actions.length">
+                <button class="btn btn-green btn-sm" dropdown-toggle ng-disabled="companyType === 'SS' && hasPermissions('ss.rfa.read') &&
+                        !(hasPermissions('ss.rfa') || hasPermissions('ss.rfa.signatory') || hasPermissions('ss.rfa.onboarding')
+                        	 || hasPermissions('ss.rfa.kyc') || hasPermissions('ss.rfa.tax') || hasPermissions('ss.rfa.credit') 
+                        	 || hasPermissions('ss.rfa.legal') || hasPermissions('ss.rfa.operations') || hasPermissions('ss.rfa.manager'))"
+                    ng-click="'bulkNotifications()'">
+                    <span> Bulk Actions</span><i class="fa fa-angle-down pull-right" style="margin-top:3px;"></i>
+                </button>
+                <ul class="dropdown-menu" dropdown-menu>
+                    <li ng-repeat="action in data.actions" ng-if="!action.permissions || hasAnyPermissions(action.permissions)">
+                        <a ng-if="(action.label == 'Legal' || action.label == 'Manager') ? false : true" href ng-click="bulkAction(action)"
+                            ng-bind="action.label"></a>
+                        <a ng-if="action.label == 'Legal'" href ng-click="bulkAction(action)">Notification to
+                            {{mystatus.getDesk1Name}}</a>
+                        <a ng-if="action.label == 'Manager'" href ng-click="bulkAction(action)">Notification to
+                            {{mystatus.getDesk2Name}}</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Buttons in screener configs -->
+            <button class="btn pull-right btn-green btn-sm" ng-if="data.buttons.length" ng-repeat="button in data.buttons"
+                ng-if="!button.permissions || hasAnyPermissions(button.permissions)" ng-class="button.class" ng-click="buttonAction(button)">
+                {{button.label}}
+            </button>
+            <button class="btn btn-green btn-sm" ng-hide="true" ng-click="$ctrl.screener.exportData()">Export</button>
+        </div>
+    </div>
+</div>

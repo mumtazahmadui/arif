@@ -1,0 +1,6 @@
+<div class="tasks">
+	<div ng-repeat="task in tasks">
+		<a ng-href="{{ task[1] }}">{{ task[0] }}</a>
+		<hr ng-show="!$last">
+	</div>
+</div>

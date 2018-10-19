@@ -1,0 +1,42 @@
+<div class="modelHeader" style="padding: 15px;">
+    <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+        <span>x</span></button>
+    <h3 class="modal-title">Request for Amendment History - {{data.id}}</h3>
+</div>
+<div class="modal-body fixed-size-blue">
+    <div class="file-table scroll-area-blue">
+        <table class="table">
+            <thead>
+            <tr>
+            	<th class="nowrap text-left"><strong>Event</strong></th>
+            	<th class="nowrap text-left"><strong>Document ID</strong></th>
+                <th class="nowrap text-left"><strong>Date</strong></th>
+                <th class="nowrap text-left"><strong>E-Sign / Wet Sign</strong></th>
+                <th class="nowrap text-left"><strong>Signatory</strong></th>
+                <th class="nowrap text-center"><strong>File</strong></th>
+                <th class="nowrap text-left"><strong>Reason for Deletion/Rejection</strong></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="document in data.vm.rows">
+            	<td>{{document.EVENT}}</td>
+            	<td>{{document.DOC_ID}}</td>
+                <td class="text-left">
+                    {{ document.TRANSITION_DATE | date : 'dd-MMM-yyyy hh:mm:ss a'}}
+                </td>
+                <td>{{document.SIGN_TYPE}}</td>
+                <td>{{document.Signatory}}</td>
+                <td class="text-center">
+                    <a class="sprite-file-pdf" ng-if="document.FILE_ID" ng-click="openFile(document.FILE_ID)"></a>
+                </td>
+                <td class="text-left truncated">
+                    <div class="break-text">{{ document.REJECTION_REASON }}</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-green" autofocus ng-click="cancel()">Close</button>
+</div>

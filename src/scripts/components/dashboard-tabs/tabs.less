@@ -1,0 +1,32 @@
+.active-dashboard-tab {
+  cursor: default;
+  background: #efefef;
+  border-right: 1px solid #bebebe;
+  border-left: 1px solid #bebebe;
+  border-top: 1px solid #bebebe;
+  // box-shadow: 0 -4px 0 0 #356f9d;
+}
+
+.dashboard-tabs-container {
+  padding-top: 15px;
+  font-weight: bold;
+  // background: #EFEFEF;
+  &_tab {
+    display: inline-block;
+    cursor: pointer;
+    color: #8dc63f;
+    border-radius: 0;
+    p {
+      padding: 15px;
+    }
+    &:not(.dashboard-tabs-container_tab--active):hover {
+      cursor: pointer;
+      p {
+        color: #8dc63f;
+      }
+    }
+    &--active {
+      .active-dashboard-tab;
+    }
+  }
+}

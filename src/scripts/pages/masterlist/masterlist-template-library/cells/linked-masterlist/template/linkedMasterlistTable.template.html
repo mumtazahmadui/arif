@@ -1,0 +1,22 @@
+<div class="rfa-tooltip-content linked-masterlist">
+        <h6>Masterlist Linked</h6>
+        <div class="rfa-tooltip-grid">
+            <div class="rfa-tooltip-grid__head">
+                <div class="rfa-tooltip-grid__row">
+                    <div class="rfa-tooltip-grid__cell">Ref Agreement Date</div>
+                    <div class="rfa-tooltip-grid__cell">Party A True Legal Name</div>
+                    <div class="rfa-tooltip-grid__cell">Investment Manager</div>
+                    <div class="rfa-tooltip-grid__cell">Masterlist Identifier</div>
+                </div>
+            </div>
+            <div class="rfa-tooltip-grid__body" slimscroll="{height: '', color: '#FFFFFF', alwaysVisible: 'true'}">
+                <div ng-repeat="signatory in rows" class="rfa-tooltip-grid__row">
+                    <div ng-bind="::signatory.agreementDate" class="rfa-tooltip-grid__cell rfa-tooltip-grid__cell--in-row" title="{{::signatory.agreementDate}}"></div>
+                    <div ng-bind="::signatory.partyA" class="rfa-tooltip-grid__cell rfa-tooltip-grid__cell--in-row" title="{{::signatory.investmentManager}}"></div>
+                    <div ng-bind="::signatory.investmentManager" class="rfa-tooltip-grid__cell rfa-tooltip-grid__cell--in-row" title="{{::signatory.masterlistIdentifier}}"></div>
+                    <div ng-bind="::signatory.masterlistIdentifier" class="rfa-tooltip-grid__cell rfa-tooltip-grid__cell--in-row" title="{{::signatory.partyA}}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

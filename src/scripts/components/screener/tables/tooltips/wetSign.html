@@ -1,0 +1,8 @@
+<div class="{{content.class}}">
+    <ul class="list-unstyled border-btn" ng-repeat="data in response | limitTo:5">
+        <li>Signatory Name : {{data.signatoryName}}</li>
+        <li>Date : {{data.date}} </li>
+        <li>Notified By : {{data.notifiedBy}}</li>
+    </ul>
+    <div ng-if="lenght >= 5" class="small">Detailed audit available in ‘View RFA Document History’ for this RFA.</div>
+</div>

@@ -1,0 +1,25 @@
+<div class="modal-add-attribute">
+    <div class="modelHeader" style="padding: 15px;">
+            <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+                    <span>x</span></button>
+        <h3 class="modal-title">Save Template As</h3>
+    </div>
+    <div class="modal-body">
+        <table>
+            <tr>
+                <td width="30%">Template Name</td>
+                <td>
+                    <label class="pointer">
+                        <input  type="text" ng-model="vm.templateName">
+                    </label>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-green" ng-click="$dismiss()">Close</button>
+        <button class="btn btn-lightgreen" ng-disabled="!vm.canAdd()" ng-click="vm.add()">Save</button>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="table-contayner screener-upload-template">
+
+    <table class="table table-hover table-master-list-template" ng-if="!data.loading">
+        <thead>
+            <tr>
+                <th class="text-left">Template ID</th>
+                <th class="text-left">Template Name</th>
+                <th class="text-left">Last Updated By</th>
+                <th class="text-left">Last Updated Date</th>
+                <th class="text-left">Template</th>
+                <th class="text-left">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in data.table.data.dataList | limitTo:data.pages.items_per_page">
+                <td class="text-left">{{item.id}}</td>
+                <td class="text-left" title="{{item.templateName}}">{{item.templateName }}</td>
+                <td class="text-left">{{item.modifiedByUsername}}</td>
+                <td class="text-left">{{item.modifiedDate}}</td>
+                <td class="text-left">
+                    <a title="Template" class="btn btn-default btn-action sprite-file-xcl margin-left-10percent" ng-click="call('downloadXCLTemplate', item.id)"></a>
+                </td>
+                <td class="text-left uploaded-files-screener_cell_actions">
+                    <div class="uploaded-files-screener_cell_actions_container">
+                        <button title="Edit " ng-click="call('editUploadedTemplate', item)"
+                            class="btn btn-default btn-action sprite-button-edit"></button>
+                        <button title="Delete" class="btn btn-default btn-action sprite-button-remove" ng-click="call('deleteUploadedTemplate', item.id)"></button>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="table-loader" ng-if="data.loading">
+        <span>
+            <i class="fa fa-spin fa-circle-o-notch"></i> Loading...</span>
+    </div>
+    <div class="table-no-results" ng-if="data.table.data.dataList.length == 0 && !data.loading">
+        <span>No search results found for this query.</span>
+    </div>
+</div>

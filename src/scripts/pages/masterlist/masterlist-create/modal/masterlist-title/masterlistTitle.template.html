@@ -1,0 +1,18 @@
+<div class="modal-masterlist-title">
+    <div class="modelHeader" style="padding: 15px;">
+            <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+                    <span>x</span></button>
+        <h3 class="modal-title">Save Template As</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-show="mstTitleCtrl.loading" class="modal-masterlist-title--loading"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</div>
+        <div class="title-input">
+            <input type="text" ng-model="mstTitleCtrl.templateName">
+        </div>
+        <div ng-show="mstTitleCtrl.errorOccurred" class="modal-masterlist-title--error" ng-bind="mstTitleCtrl.errorMsg"></div>
+        <div class="modal-buttons">
+            <button class="btn btn-green" ng-click="$dismiss()">Cancel</button>
+            <button class="btn btn-lightgreen" ng-disabled="!mstTitleCtrl.templateName" ng-click="mstTitleCtrl.save()">Save</button>
+        </div>
+    </div>
+</div>

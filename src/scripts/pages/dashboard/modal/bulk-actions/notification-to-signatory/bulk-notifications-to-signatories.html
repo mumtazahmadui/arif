@@ -1,0 +1,90 @@
+<div class="modal-rfa">
+    <div class="modelHeader" style="padding: 15px;">
+            <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+                    <span>x</span></button>
+        <h3 class="modal-title">Bulk Notifications to Signatories</h3>
+    </div>
+    <div class="modal-body">
+
+        <div class="text-center col-xs-12" ng-show="!blkNtf.loaded">
+            <h1><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</h1>
+        </div>
+
+        <div class="content-loaded" ng-show="blkNtf.loaded">
+            <div class="row">
+                <p class="instruction">Instruction: Only RFA(s) with E-Sign in Next Steps can be selected</p>
+                <div class="signatory">
+                    <p class="instruction">Select Signatory(ies) for </p>
+                    <div class="sign-checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="blkNtf.isESign"
+                                   class="checkbox"><span></span>
+                            E-sign
+                        </label>
+                    </div>
+                    <div class="sign-checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="blkNtf.isWSign"
+                                   class="checkbox"><span></span>
+                            Wet Sign
+                        </label>
+                    </div>
+
+                </div>
+                <div class="warning" ng-show="blkNtf.notEligibCount">
+                    <span>[ {{blkNtf.notEligibCount}} ]</span>
+                    <span> selected RFA(s) cannot be electronically signed yet</span>
+                    <span class="pdf-download" ng-click="blkNtf.downloadError()"></span>
+                </div>
+                <div class="col-sm-6">
+                    <h3>Selected RFA(s)</h3>
+
+                    <div class="framed blue-frame">
+                        <span>RFA ID</span>
+                        <span class="pull-right">MasterList Identifier</span>
+                        <div class="long-holder fixed-size" slim-scroll settings="{height:'400px'}">
+                            <div class="scroll-area" id="partyB">
+                                <div class="available-party-b-item"
+                                     ng-repeat="letter in blkNtf.amendmentLetters">
+                                    <span class="truncated" ng-bind="letter.validRfaId"></span>
+                                    <span class="pull-right" ng-bind="letter.masterlistIdentifier"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <h3>Select Signatory</h3>
+                    <div class="short-holder framed framed-signatory">
+                        <div class="scroll-area-small" ng-if="blkNtf.users.length" slim-scroll>
+                            <div class="available-party-b-item blue-frame"
+                                 ng-repeat="user in blkNtf.users track by user.userId">
+                                <span class="opacity50">|||</span>
+                                <span class="truncated" ng-bind="user.userName"></span>
+                                <div class="pull-right"><input type="checkbox" ng-model="user.selected"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row custom-notification-msg">
+                <div class="col-sm-6">CUSTOM NOTIFICATION MESSAGE</div>
+                <div class="col-sm-6"><span class="preview-email" ng-click="blkNtf.previewEmail()">Preview Email</span></div>
+                <div class="col-sm-12">
+                    <textarea ng-model="blkNtf.customNotificationMessage"
+                              placeholder="Enter Notification Message (500 Characters Max)">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <span ng-show="waiting"><i class="fa fa-circle-o-notch fa-spin"></i>Loading...</span>
+        <button class="btn btn-green" ng-disabled="!blkNtf.loaded" ng-click="blkNtf.close()">Close</button>
+        <button class="btn btn-lightgreen" ng-click="blkNtf.save()"
+                ng-disabled="!blkNtf.checkEnabled() || !blkNtf.loaded">
+            Save
+        </button>
+    </div>
+</div>

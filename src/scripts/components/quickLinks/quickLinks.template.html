@@ -1,0 +1,13 @@
+<div class="quick-links hidden-print">
+    <div class="title" ng-class="{'col-md-offset-6': get.length==1}">
+        <h4><strong>Quicklinks</strong></h4>
+    </div>
+    <div class="links pull-right">
+        <div class="col-md-6 col-sm-6 col-xs-12" ng-class="{'col-md-offset-6': get.length==1}" ng-repeat="col in get">
+            <ul class="list-unstyled">
+                <li ng-repeat="row in col" ng-class="{selected:isSelected(row.url)}"><a ng-click="linkTo(row.url)">{{row.text}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div>
+	<mce-editable-block ng-repeat="lineBreak in data.previousLineBreaks" ng-model="lineBreak.text"></mce-editable-block>
+	<div ng-repeat="table in data.tables track by $index">
+		<mce-editable-block ng-if="$index === 0" ng-model="table.lineBreak.showHeaderText"></mce-editable-block>
+        <div class="mceNonEditable">
+            <table class="table-bordered unselectable" unselectable="on">
+                <tr>
+                    <th ng-repeat="column in data.columns" ng-class="{nobordered: column.nobordered, splitter: column.splitter}">{{column.name}}</th>
+                </tr>
+                <tr ng-repeat='item in table.rows'>
+                    <td ng-repeat="column in data.columns" ng-class="{nobordered: column.nobordered, splitter: column.splitter}">
+                        <span ng-if="checkDefaults(column.name)">{{item[column.name]}}</span>
+                        <span ng-if="column.name === 'Sell Side Response'">
+                            <label ng-repeat="response in column.responses" ng-click="setResponseValue(item, response.value)">
+                                <span ng-class="{checked: item[column.name] === response.value}" class='btn sprite-radio'></span>
+                                {{response.text}}
+                            </label>
+                        </span>
+                        <span ng-if="column.name === 'Reason for Rejection/Pending'">
+	                    <form name="SellSideResponse">
+	                        <span class='length-error' ng-if='SellSideResponse.textarea.$error.maxlength'>Maximum 500 characters allowed!</span>
+	                        <textarea ng-maxlength='501'
+	                            name="textarea"
+	                            ng-disabled="item['Sell Side Response'] === 'Accepted'"
+	                            ng-model='item[column.name]'
+	                            placeholder="Add Comment"
+	                            ng-required="item['Sell Side Response'] === 'Rejected' || item['Sell Side Response'] === 'Pending'"
+	                            taiplaceholder="Add Comment"
+	                            ng-class='{"mark-invalid": isMarkInvalid(item, item[column.name])}'>
+	                        </textarea>
+	                    </form>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+	    <mce-editable-block ng-model="table.lineBreak.lineBreakText" ng-if="table.lineBreak.lineBreakText"></mce-editable-block>
+	</div>
+</div>

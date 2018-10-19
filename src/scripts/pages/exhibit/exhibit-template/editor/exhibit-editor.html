@@ -1,0 +1,48 @@
+<div class="exhibit-template">
+    <div class="col-md-7 col-sm-12 col-xs-12 back">
+        <a ng-click="linkTo('/rfa/company/amendmentLetter')" class="a-green">&larr; Back to Dashboard</a>
+        <h2 class="col-md-12" ng-show="!data.id">Create Exhibit Template</h2>
+        <h1 class="col-md-12" ng-show="data.id">
+            <text-edited-field type="Exhibit Name" ng-model="name"
+                               match="[a-z0-9\.\-\!\@\#\$\%\^\&amp;\*\(\)\_\+\\\|\}\{\[\]\�\�\:\;\&lt;\&gt;\/\~\* ]"></text-edited-field>
+        </h1>
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-12">
+        <quick-links></quick-links>
+    </div>
+    <div class="text-editor">
+        <mc-text-editor data-options="exhTempEdCtrl.editorOptions" data-editor-instance="exhTempEdCtrl.editorInstance">
+            <div class="text-formating-tools panel hidden-print" id="toolbar">
+                <div class="row custom-buttons">
+                    <exhibit-columns-toolbar></exhibit-columns-toolbar>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <div class="form-inline commands">
+                        <div id="tiny-toolbar"></div>
+                        <!-- <span class="text-formating-tools-span">
+                            <mc-text-editor-toolbar-standard/>
+                        </span> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2 pull-right text-right" style="top:6px;">
+                        <button type="button" ng-click="exhTempEdCtrl.print()" class="btn sprite-button-print"></button>
+                        <button type="button" ng-click="exhTempEdCtrl.save()" class="btn btn-green">Save Template</button>
+                    </div>
+                </div>
+            </div>
+        </mc-text-editor>
+        <form name="exhTempForm" novalidate>
+            <div class="error-holder">
+                <span ng-if="invalid && !exhTempForm.$valid" class="fill-tables-error nga-default nga-stagger nga-slide-up">Please fill all of cells</span>
+            </div>
+            <div class="col-md-7 col-sm-12 col-xs-12">
+                <span>
+                    <b>Enter column headers in the grid below to save</b>
+                </span>
+            </div>
+            <exhibit-template-grid-header></exhibit-template-grid-header>
+        </form>
+        <loader is-show="isShowLoader" notification-text="notificationText"></loader>
+    </div>
+</div>

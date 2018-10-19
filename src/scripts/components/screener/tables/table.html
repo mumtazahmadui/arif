@@ -1,0 +1,61 @@
+<table class="table table-hover name-table">
+    <thead>
+        <tr>
+            <th>Request for Amendment Name <button class="btn btn-table"></button></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="request in data.results">
+            <td>{{request.name}}</td>
+        </tr>
+    </tbody>
+</table>
+<div class="moving-table-contayner">
+    <table class="table table-hover data-table">
+        <thead>
+            <tr>
+                <th>Reference Master Agreement Dateeeeee</th>
+                <th>Investment Manager</th>
+                <th>Party A</th>
+                <th>Party B Requested</th>
+                <th>Party B Addition Actioned</th>
+                <th>Party B Removal Actioned</th>
+                <th>Request Status</th>
+                <th>Request Submited Date</th>
+                <th>My Signatory</th>
+                <th>Party B Signatory</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="request in data.results">
+                <td>{{request.rma_date}}</td>
+                <td>{{request.manager}}</td>
+                <td>{{request.party_a}}</td>
+                <td>
+                    {{request.total_party_b_r.add.total}} {{request.total_party_b_r.remove.total}} 
+                    {{request.party_b_withdrawn}}
+                </td>
+                <td>{{request.total_party_b_r.add.total}}</td>
+                <td>{{request.total_party_b_r.remove.total}}</td>
+                <td>{{request.status}}</td>
+                <td>{{request.submit_date}}</td>
+                <td>{{request.sign}}</td>
+                <td>{{request.party_a_sign}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<table class="table table-hover actions-table">
+    <thead>
+        <tr>
+            <th>Actions <button class="btn btn-table"></button></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="request in data.results">
+            <td>
+                <button class="btn btn-default"></button>
+            </td>
+        </tr>
+    </tbody>
+</table>

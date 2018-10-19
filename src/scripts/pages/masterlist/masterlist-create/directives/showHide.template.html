@@ -1,0 +1,10 @@
+<div class="show-hide-masterlist" ng-class="{'show-hide-masterlist--disabled': ngDisabled}">
+    <div class="show-hide-masterlist--button show-hide-masterlist--show"
+         ng-class="{'show-hide-masterlist--button--active': ngModel === 1,
+         'show-hide-masterlist--button--invalid': invalidClass}"
+         ng-click="toggle(1)">Show
+    </div><div class="show-hide-masterlist--button show-hide-masterlist--hide"
+         ng-class="{'show-hide-masterlist--button--active': ngModel === 0,
+         'show-hide-masterlist--button--invalid': invalidClass}"
+         ng-click="toggle(0)">Hide</div>
+</div>

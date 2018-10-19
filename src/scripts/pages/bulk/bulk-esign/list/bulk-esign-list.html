@@ -1,0 +1,87 @@
+<div class="bulk-esign-list">
+    <!-- Loader -->
+    <div class="loading" ng-hide="loaded">
+        <i class="fa fa-circle-o-notch fa-spin"></i> {{ notificationText }}
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12" ng-if="nonEligibleCount">
+        <div class="error-message">
+	        [{{nonEligibleCount}}] Selected RFA(s) cannot be electronically signed. Please view the Error Report for details. 
+	        <a class="sprite-file-pdf" target="_new" href ng-click="downloadErrorsDocument()">&nbsp;</a>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <a ng-click="linkTo('/rfa/company/amendmentLetter')" class="a-green">← Back to Dashboard</a>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12" ng-if="amendments.length">
+        <h2>Bulk Electronic Signature</h2>
+        <p>By clicking on <strong>Continue</strong>, you will be deemed to have validly signed 
+            the selected document(s) set out below on behalf of your firm. 
+            Pursuant to the <a class="tou-link" ng-click="showTermsOfUse()">Terms of Use</a>, you hereby confirm and represent that 
+            you are authorised to sign and attest to the truth, accuracy and 
+            completeness of the document(s).</p>
+
+        <strong>Click the check box next to each document that you wish to Esign</strong>
+    </div>
+    <div class="bulk-operation-list-panel col-md-12 col-sm-12 col-xs-12" ng-show="loaded">
+        <div class="rfa-count pull-right" ng-if="getSelected().length">RFA(s) selected: {{getSelected().length}}</div>
+        <div class="rfa-count pull-right" ng-if="!getSelected().length">No RFA(s) selected</div>
+        <div class="table-header-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="200">RFA ID</th>
+                        <th width="500">Signature Text Block</th>
+                        <th width="160">Ref Signature Placeholder</th>
+                        <th>Previous Signature</th>
+                        <th class="right-aligned" width="100">
+                            Confirm All&nbsp;&nbsp;<label><input type="checkbox"
+							                                     ng-model="allConfirmed.checked" 
+							                                     class="checkbox"
+							                                     ng-change="confirmAll()"><span></span></label>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="table-scroller">
+            <table>
+                <tbody>
+                    <tr ng-repeat="amendment in amendments" class="amendment-row">
+                        <td width="200"><span ng-bind="amendment.validRfaId"></span></td>
+                        <td width="500"><textarea ng-model="amendment.customTextBlock" ng-change="setSignatureTextDate(amendment)"></textarea></td>
+                        <td>
+                            <table>
+                                <tr ng-repeat="placeholder in amendment.placeholders" class="amendment-placeholder-row"> 
+                                    <td width="160">
+                                        <label ng-class="{selected:placeholder.selected}"><input type="checkbox" 
+			                                          ng-model="placeholder.selected" 
+			                                          class="checkbox"><span></span>&nbsp;{{side}} Signature [{{$index+1}}]</label>
+			                        </td>
+			                        <td>
+			                            <div ng-repeat="previousSignature in placeholder.prevSignatures">
+			                                {{previousSignature.name}}, {{previousSignature.date}}
+			                            </div>
+			                        </td>
+                                </tr>
+                            </table>
+                        </td>
+                        
+                        <td class="right-aligned" width="100">
+                            <a href="" ng-click="viewDocument(amendment.validRfaId)">View</a>&nbsp;&nbsp;<!-- 
+                         --><label><input type="checkbox" 
+                                          ng-model="amendment.selected" 
+                                          class="checkbox"><span></span></label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="buttons col-md-12 col-sm-12 col-xs-12" ng-if="amendments.length">
+        <button type="button" 
+                ng-click="proceed()" 
+                class="btn btn-blue pull-right"
+                ng-class="{disabled: !getSelected().length}">Continue</button>
+    
+    </div>
+</div>

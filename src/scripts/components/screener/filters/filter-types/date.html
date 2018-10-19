@@ -1,0 +1,39 @@
+<!-- <label class="btn btn-date" ng-click="filter.opened = !filter.opened">{{filter.view_value}}<i ng-if="!filter.opened" class="fa fa-angle-down"></i><i ng-if="filter.opened" class="fa fa-angle-up"></i></label> -->
+<div click-outside="handleClose()" handler="filter.opened">
+    <label class="btn btn-date" ng-click="handleOpen()" ng-class="{selected:filter.view_value != 'All'}">
+        <div class="viewed-value">{{filter.view_value}}</div>
+        <i ng-show="!filter.opened" class="fa fa-angle-down pull-right"></i>
+        <i ng-show="filter.opened" class="fa fa-angle-up pull-right"></i>
+    </label>
+    <div class='filter-popup' ng-if="filter.opened">
+        <div class="container-fluid">
+            <div class='header row'>
+                <input
+                autofocus
+                type='text'
+                class='form-control date date-from'
+                ng-pattern="/^(\d{1,2})-(\d{1,2})-(\d{4})$/"
+                ng-focus="filter.values.from.edit = true; filter.values.to.edit = false"
+                ng-model="filter.values.from.view_value"
+                ng-change="updateFilter('from', false)"
+                placeholder='{{filter.values.from.label}}'/>
+                <input
+                type='text'
+                class='form-control date date-to'
+                ng-pattern="/^(\d{1,2})-(\d{1,2})-(\d{4})$/"
+                ng-focus="filter.values.from.edit = false; filter.values.to.edit = true"
+                ng-model="filter.values.to.view_value"
+                ng-change="updateFilter('to', false)"
+                placeholder='{{filter.values.to.label}}'/>
+            </div>
+            <div class="content row">
+                <datepicker max-date="filter.values.to.value" ng-model="filter.values.from.value" ng-change="updateFilter('from_value', false)" ng-if="filter.values.from.edit" class="datepicker"></datepicker>
+                <datepicker min-date="filter.values.from.value" ng-model="filter.values.to.value" ng-change="updateFilter('to_value', false)" ng-if="filter.values.to.edit" class="datepicker"></datepicker>
+            </div>
+            <div class="footer row">
+                <button class="btn btn-sm btn-danger" ng-click="handleClose()">cancel</button>
+                <button class="btn btn-sm btn-success pull-right" ng-click="updateFilter(filter.type)">update</button>
+            </div>
+        </div>
+    </div>
+</div>

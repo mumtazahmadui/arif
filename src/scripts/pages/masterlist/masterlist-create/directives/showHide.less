@@ -1,0 +1,38 @@
+@show-hide-buttons-border-radius: 6%;
+.show-hide-masterlist {
+  &--disabled {
+    .show-hide-masterlist--button {
+      cursor: default;
+    }
+    .show-hide-masterlist--show {
+      background-color: #bfbfb9;
+    }
+  }
+  &--button {
+    display: inline-block;
+    width: 100px;
+    height: 25px;
+    border: 1px solid #009697;
+    text-align: center;
+    font-style: italic;
+    line-height: 23px;
+    cursor: pointer;
+    color: #A7A7A7;
+    &--active {
+      background-color: #76c343;
+      font-style: normal;
+      color: #ffffff;
+    }
+    &--invalid {
+      border-color: red;
+    }
+  }
+  &--show {
+    border-bottom-left-radius:0px;
+    border-top-left-radius:0px;
+  }
+  &--hide {
+    border-bottom-right-radius: @show-hide-buttons-border-radius;
+    border-top-right-radius: @show-hide-buttons-border-radius;
+  }
+}

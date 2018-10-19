@@ -1,0 +1,24 @@
+<div class="modal-title">
+    <h1> Exhibits Linked </h1>
+</div>
+<div class="modal-body">
+
+    <div class="row tight-fix">
+        <div class="col-xs-4">Request for Amendment Name</div>
+        <div class="col-xs-4">Counterparty True Legal Name</div>
+    </div>
+
+    <div class="long-holder" slim-scroll>
+        <div class="scroll-area-blue">
+            <div class="row step2-items" ng-repeat="entity in inputData.savedRFA" ng-show="!entity.deleted">
+                <div class="col-xs-4">{{entity.name}}</div>
+                <div class="col-xs-4">{{entity.masterAgreement.partyA.trueLegalName}}</div>
+                <div class="col-xs-4"><span class="file-sprite"></span>{{entity.exhibit.name}}</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="el.next()">Close</button>
+</div>

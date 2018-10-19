@@ -1,0 +1,76 @@
+<div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <a ng-click="linkTo('/rfa/company/amendmentLetter')" class="a-green">&larr; Back to Dashboard</a>
+        <h1 class="col-md-12"> {{editorData.data.id}} </h1>
+    </div>
+    <div class="col-md-4 col-xs-12 top-margin">
+        <h3>Guidance</h3>
+        <ul class="txt-guide">
+            <li ng-repeat="item in legend">{{item}}</li>
+        </ul>
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-12">
+        <quick-links></quick-links>
+    </div>
+    <div class="text-editor row col-xs-12">
+        <div class="row col-xs-12">
+            <div class="text-formating-tools panel hidden-print" id="toolbar">
+                <div class="row">
+                    <div class="col-lg-9 col-md-9 col-xs-12 class dynamic-placeholders">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12" style="left: 4px;">
+                                <a class="btn btn-green" ng-click="partyBEdit()">Edit Party B Addition</a>
+                                <a class="btn btn-green" ng-click="partyBEdit()">Edit Party B Removal</a>
+                                <a class="btn btn-green" ng-click="partyBEdit()">Edit Party B Modification</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-xs-12" >
+                        <div id="tiny-toolbar-rfa"></div>
+                        <!-- <div class="form-inline commands">
+                            <span class="text-formating-tools-span">
+                                <mc-text-editor-toolbar-standard/>
+                            </span>
+                        </div> -->
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-12 pull-right text-right" style="top:6px;">
+                        <button type="button" ng-click="print()" class="btn sprite-button-print"></button>
+                        <button type="button" ng-click="save()" class="btn btn-green">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row col-xs-9">
+    <!--         <mc-text-editor data-content="vm.amendment.content" data-placeholders="vm.placeholders" data-options = "vm.editorOptions" data-on-validation="vm.onValidation(errors)" data-validation-rules="vm.validationRules" data-disabled="vm.disabled"> -->
+            <mc-text-editor data-options="vm.editorOptions" data-editor-instance="vm.editorInstance">
+                
+            </mc-text-editor>
+            
+        </div>
+        <div class="text-editor row col-xs-3">
+                <div class="sidebar"><div id="annotations-wrapper"><div class="annotations"></div></div><div class="lance-tmpl annotation-ui" tabindex="0"><div class="annotation-comments"></div><div class="annotation-tip"></div></div><div class="lance-tmpl comment-ui"><div class="comment-top"><div class="comment-avatar" style="display:inline-block;"></div><div class="comment-user-details"><div class="comment-user-name"></div><div class="comment-time-stamp"></div></div></div><div class="comment-body"><textarea class="comment-text autogrow-textarea" rows="1" placeholder="[[enter comment]]" readonly="readonly"></textarea><div class="comment-edit-links"><button class="comment-edit">[[edit]]</button><button class="comment-delete">[[delete]]</button><button data-lance-command="resolve">[[resolve]]</button></div><div class="comment-edit-controls"><button class="comment-edit-ok btn btn-small btn-info ">[[save]]</button><button class="comment-edit-cancel btn btn-small btn-info">[[cancel]]</button></div></div><textarea class="comment-reply-text autogrow-textarea" rows="1" placeholder="[[Reply to this comment]]" readonly="readonly"></textarea><div class="comment-controls"><button class="btn btn-small btn-info comment-ok">[[comment]]</button><button class="btn btn-small btn-info comment-cancel">[[cancel]]</button></div></div></div>
+        </div>
+        <loader is-show="isShowLoader" notification-text="notificationText"></loader>
+    </div>
+    <div class="row col-xs-12">
+        <!-- <accordion close-others="oneAtATime">
+                <accordion-group heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                    This content is straight in the template.
+                </accordion-group>
+                <accordion-group heading="{{accordian.group.title}}" ng-repeat="group in groups">
+                    {{accordian.group.content}}
+                </accordion-group>
+                <accordion-group heading="Dynamic Body Content">
+                    <p>The body of the accordion group grows to fit the contents</p>
+                    <button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
+                    <div ng-repeat="item in items">{{accordian.item}}</div>
+                </accordion-group>
+                <accordion-group is-open="status.open">
+                    <accordion-heading>
+                        I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </accordion-heading>
+                    This is just some content to illustrate fancy headings.
+                </accordion-group>
+        </accordion> -->
+    </div>
+</div>

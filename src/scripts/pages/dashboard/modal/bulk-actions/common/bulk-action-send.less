@@ -1,0 +1,99 @@
+.bulk-action-send {
+    .modal-header,
+    .modal-footer {
+        padding: 10px;
+    }
+    .modal-header{
+        h1 {
+            color: #444;
+            font-size: 26px;
+            padding-left: 10px;
+        }
+        .close:focus {
+            outline: none;
+        }
+
+    }
+    .modal-body {
+        padding: 0 20px 20px 20px;
+        .instruction,
+        .warning {
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        .instruction {
+            font-style: italic;
+            margin-left: 18px;
+            margin-bottom: 20px;
+        }
+        .warning {
+            &:before{
+                content: "";
+                height: 33px;
+                display: inline-block;
+            }
+            height: 22px;
+            margin-left: 15px;
+            * {
+                vertical-align: top;
+            }
+            .pdf-download{
+                top: -4px;
+            }
+        }
+        h3 {
+            font-size: 15px;
+        }
+        .request-name {
+            font-size: 26px;
+        }
+        .framed.blue-frame {
+            background-color: #EFEFEF;
+            color: #009697;
+            border: #EFEFEF;
+            .scroll-area {
+                // margin-right: 0;
+                min-height: inherit;
+                .available-party-b-item {
+                    padding: 10px 10px 2px 0;
+                }
+
+            }
+        }
+        .short-holder {
+            height: 429px;
+            background-color: #F7F7F7;
+            border: 1px solid #f7f4f4;
+            .available-party-b-item.blue-frame {
+                background-color: #EFEFEF;
+                margin-top: 5px;
+                padding: 8px 5px 5px 10px;
+                color: #009697;
+                border: #EFEFEF;
+                margin-left: 10px;
+                .opacity50 {
+                    color: #009697;
+                }
+                input {
+                    cursor: pointer;
+                    border: 1px solid
+                }
+                
+            }
+        }
+        .framed.blue-frame,
+        .short-holder {
+            padding: 5px 10px;
+        }
+        .available-party-b-item {
+            font-size: 12px;
+        }
+    }
+    .btn-danger:active:focus {
+        outline: none;
+    }
+}
+.white {
+    background-color: #FFFFFF;
+    opacity: 0.7;
+}

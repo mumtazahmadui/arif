@@ -1,0 +1,546 @@
+.fontFace(@family,@src,@style: normal,@weight: normal) {
+    font-family: @family;
+    src: url('#{@src}.eot'); // IE9 compat
+    src: url('#{@src}.eot?#iefix') format('embedded-opentype'), // IE8 and below
+    url('#{@src}.woff') format('woff'), // standards
+    url('#{@src}.ttf') format('truetype'), // Safari, Android, iOS
+    url('#{@src}.svg##{@family}') format('svg'); // legacy iOS
+
+    font-style: @style;
+    font-weight: @weight;
+}
+
+.text-editor-MCE {
+  //margin: 1.2em !important;
+  //max-width: 97% !important;
+}
+
+.font-family {
+  &-size {
+    &-8 {
+      font-size: 8pt;
+    }
+    &-10 {
+      font-size: 10pt;
+    }
+    &-12 {
+      font-size: 12pt;
+    }
+    &-14 {
+      font-size: 14pt;
+    }
+    &-16 {
+      font-size: 16pt;
+    }
+    &-24 {
+      font-size: 24pt;
+    }
+  }
+
+  &-Arial {
+    font-family: Arial;
+  }
+
+  &-Arial-Black {
+    font-family: Arial Black;
+  }
+
+  &-Calibri {
+    font-family: Calibri;
+  }
+
+  &-Cambria {
+    font-family: Cambria;
+  }
+
+  &-Comic-Sans-MS {
+    font-family: Comic Sans MS;
+  }
+
+  &-San-Serif {
+    font-family: San Serif;
+  }
+
+  &-Times-New-Roman {
+    font-family: Times New Roman;
+  }
+}
+
+.float-left {
+    float:left;
+}
+
+.margin-clear {
+    margin:0;
+}
+
+.min-height-20 {
+    min-height: 20px;
+}
+.height-20 {
+  height: 20px;
+}
+
+.grey-class {
+    min-height:20px;
+    background-color: #eeeeee;
+}
+
+.height-410px {
+    height: 410px;
+}
+
+.min-width-133px {
+    min-width: 133px;
+}
+.min-width-97px {
+    min-width: 97px;
+}
+
+.padding-right-2px {
+    padding-right: 2px !important;
+}
+
+.word-wrap {
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    word-break: break-all !important;
+    -ms-word-wrap: break-word;
+}
+
+.word-break-keep-all {
+    word-break: keep-all !important;
+}
+.padding-top-10 {
+    padding-top: 10px;
+}
+
+.word-break-normal {
+    word-break: normal;
+}
+
+.margin-left-10percent {
+    margin-left: 10%;
+}
+
+/*
+@include fontFace("Universe LT Std", "../fonts/UniversLTStd-Light");
+
+*{
+  font-family: "Universe LT Std";
+}
+*/
+
+// mcpm
+@mcpm-img-path: '../images/';
+@loader-img: 'data:image/gif;base64,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';
+@arrow-down-img: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH3wETCyA2BhuLQQAAAMBJREFUKM/t0S1KhAEYxPHf+6LBTRssgtEkXkHYvuABTIphRDCJSbAvmCzyKHgCET8wWASLxUNYTB7AtIhlix+7rN2Jw/xhmOFfTVU9YZDkelqoqmZwhvcWOziuqt0p4TlcYh77zchcxB0esJfkYwzcxQ1esJVk2EKSV6xiGRdV1fkFXsAjnrGRZAjNt9AsTrCCtSRvI38J9zhNMvgy4piqB9hEHx3c4jDJ+Y8XJoy1jiO02E5y9eePq6pXVb1JmU+nxD7BHKgG4AAAAABJRU5ErkJggg==';
+@imsearching-img: 'data:image/gif;base64,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';
+@arrow-up-filter-img: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAJCAYAAADU6McMAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH3wEQDwUPpFHUnAAAAK9JREFUKM+d0D0KAjEQQOG3rCLYWNhYCkI0SFwLQbxD2CJlwMqT2dipzYp4BhWRFIFcRpvdRnR/fOUMfAwDJWlju9rYDRXFZQDggbWQqh+8OzdCcsABw3y0FFINgnenWog2tg1cgcnHaiGk6gXvLqWINrYDPIHpj8tXQqpR8O74FcmBByAr/pgIqcbBu30xiHKgBdyBGfXLgDQ77F6RNjYGbsCc5mVAWlyQ8F8a2L4BgvMrOkIIO2UAAAAASUVORK5CYII=';
+
+
+// RFA-MTU COLORS
+@primary-background: #fff;
+@link: #22b5d7;
+@error: #cf2026;
+@dark-icons: #979797;
+@side-module-icon: #545e6b;
+@navigation: #00598c;
+@table-highlight: #EFEFEF;
+@informational: #f4a621;
+@side-module-icon: #aaaaab;
+@filter-background: #cbcaca;
+@navigation-hover: #004c7f;
+@task-panel-background: #f5f5f5;
+@buttons: #76bf43;
+@primary-text: #323232;
+@side-module: #323232;
+@side-module-title-bar: #545E6B;
+@chart-color-1: #575A5D;
+@chart-color-2: #00598C;
+@chart-color-3: #9EA137;
+@chart-color-4: #78BD43;
+@chart-color-5: #F3C522;
+@chart-color-6: #DC7231;
+@chart-color-7: #CE2027;
+@selected-checkbox: #00a8cf;
+@checkbox: #cccbcb;
+@dropdown: #00598c;
+
+
+//== Colors
+//
+//##
+@mcpm-base:             #333;
+@mcpm-white:            #FFF;
+@mcpm-ocean:            #00588D;
+@mcpm-oceanlight:       #4C7892;
+@mcpm-oceanlighter:     #0C5D91;
+@mcpm-oceaninput:       #035A8E;
+@mcpm-gray:             #CCC;
+@mcpm-lightgray:        #F5F5F5;
+@mcpm-midgray:          darken(@mcpm-gray, 20%);
+@mcpm-midgray:          darken(@mcpm-gray, 20%);
+@mcpm-darkgray:         darken(@mcpm-gray, 40%);
+@mcpm-lightblue:        #B4C9DA;
+@mcpm-lighterblue:      #C0CAD4;
+@mcpm-oceangray:        #4C525A;
+
+@brand-primary:         @mcpm-oceanlighter;
+
+// Tasks colors
+@mcpm-task-kyc:         #02A9D1;
+@mcpm-task-none:        #C0CAD4;
+@mcpm-task-ready:       #A0A42B;
+@mcpm-task-progress:    #F6C800;
+@mcpm-task-reviewed:    #E17327;
+@mcpm-task-rejected:    #C71A1A;
+
+@mcpm-active-menu-bg:   #77C042;
+
+@mcpm-danger-color: 	#C71A1A;
+@mcpm-success-color: 	#77C042;
+@mcpm-warning-color: 	#F6C800;
+@mcpm-disabled-color:   #A7A7A7;
+
+
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+//** Background color for `<body>`.
+@body-bg:               @mcpm-white;
+//** Global text color on `<body>`.
+@text-color:            @mcpm-base;
+
+//** Global textual link color.
+// @link-color:            @brand-primary;
+//** Link hover color set via `darken()` function.
+@link-hover-color:      darken(@link-color, 10%);
+//** Link hover decoration.
+// @link-hover-decoration: underline;
+
+
+
+//== Tables
+//
+//## Customizes the `.table` component with basic values, each used across all table variations.
+
+//** Padding for `<th>`s and `<td>`s.
+@table-cell-padding:            6px;
+//** Padding for cells in `.table-condensed`.
+@table-condensed-cell-padding:  5px;
+
+//** Default background color used for all tables.
+@table-bg:                      transparent;
+//** Background color used for `.table-striped`.
+@table-bg-accent:               #f9f9f9;
+//** Background color used for `.table-hover`.
+@table-bg-hover:                #f5f5f5;
+@table-bg-active:               @table-bg-hover;
+
+//** Border color for table and cell borders.
+@table-border-color:            #ddd;
+
+@table-th-color:                @mcpm-darkgray;
+@table-th-font-size:            10px;
+@table-th-font-weight:          normal;
+@table-th-letter-spacing:       .5px;
+
+
+@table-td-font-size:            12px;
+
+//== Navbars
+//
+//##
+
+@navbar-height:                    50px;
+@navbar-height-top:                60px; 
+@subnavbar-height-top:             50px; 
+@navbar-margin-bottom:             @line-height-computed;
+@navbar-border-radius:             @border-radius-base;
+@navbar-padding-horizontal:        floor((@grid-gutter-width / 2));
+@navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
+@navbar-padding-vertical-top:      ((@navbar-height-top - @line-height-computed) / 2);
+@subnavbar-padding-vertical-top:   ((@subnavbar-height-top - @line-height-computed) / 2);
+@navbar-collapse-max-height:       340px;
+
+@navbar-default-color:             @mcpm-white;
+@navbar-default-bg:                @mcpm-ocean;
+@navbar-default-border:            darken(@navbar-default-bg, 6.5%);
+
+// Navbar links
+@navbar-default-link-color:                darken(@mcpm-white, 20%);
+@navbar-default-link-hover-color:          @mcpm-white;
+@navbar-default-link-hover-bg:             transparent;
+@navbar-default-link-active-color:         @mcpm-white;
+@navbar-default-link-active-bg:            transparent;
+@navbar-default-link-disabled-color:       darken(@mcpm-white, 30%);
+@navbar-default-link-disabled-bg:          transparent;
+
+@navbar-brand-border-color:                @mcpm-oceanlight;
+@top-navbar-default-mb:                    0;
+@sub-navbar-default-mb:                    0;
+
+// Second navbar
+@second-navbar-default-color:              @mcpm-white;
+@second-navbar-default-bg:                 @mcpm-lightgray;
+@second-navbar-default-border:             @mcpm-lightblue;
+@navbar-brand-border-hover-color: 		   @mcpm-lightgray;
+
+// Navbar links
+@second-navbar-default-link-color:                @mcpm-ocean;
+@second-navbar-default-link-hover-color:          lighten(@second-navbar-default-link-color, 10%);
+@second-navbar-default-link-hover-bg:             transparent;
+@second-navbar-default-link-active-color:         @mcpm-ocean;
+@second-navbar-default-link-active-bg:            transparent;
+@second-navbar-default-link-disabled-color:       #ccc;
+@second-navbar-default-link-disabled-bg:          transparent;
+
+
+//== Buttons
+//
+//## For each of Bootstrap's buttons, define text, background and border color.
+
+@btn-font-weight:                normal;
+@btn-font-weight-bold:           600;
+
+@btn-default-color:              #333;
+@btn-default-bg:                 #fff;
+@btn-default-border:             @mcpm-oceaninput; // #ccc
+
+@btn-gray-color:                 #fff;
+@btn-gray-bg:                    #9b9b9b;
+@btn-gray-border:                #9b9b9b;
+
+@btn-primary-color:              #fff;
+@btn-primary-bg:                 @brand-primary;
+@btn-primary-border:             darken(@btn-primary-bg, 5%);
+
+@btn-success-color:              #fff;
+@btn-success-bg:                 @brand-success;
+@btn-success-border:             darken(@btn-success-bg, 5%);
+
+@btn-info-color:                 #fff;
+@btn-info-bg:                    @brand-info;
+@btn-info-border:                darken(@btn-info-bg, 5%);
+
+@btn-warning-color:              #fff;
+@btn-warning-bg:                 @brand-warning;
+@btn-warning-border:             darken(@btn-warning-bg, 5%);
+
+@btn-danger-color:               #fff;
+@btn-danger-bg:                  @brand-danger;
+@btn-danger-border:              darken(@btn-danger-bg, 5%);
+
+@btn-link-disabled-color:        @gray-light;
+
+@padding-base-vertical:          3px;
+@padding-base-horizontal:        20px;
+@font-size-base:                 14px; 
+@line-height-base:               1.4; 
+@border-radius-base:             6px;
+
+
+
+//== Forms
+//
+//##
+
+// @padding-base-horizontal: 5px;
+@form-control-padding-base-horizontal: 5px;
+
+//** `<input>` background color
+@input-bg:                       #fff;
+//** `<input disabled>` background color
+@input-bg-disabled:              @gray-lighter;
+
+//** Text color for `<input>`s
+@input-color:                    @gray;
+//** `<input>` border color
+@input-border:                   @mcpm-oceaninput;
+
+// TODO: Rename `@input-border-radius` to `@input-border-radius-base` in v4
+//** Default `.form-control` border radius
+@input-border-radius:            6px; //@border-radius-base;
+//** Large `.form-control` border radius
+@input-border-radius-large:      @border-radius-large;
+//** Small `.form-control` border radius
+@input-border-radius-small:      @border-radius-small;
+
+//** Border color for inputs on focus
+@input-border-focus:             @mcpm-ocean;
+
+//** Placeholder text color
+@input-color-placeholder:        #999;
+
+//** Default `.form-control` height
+@input-height-base:              (@line-height-computed + (@padding-base-vertical * 2) + 5);
+//** Large `.form-control` height
+@input-height-large:             (ceil(@font-size-large * @line-height-large) + (@padding-large-vertical * 2) + 2);
+//** Small `.form-control` height
+@input-height-small:             (floor(@font-size-small * @line-height-small) + (@padding-small-vertical * 2) + 2);
+
+@legend-color:                   @gray-dark;
+@legend-border-color:            #e5e5e5;
+
+//** Background color for textual input addons
+@input-group-addon-bg:           @gray-lighter;
+//** Border color for textual input addons
+@input-group-addon-border-color: @input-border;
+
+//** Disabled cursor for form controls and buttons.
+@cursor-disabled:                not-allowed;
+
+
+
+//== Badges
+//
+//##
+
+@badge-primary-color:                 @mcpm-white;
+//** Linked badge text color on hover
+@badge-primary-link-hover-color:      @mcpm-white;
+@badge-primary-bg:                    @mcpm-ocean;
+
+//** Badge text color in active nav link
+@badge-primary-active-color:          @link-color;
+//** Badge background color in active nav link
+@badge-primary-active-bg:             @mcpm-white;
+
+@badge-primary-font-weight:           normal;
+@badge-primary-line-height:           1;
+@badge-primary-border-radius:         25px;
+
+
+
+//== Navs
+//
+//##
+
+//=== Shared nav styles
+@nav-link-padding:                          5px 15px;
+@nav-link-hover-bg:                         @mcpm-lightgray;
+
+@nav-disabled-link-color:                   @gray-light;
+@nav-disabled-link-hover-color:             @gray-light;
+
+
+
+//== Tabs
+@nav-tabs-font-size:						22px;
+@nav-tabs-border-color:                     @mcpm-lighterblue;
+
+@nav-tabs-link-hover-border-color:          @gray-lighter;
+
+@nav-tabs-active-link-hover-bg:             @mcpm-lightgray;
+@nav-tabs-active-link-hover-color:          @gray;
+@nav-tabs-active-link-hover-border-color:   @mcpm-lighterblue;
+
+@nav-tabs-justified-link-border-color:            @mcpm-lighterblue;
+@nav-tabs-justified-active-link-border-color:     @body-bg;
+
+
+
+
+//== Wells
+//
+//##
+
+@well-bg:                     @mcpm-lightgray;
+@well-border:                 @well-bg;
+
+
+
+//== Modals
+//
+//##
+
+@modal-sub-title-color:       #02a9d1;
+@modal-inset-title-color:     #00cde7;
+
+//** Padding applied to the modal body
+@modal-inner-padding:         20px;
+
+//** Padding applied to the modal title
+@modal-title-padding:         20px;
+//** Modal title line-height
+@modal-title-line-height:     @line-height-base;
+
+//** Background color of modal content area
+@modal-content-bg:                             #fff;
+@modal-content-inset-bg:                       #545e6b;
+//** Modal content border color
+@modal-content-border-color:                   rgba(0,0,0,.2);
+//** Modal content border color **for IE8**
+@modal-content-fallback-border-color:          #999;
+
+//** Modal backdrop background color
+@modal-backdrop-bg:           #eee;
+//** Modal backdrop opacity
+@modal-backdrop-opacity:      .5;
+//** Modal header border color
+@modal-header-border-color:   #e5e5e5;
+//** Modal footer border color
+@modal-footer-border-color:   @modal-header-border-color;
+
+@modal-lg:                    900px;
+@modal-md:                    580px;
+@modal-sm:                    300px;
+
+@modal-form-control-color:                  #737f8d;
+@modal-form-control-border-color:           #dbdbdb;
+
+
+//== Tooltips
+//
+//##
+
+//** Tooltip max width
+@tooltip-max-width:           200px;
+//** Tooltip text color
+@tooltip-color:               #fff;
+//** Tooltip background color
+@tooltip-bg:                  #545e6c;
+@tooltip-opacity:             1;
+
+//** Tooltip arrow width
+@tooltip-arrow-width:         5px;
+//** Tooltip arrow color
+@tooltip-arrow-color:         @tooltip-bg;
+
+
+//== Page forms
+// 
+//##
+@page-form-control-color:                   #737f8d;
+@page-form-control-border-color:            #dbdbdb;
+@page-form-error-border-color:              #cf2026;
+@page-form-error-bg:                        #f7e9ea;
+
+@signature-style-preview-border:            #dbdbdb;
+
+@input-error-color:                         #cf2026;
+
+
+//== Filter area
+// 
+//##
+
+@filter-area-bg:                            @mcpm-lightgray;
+@filter-area-border-bottom-color:           @mcpm-gray;
+
+@filter-title-color:                        @mcpm-midgray;
+
+@filter-btn-clear-bg:                       @mcpm-oceanlighter;
+@filter-btn-clear-padding-vertical:         3px;
+@filter-btn-clear-padding-horizontal:       20px;
+@filter-btn-clear-font-size:                14px;
+@filter-btn-clear-line-height:              1.4;
+@filter-btn-clear-border-radius:            6px;
+
+
+@sub-navbar-link-color:                          #3A7EA7;
+@sub-navbar-link-color-hover:                    darken(@sub-navbar-link-color, 10%);
+@sub-navbar-border-color:                        #D6DDE4;

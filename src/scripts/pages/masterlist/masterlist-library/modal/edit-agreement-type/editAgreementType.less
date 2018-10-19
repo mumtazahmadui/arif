@@ -1,0 +1,82 @@
+.modal-edit-agreement-type {
+  .modal-body {
+    margin-top: 20px;
+  }
+  &--loading {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    padding-top: 100px;
+    background-color: rgba(255,255,255,0.5);
+    z-index: 1;
+  }
+  &--error {
+    color: #ff3228;
+    position: relative;
+    top: -10px;
+  }
+  &_label {
+    height: 100px;
+  }
+  &_input {
+    .dropdown {
+      cursor: pointer;
+      width: 300px;
+      margin-top: -.5em;
+      margin-bottom: -.5em;
+      display: block;
+      vertical-align: middle;
+      border-radius: 5px;
+      border: 1px #045a8c solid;
+      margin-left: -15px;
+      padding: 5px 20px 5px 5px;
+      height: auto !important;
+      overflow: visible !important;
+      p {
+        color: #000;
+        height: 19px;
+      }
+      i {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+      }
+      ul {
+        max-height: 10em;
+        overflow-y: auto;
+        padding-right: 0;
+      }
+    }
+    .dropdown-menu {
+      padding-right: 1.5em;
+      top: auto;
+      left: auto;
+      width: inherit;
+      max-width: 10em;
+      z-index: 1000;
+      margin-left: -5px;
+      h3 {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        i {
+          color: #CCC;
+          right: 188px;
+        }
+      }
+      &.big-dropdown {
+        width: 295px;
+        max-width: 295px;
+        max-height: none;
+      }
+      a {
+        padding: 3px 8px;
+      }
+    }
+  }
+  .modal-footer {
+    clear: both;
+  }
+}

@@ -1,0 +1,9 @@
+<div class="dashboard-tabs-container row">
+    <div ng-repeat="tab in tabsConfig track by $index"
+         ng-if="checkPermission(tab)"
+         ng-class="{'dashboard-tabs-container_tab--active': tab.active}"
+         ng-click="toggleTab()" class="dashboard-tabs-container_tab"
+         ui-sref="{{tab.href}}">
+        <p ng-bind="tab.caption"></p>
+    </div>
+</div>

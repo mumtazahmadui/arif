@@ -1,0 +1,34 @@
+<div ng-controller="AmendmentLetterController as vm">
+    <div class="loading dashboard-loading" ng-show="vm.processing">
+        <i class="fa fa-circle-o-notch fa-spin"></i> Loading...
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-6">
+        <h4 class="col-md-12" style="margin-bottom: 20px;"><strong>RFA Status</strong></h4>
+        <donut-chart ng-if="vm.data.tasks.request" style="min-width: 500px; height: 240px; max-width: 600px;" ng-model="vm.data.tasks.request"
+            id="donut-container"></donut-chart>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-6">
+        <h4 class="col-md-12" style="margin-bottom: 20px;"><strong>Pending Tasks</strong></h4>
+        <tasks-pending ng-if="isBuySidePendingTask(task)" ng-model="task" ng-repeat="task in vm.data.tasks.pending"></tasks-pending>
+    </div>
+    <div class="col-md-5 col-sm-12 col-xs-12">
+        <quick-links show-create-rfa-link="true"></quick-links>
+        <!-- <div class="col-xs-12 screener-legend-badges">
+            <ul class="list-unstyled pull-right">
+                <li><span class="badge badge-add"></span><span class="legend-description">Addition</span></li>
+                <li><span class="badge badge-remove"></span><span class="legend-description">Removal</span></li>
+                <li><span class="badge badge-modification"></span><span class="legend-description">Modification</span></li>
+            </ul>
+            <ul class="list-unstyled pull-right">
+                <li><span class="badge badge-pending"></span><span class="legend-description">Pending</span></li>
+                <li><span class="badge badge-rejected"></span><span class="legend-description">Rejected</span></li>
+                <li><span class="badge badge-withdrawn"></span><span class="legend-description">Withdraw</span></li>
+            </ul>
+        </div> -->
+    </div>
+    <tabset class="screener-tabs" ng-controller="RFATabController">
+        <tab ng-repeat="(index,tab) in vm.data.tabs track by $index" heading="{{tab.title}}"  active="tab.active" select="tabSelection(index)" deselect="tabDeSelection(index)">
+           <section data-ng-include="tab.templateURL" class="tab" ng-if="tab.active"></section>
+        </tab>
+    </tabset>
+</div>

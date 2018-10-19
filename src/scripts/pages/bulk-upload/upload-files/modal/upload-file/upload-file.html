@@ -1,0 +1,67 @@
+<div class="modal-upload-title">
+    <div class="modelHeader" style="padding: 15px;">
+            <button type="button" class="closed" data-dismiss="modal" aria-hidden="true" ng-click="$dismiss()">
+                    <span>x</span></button>
+        <h3 class="modal-title">Upload File</h3>
+    </div>
+        <div class="text-center col-xs-12 loader" ng-show="vm.uploading">
+            <span>
+                <i class="fa fa-circle-o-notch fa-spin"></i>
+                <span>Uploading...</span>
+            </span>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <tbody>
+                    <tr style="display:block;">
+                        <td style="font-size: 0.9em;">Template Name:</td>
+                        <td>
+                            <div class="dropdown" dropdown dropdown-toggle style="font-size: 1.1em;">
+                                <span href class="dropdown-toggle">
+                                    <span class="file-sprite">{{vm.name? vm.name.value : '&nbsp;'}}</span>
+                                    <i class="fa fa-chevron-down pull-right"></i>
+                                </span>
+                                <ul class="dropdown-menu big-dropdown">
+                                    <div class="text-center col-xs-12 loader" ng-show="!vm.loaded">
+                                        <span>
+                                            <i class="fa fa-circle-o-notch fa-spin"></i>
+                                            <span>Uploading...</span>
+                                        </span>
+                                    </div>
+                                    <li ng-repeat="choice in vm.templateTypes">
+                                        <span class="dropdown-menu_select" ng-click="vm.name = choice" title="{{choice.value}}">
+                                            {{choice.value}}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="upload-control">
+                                <div class="line">
+                                    <span class="upload-file-name">
+                                        <label for="browse-file" style="float: right;">
+                                            <span class="btn btn-green browse-btn">Browse</span>
+                                        </label>
+                                        <label>
+                                            <span class="content" ng-bind="vm.file.name" title={{vm.file.name}} ng-class="{'invalid': vm.invalidField}"></span>
+                                            <input id="browse-file" type="file" name="file" class="upload-file" ng-model="vm.file" file-input
+                                            accept=".xlsx" ng-change="vm.checkFile(vm.file)">
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="error-msg" ng-if="vm.invalidField">Please select file with .xlsx extension.</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-green" ng-disabled="!vm.loaded" ng-click="$dismiss()">Cancel</button>
+            <button class="btn btn-lightgreen" ng-disabled="!(vm.loaded && vm.file && vm.name && !vm.invalidField)" ng-click="vm.upload()">Upload</button>
+        </div>
+</div>
