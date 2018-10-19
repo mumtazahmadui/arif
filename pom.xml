@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.markit.kyc</groupId>
+		<artifactId>kyc-master</artifactId>
+		<version>1.11</version>
+	</parent>
+
+	<groupId>com.markit.ms</groupId>
+	<artifactId>ms-rfa</artifactId>
+	<version>5.0.13-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+  <scm>
+        <connection>${scm.url}</connection>
+        <developerConnection>${scm.url}</developerConnection>
+        <url>${scm.url}</url>
+  </scm>
+  
+   <distributionManagement>
+    <repository> 
+      <id>central</id>
+                  <name>central</name>
+      <url>http://maven.markit.partners/artifactory/inhouse-local2</url>
+    </repository>
+  </distributionManagement>
+
+	<properties>
+		<rest-test-lib.version>0.2</rest-test-lib.version>
+		<kyc-commons.version>1.30-SNAPSHOT</kyc-commons.version>
+		<kyc-webfilter.version>1.39</kyc-webfilter.version>
+		<kyc-security.version>1.27</kyc-security.version>
+		<kyc-overlay.version>1.10</kyc-overlay.version>
+		<ms-select-all.version>1.2</ms-select-all.version>
+
+		<!-- kyc-webapp-ui.version>1.3.3-SNAPSHOT</kyc-webapp-ui.version -->
+
+		<swagger-springmvc.version>0.8.8</swagger-springmvc.version>
+		<maven.skipTests>false</maven.skipTests>
+		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<output.ui.dir>${project.build.directory}/ui</output.ui.dir>
+		<!-- <microsoft-sqlserver.version>4.0</microsoft-sqlserver.version>-->
+		<jtds-driver-sqlserver.version>1.3.1</jtds-driver-sqlserver.version>
+		<webapp.ui.dir>mtu</webapp.ui.dir>
+		<scm.url>scm:git:ssh://git.markit.partners:29418/rc-mcpm/ms-rfa.git</scm.url>
+	</properties>	
+	
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.markit.ms</groupId>
+			<artifactId>ms-config-dev</artifactId>
+			<version>3.10-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<modules>
+		<module>ms-webapp-rfa-ui</module>
+		<module>ms-webapp-rfa</module>
+	</modules>
+</project>
